@@ -261,47 +261,35 @@ render(){
           
           <div className="top-row">
             <div className="field-wrap">
-              <label>
-                First Name<span className="req">*</span>
-              </label>
-              <input type="text" required  onChange={(event)=>this.signupInfoUpdate(event,'first_name')}/>
+              
+              <input type="text" required  placeholder="First Name" onChange={(event)=>this.signupInfoUpdate(event,'first_name')}/>
             </div>
         
             <div className="field-wrap">
-              <label>
-                Last Name<span className="req">*</span>
-              </label>
-              <input type="text"required  onChange={(event)=>this.signupInfoUpdate(event,'last_name')} />
+              
+              <input type="text"required placeholder="Last name" onChange={(event)=>this.signupInfoUpdate(event,'last_name')} />
             </div>
           </div>
 
           <div className="field-wrap">
-            <label>
-              Username<span className="req">*</span>
-            </label>
-            <input type="text"required  onChange={(event)=>this.signupInfoUpdate(event,'username')}/>
+            
+            <input type="text"required placeholder="Username"  onChange={(event)=>this.signupInfoUpdate(event,'username')}/>
           </div>
 
           <div className="field-wrap">
-            <label>
-              Email Address<span className="req">*</span>
-            </label>
-            <input type="email"required  onChange={(event)=>this.signupInfoUpdate(event,'email')}/>
+            
+            <input type="email"required placeholder="Email" onChange={(event)=>this.signupInfoUpdate(event,'email')}/>
           </div>
           
           <div className="field-wrap">
-            <label>
-              Set A Password<span className="req">*</span>
-            </label>
-            <input type="password"required  onChange={(event)=>this.signupInfoUpdate(event,'password1')}/>
+            
+            <input type="password"required placeholder="Password"  onChange={(event)=>this.signupInfoUpdate(event,'password1')}/>
           </div>
 
 
           <div className="field-wrap">
-            <label>
-              Confirm Password<span className="req">*</span>
-            </label>
-            <input type="password" required  onChange={(event)=>this.signupInfoUpdate(event,'password2')}/>
+           
+            <input type="password" placeholder="Confirm Password" required  onChange={(event)=>this.signupInfoUpdate(event,'password2')}/>
           </div>
           { this.state.process == false ?
           <button type="submit" className="button button-block">Get Started</button>
@@ -333,17 +321,13 @@ render(){
           <form action="#" method="post" onSubmit={this.loginHandler.bind(this)}>
           
             <div className="field-wrap">
-            <label>
-              Email Address<span className="req">*</span>
-            </label>
-            <input type="email" required onChange={(event)=>this.loginUpdate(event,'email')}/>
+            
+            <input type="email" placeholder="Email" required onChange={(event)=>this.loginUpdate(event,'email')}/>
           </div>
           
           <div className="field-wrap">
-            <label>
-              Password<span className="req">*</span>
-            </label>
-            <input type="password" required onChange={(event)=>this.loginUpdate(event,'password')}/>
+            
+            <input type="password" placeholder="Password" required onChange={(event)=>this.loginUpdate(event,'password')}/>
           </div>
           
           <p className="forgot"><a href="#">Forgot Password?</a></p>
