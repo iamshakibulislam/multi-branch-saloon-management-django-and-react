@@ -1,0 +1,1834 @@
+/*
+----------------------------------
+
+        Name:Theme Black styles.css
+        Version: 1.3
+		edited date:24-02-16
+----------------------------------
+
+        Table of Contents
+        
+        #Reset
+		#header
+		  	1 - Navigation right in menu.css
+		#Carousel main slider
+		#Our Team
+			1 - Carousel content slider our team in slick.css
+		#Services
+		#Make Appoinment
+		#Parallax
+		#Gallery
+			1 - Gellery Portfolio & Images hover effect in lightbox.css 
+		#Promotions slider Mini
+     	#video Showreel
+		#Footer
+		#Form Alert
+		#slick slider Hover Effects
+		#blog
+		#blog classic
+		#blog Fullwidth
+		#blog Masonary
+		#testimonials
+		#media Query
+		
+		#typography font weight
+		Extra-light:200
+		light:300
+		normal:400
+		bold:700
+		
+		
+*/
+
+/* ==========================================================================
+   #Reset
+   ========================================================================== */
+html {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, font, form, h1, h2, h3, h4, h5, h6, html, iame, img, input, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, tt, ul, var {
+	border: 0 none;
+	margin: 0;
+	outline: 0 none;
+	padding: 0;
+}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	line-height: 24px;
+	color: #999999;
+	background-color: #000;
+	font-weight: 300;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+	display: block;
+}
+audio, canvas, progress, video {
+	display: inline-block;
+	vertical-align: baseline;
+}
+h1, h2, h3, h4, h5, h6 {
+	text-transform: uppercase;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+input, select, textarea, input[type=text], input[type=date], input[type=url], input[type=email], input[type=password], input[type=tel], button, button[type="submit"] {
+	-webkit-border-radius: 0!important;
+	-moz-border-radius: 0!important;
+	-o-border-radius: 0!important;
+	-ms-border-radius: 0!important;
+	box-shadow: none!important;
+	-webkit-box-shadow: none!important;
+	-moz-box-shadow: none!important;
+	-o-box-shadow: none!important;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+}
+
+.col-padtop {
+	padding: 95px 0 0;
+}
+.scrollup {
+	width: 46px;
+	height: 46px;
+	position: fixed;
+	bottom: 50px;
+	color: #fff;
+	text-indent: -9999px;
+	right: 30px;
+	display: none;
+	background: url('../images/scroll-top-arrow.png') no-repeat 7px 7px;
+	background-color: #000;
+	border: 1px solid #fff;
+	transition: linear .2s all;
+	-webkit-transition: linear .2s all;
+	-moz-transition: linear .2s all;
+	-ms-transition: linear .2s all;
+	-o-transition: linear .2s all;
+	z-index: 50;
+}
+.scrollup:hover {
+	background-position: 7px -22px;
+	background-color: #fff;
+	border: 1px solid #000;
+}
+/* ==========================================================================
+   #Reset end
+   ========================================================================== */
+   
+/* ==========================================================================
+   #header
+   ========================================================================== */
+header {
+	width: 100%;
+}
+.logo {
+	float: left;
+	padding: 10px 0;
+}
+/* ==========================================================================
+   #header end
+  ========================================================================== */
+
+
+/* ==========================================================================
+	Main slider
+  ========================================================================== */
+.sliderfull {
+	width: 100%;
+	display: inline-block;
+	margin-top: 48px
+}
+.slider-titile {
+	display: inline-block;
+	width: 100%;
+}
+.titile-bg {
+	padding: 53px 79px 0px;
+	width: 30%;
+	background: #000;
+	margin-top: -128px;
+	float: left;
+}
+.white-bg {
+	float: right;
+	width: 70%;
+	padding: 50px 0px 0px 0px;
+}
+.sliderarrow {
+	left: 333px;
+	position: absolute;
+	top: -95px;
+}
+.sliderarrow a {
+	background: url(../images/arrow.png) no-repeat 0px 0px;
+	height: 88px;
+	width: 88px;
+	float: left;
+	cursor:pointer;
+	text-indent: -9999px;
+}
+.sliderarrow a.left:hover {
+	background-position: 0px -96px;
+}
+.sliderarrow a.right {
+	background-position: -96px 0px;
+}
+.sliderarrow a.right:hover {
+	background-position: -96px -96px;
+}
+/* ==========================================================================
+   Main slider
+  ========================================================================== */
+
+/* ==========================================================================
+   #Salon Images 
+  ========================================================================== */
+#salon img {
+	width: 100%;
+}
+/* ==========================================================================
+   #Salon Images end css 
+  ========================================================================== */
+
+/* ==========================================================================
+   #Our Team
+  ========================================================================== */
+
+#ourteam {
+	padding-top: 120px;
+}
+.ourteamd p {
+	margin-top: 20px;
+	padding-right: 90px;
+}
+#ourteam .img-responsive {
+	width: 100%;
+}
+.team p {
+	padding-right: 5px;
+}
+/* ==========================================================================
+   #Our Team end css
+  ========================================================================== */
+
+
+/* ==========================================================================
+   #Services
+  ========================================================================== */
+
+#services .pull-right h2 {
+	float: left;
+	margin-right: 20px;
+}
+#services .marbottom {
+	margin-bottom: 40px;
+}
+#services h2.titile {
+	margin-bottom: 31.4px;
+}
+#services p {
+	margin-top: 4px;
+}
+.color {
+	display: none;
+}
+#services .img-responsive {
+	width: 100%;
+}
+.displayhide {
+	display: none;
+}
+.displayvisible {
+	display: block;
+}
+/* ==========================================================================
+   #Services end css
+  ========================================================================== */
+
+
+/* ==========================================================================
+   #Make Appoinment div css 
+  ========================================================================== */
+.appoimentbg {
+	background: url(http://www.placehold.it/1170x1280) no-repeat fixed center top;
+	padding: 100px 70px 50px;
+	color: #fff;
+	width: 100%;
+}
+.appoimentbg h2 {
+	color: #fff;
+	margin-bottom: 30px;
+}
+.dateinput {
+	float: left;
+	width: 53%;
+	margin-right: 18px;
+}
+.dateinput input {
+	cursor: pointer;
+}
+.time {
+	width: 40.1%;
+	float: left;
+}
+.appoimentbg .textarea textarea {
+	height: 129px;
+	margin: 0;
+}
+.appfrm {
+	padding-top: 70px;
+	width: 100%;
+	position: relative;
+}
+.submitbtn {
+	width: 23%;
+	margin-top: 15px;
+	float: right;
+	text-align: center;
+}
+.submitbtn button[type="submit"] {
+	width: 100%;
+	float: right;
+}
+.time select {
+	background-color: transparent;
+	background-image: url(../images/dropdown-arrow.png);
+	background-position: 92% center;
+	background-repeat: no-repeat;
+	border: 1px solid #fff;
+	color:#fff;
+	display: block;
+	font-size: 16px;
+	line-height: 24px;
+	padding: 9px 7px;
+	width: 100%;
+	appearance: normal;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-moz-appearance: none;
+	height: 42px;
+}
+.time select option {
+	color: #fff;
+}
+.appfrm label {
+	font-weight: 200;
+	font-size: 16px;
+}
+.mobiledate {
+	display: none;
+}
+/* ==========================================================================
+   #Make Appoinment div css end
+  ========================================================================== */
+
+/* ==========================================================================
+   #Parallax
+  ========================================================================== */
+
+#parallax-2 {
+	background: url(http://www.placehold.it/2560x1000) 50% 0 no-repeat;
+	height: 640px;
+}
+.parallax {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	background-attachment: fixed;
+	position: relative;
+	background-size: cover;
+}
+.parallax.fixed {
+	background-attachment: fixed;
+}
+.parallax.fixed-desktop {
+	background-attachment: fixed!important;
+}
+.excellence {
+	padding: 100px 0 0;
+	width: 100%;
+}
+.bg-white {
+	background: #000;
+	margin-right: 40px;
+	display: block;
+}
+.bg-white h2 {
+	margin-bottom: 30px;
+}
+.bg-white p {
+	padding: 0 0 0 4px;
+}
+/* ==========================================================================
+   #Parallax end css
+  ========================================================================== */
+
+
+/* ==========================================================================
+   #Gallery main div css
+  ========================================================================== */
+  
+#gallery {
+	padding: 100px 0 35px;
+}
+#gallery h2 {
+	margin-bottom: 40px;
+}
+.top40 {
+	top: 40px;
+}
+.bg-gray {
+	background: #333;
+	padding: 75px 60px;
+}
+/* ==========================================================================
+   #   #Gallery main div css end
+  ========================================================================== */
+
+
+/* ==========================================================================
+   #Promotions slider Mini
+  ========================================================================== */
+
+#promotions .carousel {
+	height: 400px;
+}
+#promotions h2 {
+	margin-bottom: 50px;
+	color: #fff;
+}
+#promotions h4 {
+	margin-bottom: 20px;
+	color: #000;
+}
+#promotions .bg-white {
+	margin: 0px;
+}
+#promotions .bg-white p {
+	padding: 0 0 0 1px;
+}
+#promotions .carousel-control {
+	bottom: 112px;
+	width: 30.7%
+}
+#promotions .carousel-control a {
+	background: url("../images/arrow-black.png") no-repeat scroll 0 0;
+	height: 81px;
+	position: absolute;
+	top: 50%;
+	width: 87px;
+}
+#promotions .carousel-control .left {
+	left: 58.2%;
+	margin: 0px;
+	background-position: 0px -3px
+}
+#promotions .carousel-control .right {
+	left: 86.1%;
+	margin: 0px;
+	background-position: -96px -3px
+}
+#promotions .carousel-control .left:hover {
+	background-position: 0 -99px
+}
+#promotions .carousel-control .right:hover {
+	background-position: -96px -99px
+}
+.img-right {
+	float: right;
+	width: 65%;
+}
+/* ==========================================================================
+  #Promotions slider css end
+  ========================================================================== */
+
+/* ==========================================================================
+  #video Showreel
+  ========================================================================== */
+
+#video {
+	margin-bottom: 100px;
+}
+#video h2 {
+	margin-bottom: 15px;
+}
+.responsive-object {
+	padding-bottom: 53.4%;
+	position: relative;
+	width: 100%;
+}
+.responsive-object iframe, .responsive-object object, .responsive-object embed {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	padding-right: 5%;
+	border: none !important;
+}
+/* ==========================================================================
+  #video Showreel end css
+  ========================================================================== */
+
+/* ==========================================================================
+  #footer 
+  ========================================================================== */
+
+#contact {
+	background: url(http://www.placehold.it/2560x1440) no-repeat left center #ccc;
+	padding: 100px 0px;
+}
+#contact h2 {
+	margin-bottom: 25px;
+	color: #000;
+}
+.mapcont {
+	float: left;
+	width: 62%;
+	position: relative;
+	padding-bottom: 38.7%;
+}
+.mapcont iframe {
+	border: medium none!important;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	width: 100%
+}
+.contactmap {
+	background: #000;
+	width: 95%;
+	float: left;
+}
+#ContactForm .form-control {
+	border: 1px solid #000;
+	color: #333;
+}
+#ContactForm input[type="submit"] {
+	width: 97%;
+}
+.social {
+	float: right;
+	width: 38%;
+	padding: 61px 40px 61px;
+}
+.social p {
+	margin-bottom: 15px;
+}
+.social-icon {
+	width: 100%;
+	margin: 20px 0 0;
+	float: left;
+}
+.social-icon a {
+	float: left;
+	width: 28px;
+	height: 28px;
+	margin-right: 20px;
+	background: url(../images/social-icon.png) no-repeat 0px 0px;
+}
+.social-icon a.facebook:hover {
+	background-position: 0px -33px;
+}
+.social-icon a.twitter {
+	background-position: -40px 0;
+}
+.social-icon a.twitter:hover {
+	background-position: -40px -33px;
+}
+.social-icon a.google {
+	background-position: -80px 0;
+}
+.social-icon a.google:hover {
+	background-position: -80px -33px;
+}
+.social-icon a.youtube {
+	background-position: -120px 0px;
+}
+.social-icon a.youtube:hover {
+	background-position: -120px -33px;
+}
+.coypright {
+	width: 100%;
+	float: left;
+	margin-top: 22px;
+	color: #999999;
+}
+/* ==========================================================================
+  #footer 
+  ========================================================================== */
+
+/* ==========================================================================
+  #Form Alert
+  ========================================================================== */
+p.error {
+	color: #F00;
+}
+#SuccessMessage, #ErrorMessage {
+	padding: 0px 10px;
+	width: 50%;
+	position: absolute;
+	top: 0px;
+	color: #fff;
+}
+#ContactSuccessMessage, #ContactErrorMessage {
+	width: 92%;
+	position: absolute;
+	top: -76px;
+}
+.alert {
+	padding: 10px 15px;
+	margin-top: 12px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.alert-success {
+	color: #3c763d;
+	border-color: #d6e9c6;
+	background-image: linear-gradient(to bottom, #dff0d8 0px, #c8e5bc 100%);
+	background-repeat: repeat-x;
+	border-color: #b2dba1;
+}
+.alert-danger {
+	background-image: linear-gradient(to bottom, #f2dede 0px, #e7c3c3 100%);
+	background-repeat: repeat-x;
+	border-color: #ebccd1;
+	color: #a94442
+}
+/* ==========================================================================
+  #Form Alert
+  ========================================================================== */
+
+/* ==========================================================================
+  #slick slider Hover Effects
+  ========================================================================== */
+
+.third-effect {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+	cursor: pointer;
+}
+.third-effect .mask {
+	opacity: 0;
+	overflow: visible;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+}
+.third-effect a {
+	position: relative;
+	top: 48%;
+	bottom: 48%;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s 0s ease-in-out;
+	-moz-transition: opacity 0.3s 0s ease-in-out;
+	-o-transition: opacity 0.3s 0s ease-in-out;
+	-ms-transition: opacity 0.3s 0s ease-in-out;
+	transition: opacity 0.3s 0s ease-in-out;
+	display: inline-block;
+	text-decoration: none;
+	padding: 0;
+	text-indent: -9999px;
+	width: 28px;
+	height: 28px;
+	background: url(../images/team-social-icn.png) no-repeat 0px 0px;
+	margin-right: 10px;
+}
+.third-effect a.twitter {
+	background-position: -40px 0px;
+}
+.third-effect:hover .mask {
+	opacity: 1;
+	background: rgba(0,0,0,0.7);
+}
+.third-effect:hover a {
+	opacity: 1;
+	-moz-transition-delay: 0.2s;
+	-webkit-transition-delay: 0.2s;
+	-o-transition-delay: 0.2s;
+	-ms-transition-delay: 0.2s;
+	transition-delay: 0.2s;
+}
+/* ==========================================================================
+  #slick slider Hover Effects
+  ========================================================================== */
+
+/* ==========================================================================
+   #blog page css
+  ========================================================================== */
+.bloddiv {
+	width: 100%;
+	padding-top: 50px;
+}
+.pagetitle {
+	background: #fff;
+	padding: 130px 0px 0px;
+	width: 100%
+}
+.pagetitle h1 {
+	color: #000;
+}
+.rssdiv {
+	width: 37%;
+	padding: 0px 15px;
+	position: relative;
+	min-height: 154px;
+	float: right;
+}
+.rssfeed {
+	width: 96%;
+	background: #000;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	padding: 25px 25px 0;
+	margin: 0px 15px;
+}
+.rssfeed a {
+	background: #111;
+	padding: 12px 20px;
+	color: #fff;
+	display: block;
+	text-align: center;
+	border: 1px solid #111;
+	text-transform: uppercase;
+	font-size: 22px;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+.rssfeed a img {
+	vertical-align: middle;
+	display: inline-block;
+	margin-right: 10px;
+}
+.rssfeed a span {
+	vertical-align: middle;
+}
+.breadcrumb {
+	float: left;
+	margin: 20px 0px 30px 4px;
+	color: #777777;
+}
+.breadcrumb a {
+	color: #999;
+}
+.breadcrumb a:hover {
+	color: #000;
+}
+.breadcrumb a.active {
+	color: #000;
+}
+.blogpost {
+	padding-top: 90px;
+}
+.blogbox {
+	padding-bottom: 30px;
+	width: 100%;
+}
+.blogright {
+	width: 100%;
+	padding-left: 50px;
+}
+.blogimg {
+	width: 100%;
+	vertical-align: top;
+	display: inline-block;
+}
+.blogcontent {
+	background: #000;
+	margin: -40px 34px 0px;
+	padding: 40px;
+	width: 90%;
+	display: inline-block;
+}
+.blogtitle {
+	width: 100%;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 30px;
+	margin: 0px 0px 30px 0px;
+}
+.blogtitle h2 {
+	font-size: 48px;
+}
+.blogbox span {
+	color: #999999;
+	display: inline-block;
+	margin-top: 8px;
+}
+.blogcontent p {
+	padding-bottom: 20px;
+}
+.blogbox a {
+	padding: 10px 30px 12px;
+	text-transform: uppercase;
+	font-weight: 300;
+	margin-top: 10px;
+}
+.blogbox a:hover {
+	background-color: #fff;
+	color: #000;
+}
+.rightsidebar {
+	margin-bottom: 40px;
+	width: 100%;
+}
+.rightsidebar h4 {
+	margin-bottom: 20px;
+}
+.listbg {
+	background: #111;
+	width: 100%;
+	padding: 30px;
+}
+.listitem {
+	margin: 0px;
+	padding: 0px;
+}
+.listitem li {
+	background: url(../images/bullet.png) no-repeat left 9px;
+	padding-left: 20px;
+	color: #000;
+	padding-bottom: 5px;
+}
+.listitem li a {
+	color: #999;
+	font-size: 16px;
+}
+.listitem li a:hover {
+	text-decoration: underline;
+}
+.tag a {
+	margin: 0 5px 10px 0;
+	padding: 8px 20px;
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.postdiv {
+	padding: 10px 0px;
+	width: 100%;
+}
+.postdiv h5 {
+	text-transform: none;
+}
+.rightpostimg {
+	margin-top: 15px;
+	overflow: hidden;
+}
+.rightpostimg img {
+	-webkit-transition: all 0.2s 0s ease-in-out;
+	-moz-transition: all 0.2s 0s ease-in-out;
+	-o-transition: all 0.2s 0s ease-in-out;
+	-ms-transition: all 0.2s 0s ease-in-out;
+	transition: all 0.2s 0s ease-in-out;
+	transform: scale(1, 1);
+	-webkit-transform: scale(1, 1);
+	-moz-transform: scale(1, 1);
+	-o-transform: scale(1, 1);
+	;
+	-ms-transform: scale(1, 1);
+}
+.rightpostimg:hover img {
+	transform: scale(1.1, 1.1);
+	-webkit-transform: scale(1.1, 1.1);
+	-moz-transform: scale(1.1, 1.1);
+	-o-transform: scale(1.1, 1.1);
+	-ms-transform: scale(1.1, 1.1);
+}
+.postdiv a:hover h5 {
+	text-decoration: underline;
+}
+/* ==========================================================================
+   #blog page css
+  ========================================================================== */
+
+/* ==========================================================================
+   #blog classic css
+  ========================================================================== */
+.blogclassic-title {
+	padding-bottom: 30px;
+}
+.blogclassic {
+	padding: 30px 15px 40px;
+	width: 100%;
+}
+.blogclassic p {
+	padding-bottom: 15px;
+}
+/* ==========================================================================
+   #blog fullwidth css
+  ========================================================================== */
+.blogfull {
+	width: 100%;
+	padding: 0px 130px 40px;
+}
+.blogfullcontent {
+	background: #000;
+	margin: -90px 68px 0px;
+	padding: 40px;
+	width: 85%;
+	display: inline-block;
+}
+.blogfull p {
+	margin-bottom: 20px;
+}
+.blogfull a {
+	padding: 10px 30px 12px;
+	font-size: 22px;
+	line-height: 22px;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+	text-transform: uppercase;
+	font-weight: 300;
+	margin-top: 10px
+}
+.blogfull span {
+	color: #999999;
+	display: inline-block;
+	margin-top: 8px;
+}
+/* ==========================================================================
+   #blog Masonary Layout css
+  ========================================================================== */
+.col-30 {
+	width: 33.3%;
+	padding: 0px 15px 45px;
+}
+.col-30 img {
+	width: 100%;
+}
+.col-30 span {
+	color: #999999;
+	display: inline-block;
+	margin-top: 5px;
+}
+.blogmscontent {
+	padding: 35px 0px;
+	border-bottom: 1px solid #ddd;
+}
+.blogmscontent p {
+	padding-top: 15px;
+}
+.blogmasonary {
+	width: 100%;
+	margin-bottom: 50px;
+}
+/* ==========================================================================
+   #testimonials	
+   ========================================================================== */
+.testimonialdiv {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 100px;
+}
+.testimonilabg {
+	width: 100%;
+	display: inline-block;
+	background: #333333;
+	padding: 60px 70px 75px;
+}
+.testimonilabg h2 {
+	margin-bottom: 45px;
+	text-align: center;
+	color: #fff;
+}
+.testimonilabg .carousel {
+	height: auto;
+	margin-top: 0px;
+}
+.img-left {
+	float: left;
+	width: 150px;
+}
+.tbg-white {
+	float: left;
+	width: 81%;
+	background: #fff;
+	color: #333;
+}
+.tbg-white h4 {
+	font-weight: 300;
+	color: #000;
+}
+.tbg-white h6 {
+	color: #000;
+	font-size: 20px;
+	margin: 5px 0px 15px;
+}
+/* ==========================================================================
+   #TESTIMONIALS	
+   ========================================================================== */
+
+					
+/* ==========================================================================
+   #media Query
+   ========================================================================== */
+
+/* ==========================================================================
+   	imac,mac width 2560 resolution
+   ========================================================================== */
+@media (min-width: 2560px) and (min-width:1920px) {
+.appoimentbg {
+	background-attachment: fixed;
+}
+
+}
+
+/* ==========================================================================
+   	desktop version width 1440 to 1680 resolution
+   ========================================================================== */
+
+
+@media (min-width: 1440px) and (max-width: 1680px) {
+.appoimentbg .textarea {
+	margin-right: 0px;
+}
+.mapcont {
+	padding-bottom: 36.1%;
+}
+.social {
+	padding: 51px 40px;
+}
+.titile-bg {
+	padding: 53px 79px 0px;
+}
+
+}
+
+/* ==========================================================================
+   	laptop  width 1366 resolution
+   ========================================================================== */
+
+
+@media (min-width:1366px) and (max-width:1400px) {
+.slidercaption {
+	width: 89%;
+}
+.social-icon {
+	margin: 20px 0 0;
+}
+.social {
+	padding: 52px 40px;
+}
+.appoimentbg .textarea {
+	margin-right: 0;
+}
+.map {
+	height: 267px;
+}
+.mapcont {
+	padding-bottom: 36.4%;
+}
+.titile-bg {
+	padding: 38px 80px 0px
+}
+.white-bg {
+	padding: 35px 0px 0px;
+}
+
+}
+
+/* ==========================================================================
+   	laptop  width 1200 resolution
+   ========================================================================== */
+
+@media (min-width: 1200px) and (max-width:1365px) {
+.social-icon {
+	margin: 20px 0px 0px;
+}
+.social {
+	padding: 54px 35px
+}
+.slidercaption {
+	width: 95%;
+}
+.map iframe {
+	height: 267px;
+}
+.appoimentbg .textarea {
+	margin-right: 0;
+}
+.map {
+	height: 267px;
+}
+.mapcont {
+	padding-bottom: 36.4%;
+}
+.titile-bg {
+	padding: 38px 80px 0px
+}
+.white-bg {
+	padding: 35px 0px 0px
+}
+}
+/* ==========================================================================
+   	Portrait ipad and android Tablets  width 768 
+   ========================================================================== */
+
+@media (min-width: 768px) and (max-width: 991px) {
+h2.color {
+	display: block;
+	margin-bottom: 25px;
+	margin-top: 35px;
+}
+.col-xs-offset-2 {
+	display: none;
+}
+.col-padtop {
+	padding: 40px 0px 0px;
+}
+#contact {
+	padding: 40px 0;
+}
+#services .marbottom {
+	margin-bottom: 0;
+}
+.excellence {
+	padding: 60px 0 0;
+}
+#gallery {
+	padding: 50px 0 0;
+}
+.bg-white {
+	margin: 0 7px 0 0;
+}
+.bg-white h2 {
+	margin-bottom: 15px;
+}
+.bg-gray {
+	padding: 20px 30px 40px;
+}
+.responsive-object iframe, .responsive-object object, .responsive-object embed {
+	padding-right: 0;
+}
+.responsive-object {
+	padding-bottom: 56%;
+	margin-bottom: 20px;
+}
+#video {
+	margin-bottom: 60px;
+}
+#ourteam {
+	padding-top: 60px;
+}
+.social {
+	width: 38%;
+	padding: 5.2% 5%;
+}
+.mapcont {
+	padding-bottom: 33.5%;
+}
+.img-right {
+	width: 100%;
+}
+#promotions .carousel {
+	height: 500px
+}
+#promotions .carousel-control {
+	bottom: 50.2%;
+	width: 96%
+}
+#promotions .carousel-control .left {
+	left: 0
+}
+#promotions .carousel-control .right {
+	left: 89.6%
+}
+#promotions h4 {
+	margin-bottom: 15px;
+}
+.map iframe {
+	height: 241px;
+}
+textarea.form-control {
+	width: 99.7%;
+}
+.parallax.fixed-desktop {
+	background-attachment: scroll!important;
+	background-position: 50% 0!important;
+}
+.displayhide {
+	display: block;
+}
+.displayvisible {
+	display: none;
+}
+#services h2.titile {
+	margin-bottom: 25px;
+	margin-top: 35px;
+}
+#services p {
+	width: 99.6%;
+	margin-top: 4px;
+}
+.slidercaption {
+	width: 95%;
+}
+.logo {
+	padding: 13px 0px;
+}
+.appoimentbg {
+	padding: 80px 40px;
+	background-attachment: scroll;
+	background-position: 50% 30%;
+}
+.appoimentbg .textarea textarea {
+	width: 99.9%;
+}
+.time {
+	width: 40.5%;
+}
+.submitbtn {
+	width: 18%;
+}
+.mobiledate {
+	display: block;
+	float: left;
+	margin-right: 18px;
+	width: 100%;
+}
+.desktopdate {
+	display: none;
+}
+.contactmap {
+	width: 100%;
+	margin-bottom: 70px;
+}
+#SuccessMessage, #ErrorMessage {
+	width: 100%;
+}
+#ContactSuccessMessage, #ContactErrorMessage {
+	width: 97%;
+	top: -70px;
+}
+.pagetitle {
+	padding: 100px 0px 0px;
+}
+.blogbox {
+	padding-bottom: 40px;
+}
+.blogcontent {
+	margin: 0px;
+	width: 100%;
+}
+.blogright {
+	padding: 0px;
+}
+.listbg {
+	padding: 25px;
+}
+.rssdiv, .blogright {
+	display: none;
+}
+.blogfull {
+	padding: 0px 0px 40px;
+}
+.blogfullcontent {
+	margin: -60px 32px 0px;
+	width: 91%;
+}
+.col-30 {
+	width: 50%;
+}
+.testimonilabg {
+	padding: 40px;
+}
+.img-left {
+	width: 94px;
+}
+.tbg-white {
+	width: 78%;
+}
+.titile-bg {
+	padding: 39px 46px 27px;
+	margin-top: -95px;
+}
+.white-bg {
+	padding: 24px 0px 30px;
+}
+.sliderarrow {
+	left: 228px;
+}
+#ContactForm input[type="submit"]
+{
+	width:auto;
+	}
+}
+
+/* ==========================================================================
+    landscape ipadmini,ipad and android Tablets  width 1024 
+   ========================================================================== */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+.col-padtop {
+	padding: 70px 0 0;
+}
+.ourteamd p {
+	padding-right: 20px;
+}
+#ourteam .caption {
+	width: 97%;
+	padding: 28px 40px;
+}
+#services h2.titile {
+	margin-bottom: 23px;
+}
+.excellence {
+	padding: 70px 0;
+}
+.bg-gray {
+	padding: 30px 45px 45px;
+}
+#gallery {
+	padding: 0 0 100px;
+}
+#promotions h2 {
+	margin-bottom: 35px;
+}
+#promotions .carousel {
+	height: 361px
+}
+#video {
+	margin-bottom: 70px;
+}
+.map {
+	width: 64%;
+	height: 277px;
+}
+.map iframe {
+	height: 277px;
+}
+.social {
+	width: 37%;
+	padding: 38px 20px;
+}
+.social-icon {
+	margin: 20px 0 0;
+}
+.social-icon a {
+	margin-right: 17px;
+}
+#ourteam .caption {
+	width: 97%;
+}
+.parallax.fixed-desktop {
+	background-attachment: scroll!important;
+	background-position: 43% 0!important;
+}
+.team h3 {
+	font-size: 30px;
+}
+.logo {
+	padding: 13px 0;
+}
+.mobiledate {
+	display: block;
+	float: left;
+	width: 100%;
+	margin: 0px 18px 0px 0px
+}
+.desktopdate {
+	display: none;
+}
+.time {
+	width: 39%;
+	float: left;
+}
+#ContactSuccessMessage, #ContactErrorMessage {
+	width: 90%;
+	top: -77px;
+	font-size: 12px;
+}
+.rssdiv, .blogright {
+	display: none;
+}
+.img-left {
+	width: 98px;
+}
+.tbg-white {
+	width: 82.2%;
+}
+.titile-bg {
+	padding: 26px 70px 0px;
+}
+.white-bg {
+	padding: 29px 0px 0px;
+}
+.sliderarrow {
+	left: 295px;
+}
+}
+
+/* ==========================================================================
+    landscape ipadmini,ipad and android Tablets  width 1024 
+   ========================================================================== */
+   
+@media (min-width: 1000px) and (max-width: 1024px) {
+.slidercaption {
+	width: 96%;
+}
+.logo {
+	padding: 13px 0;
+}
+.appoimentbg {
+	padding: 80px 55px;
+	background-attachment: scroll;
+	background-position: 50% 30%;
+}
+.appoimentbg .textarea textarea {
+	width: 100%;
+}
+.submitbtn {
+	width: 45%;
+}
+.appoimentbg .textarea {
+	margin-right: 0px;
+}
+.contactmap {
+	width: 100%;
+}
+.rssdiv, .blogright {
+	display: none;
+}
+}
+
+/* ==========================================================================
+    landscape ipadmini,ipad and android Tablets  width only 980 and 960 
+   ========================================================================== */
+@media (min-width: 980px) and (max-width: 990px) {
+.slidercaption {
+	width: 77%;
+}
+.logo {
+	padding: 13px 0;
+}
+.social {
+	padding: 39px 30px;
+}
+}
+ @media (min-width: 960px) and (max-width: 970px) {
+.slidercaption {
+	width: 78%;
+}
+.logo {
+	padding: 13px 0;
+}
+.social {
+	padding: 39px 37px;
+}
+.rssdiv {
+	display: none;
+}
+.blogright {
+	padding-left: 0px;
+	display: none;
+}
+}
+
+/* ==========================================================================
+    Mobile Portratit & landscape
+   ========================================================================== */
+
+@media (max-width: 767px) {
+.col-padtop {
+	padding: 50px 0px 0px;
+}
+.excellence {
+	padding: 50px 0px 0px;
+}
+.ourteamd p {
+	margin: 20px 0px;
+	padding: 0px;
+}
+#ourteam h2 {
+	text-align: left;
+}
+#services .marbottom {
+	margin-bottom: 15px;
+}
+h2.color {
+	display: block;
+	margin-bottom: 20px;
+	margin-top: 15px;
+}
+#gallery {
+	padding: 50px 0px 0px;
+}
+.top40 {
+	top: 0px;
+}
+.bg-white p {
+	display: block;
+}
+.sidgray {
+	padding: 50px;
+}
+#promotions h2 {
+	margin-bottom: 20px;
+}
+#promotions .carousel {
+	height: 233px;
+	margin-top: 20px;
+}
+.gbg-white {
+	margin-right: 0;
+}
+.contactmap {
+	margin-bottom: 78px;
+	width: 100%;
+}
+.social {
+	padding: 40px;
+}
+#contact {
+	padding: 50px 0
+}
+.responsive-object {
+	padding-bottom: 56.5%;
+	margin-bottom: 20px;
+}
+.responsive-object iframe, .responsive-object object, .responsive-object embed {
+	padding-right: 0;
+}
+#video {
+	margin-bottom: 50px;
+}
+.social span {
+	display: block;
+}
+.map .img-responsive {
+	width: 100%;
+}
+#parallax-2 {
+	height: 750px;
+}
+.bg-white h2 {
+	margin-bottom: 15px;
+	font-size: 60px;
+}
+.parallax.fixed-desktop {
+	background-attachment: scroll!important;
+	background-position: 54% 0!important;
+}
+.displayhide {
+	display: block;
+}
+.displayvisible {
+	display: none;
+}
+#services h2.titile {
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+#services p {
+	width: 100%;
+	margin-top: 4px;
+}
+.img-right {
+	width: 100%;
+}
+.carousel-control {
+	display: none;
+}
+.slidercaption {
+	width: 100%;
+}
+#ourteam {
+	padding-top: 50px;
+}
+.logo {
+	padding: 13px 0px;
+}
+.appfrm {
+	padding-top: 55px;
+}
+.textarea, .dateinput, .time {
+	width: 100%;
+	margin-bottom: 10px;
+}
+.submitbtn {
+	width: 25%;
+}
+.appoimentbg {
+	background-position: 50% 0;
+	padding: 50px 30px;
+	background-attachment: scroll;
+}
+.appoimentbg h2 {
+	margin-bottom: 20px;
+}
+.map {
+	height: 283px;
+}
+#promotions h4 {
+	margin-bottom: 10px;
+}
+.time select {
+	background-position: 97% center;
+}
+.mobiledate {
+	display: block;
+	margin-bottom: 12px;
+}
+.desktopdate {
+	display: none;
+}
+.mapcont, .social {
+	width: 100%;
+}
+#SuccessMessage, #ErrorMessage {
+	width: 100%;
+}
+#ContactSuccessMessage, #ContactErrorMessage {
+	width: 97%;
+	position: absolute;
+	top: -76px;
+}
+.blogcontent {
+	margin: 0px;
+	padding: 15px 15px 30px;
+	width: 100%;
+}
+.rssdiv {
+	display: none;
+}
+.blogright {
+	padding-left: 0px;
+	display: none;
+}
+.blogfull {
+	padding: 0px 0px 50px;
+}
+.blogfullcontent {
+	margin: -50px 32px 0px;
+	width: 89%;
+	padding: 20px;
+}
+.col-30 {
+	width: 50%;
+}
+.testimonilabg {
+	padding: 35px;
+}
+.tbg-white {
+	width: 100%;
+}
+.testimonilabg .carousel-control {
+	display: block;
+}
+.img-left {
+	width: 98px;
+}
+.titile-bg {
+	width: 100%;
+	padding: 30px 10px 20px;
+	margin: 0px;
+}
+.white-bg {
+	width: 100%;
+	padding: 0 10px
+}
+.sliderarrow {
+	display: none;
+}
+#ContactForm input[type="submit"]
+{
+	width:100%;
+	}
+#promotions .carousel-inner > .item > img {
+	max-width: 100%;
+	position: relative;
+	left: 0
+}
+#promotions .carousel-control {
+	bottom: 65.5%;
+	display: block;
+	width: 100%
+}
+#promotions .carousel-control .left {
+	left: 0
+}
+
+	
+}
+
+@media (max-width: 640px) {
+#promotions .carousel {
+	height: 420px;
+	margin-top: 20px
+}
+#promotions .carousel-inner, #promotions .carousel-inner > .item {
+	height: 100%
+}
+.bg-gray{
+	padding:60px 45px;
+	}
+#promotions .carousel-control .right {
+	left: 80%;
+}	
+}
+/* ==========================================================================
+    Mobile landscape 480
+   ========================================================================== */
+
+@media (max-width: 480px) {
+#ourteam h2 {
+	text-align: left;
+}
+#services p {
+	width: 100%;
+}
+.bg-white h2 {
+	font-size: 48px;
+	margin: 0px;
+}
+.bg-gray {
+	padding: 16px 10px 24px;
+}
+.bg-white h2 {
+	margin-bottom: 10px;
+}
+#gallery {
+	padding: 20px 0px 0px;
+}
+#promotions .carousel-control .left {
+	left: 0;
+	margin: 0;
+}
+#promotions .carousel-control .right {
+	left: 79%;
+}
+.img-right {
+	width: 100%;
+}
+.textarea, .dateinput, .time {
+	width: 100%;
+	margin-bottom: 10px;
+}
+.submitbtn {
+	width: 100%;
+}
+.appoimentbg {
+	background-position: 50% 0;
+	padding: 60px 30px 40px;
+	background-attachment: scroll;
+}
+.appoimentbg h2 {
+	margin-bottom: 20px;
+}
+#promotions h4 {
+	margin-bottom: 7px;
+}
+.time select {
+	background-position: 97% center;
+}
+.mapcont {
+	padding-bottom: 50%;
+}
+#ContactSuccessMessage, #ContactErrorMessage {
+	top: -63px;
+	width: 94%;
+}
+.alert {
+	padding: 6px 15px;
+}
+.contactmap {
+	margin-bottom: 62px;
+	width: 100%;
+}
+.blogfullcontent {
+	margin: -40px 20px 0px;
+	width: 91%;
+	padding: 20px;
+}
+#ContactForm input[type="submit"]
+{
+	width:100%;
+	}
+}
+
+/* ==========================================================================
+    Mobile iphone3/4s/5s 479,320
+   ========================================================================== */
+
+@media (max-width: 479px) {
+#gallery {
+	padding: 30px 0 0;
+}
+#promotions h4 {
+	margin-bottom: 10px;
+}
+.slidercaption {
+	width: 100%;
+}
+.appoimentbg {
+	padding: 50px 20px;
+	width: 100%;
+}
+.textarea, .dateinput, .time {
+	width: 100%;
+	margin-bottom: 10px;
+}
+.appoimentbg .textarea {
+	width: 100%;
+}
+.time select {
+	background-position: 94% center;
+}
+.mapcont {
+	padding-bottom: 80%;
+}
+.alert {
+	padding: 5px 15px;
+	line-height: 20px;
+	font-size: 12px;
+}
+#ContactSuccessMessage, #ContactErrorMessage {
+	top: -60px;
+	width: 94%;
+}
+.blogclassic {
+	padding: 30px 0px;
+}
+.blogfull {
+	padding: 0px 0px 30px;
+}
+.blogfullcontent {
+	margin: 0px;
+	width: 100%;
+	padding: 20px;
+}
+.col-30 {
+	width: 100%;
+}
+.testimonilabg {
+	padding: 20px;
+}
+.tbg-white {
+	width: 100%;
+}
+#ContactForm input[type="submit"]
+{
+	width:100%;
+	}
+}
+@media (max-width: 320px) {
+.appfrm {
+	padding-top: 70px;
+}
+}

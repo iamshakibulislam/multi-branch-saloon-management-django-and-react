@@ -1,0 +1,352 @@
+/*
+----------------------------------
+
+        Name: menu.css
+        Version: 1.0.0
+
+        Table of Contents
+		 #navigation
+		 	
+			1 Desktop menu
+			2 Mobile menu
+        
+----------------------------------*/
+
+/* #navigation */
+
+nav {
+	width: 100%;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+	z-index: 10;
+	background: #000;
+	position: fixed;
+	top: 0
+}
+
+/* 1-Desktop Menu css */
+ul.menu {
+	padding: 0;
+	float: right
+}
+ul.menu li {
+	float: left;
+	position:relative;
+}
+ul.menu li a {
+	display: inline-block;
+	margin: 0;
+	padding: 12px 20px;
+	font-size: 20px;
+	text-transform: uppercase;
+	color: #fff;
+	transition: ease .2s all;
+	-webkit-transition: ease .2s all;
+	-moz-transition: easet .2s all;
+	-ms-transition: easet .2s all;
+	-o-transition: ease .2s all;
+}
+ul.menu li a:hover {
+	color: #000;
+	background: #fff;
+}
+ul.menu li a.active{
+	color: #000;
+	background: #fff;
+	}
+ul.menu li ul{
+	margin:0px;
+	position:absolute;
+	opacity:0;
+	visibility:hidden;
+	transition:all 0.3s ease-in;
+	-webkit-transition:all 0.3s ease-in;
+	-moz-transition:all 0.3s ease-in;
+	-ms-transition:all 0.3s ease-in;
+	-o-transition:all 0.3s ease-in;
+	background:#000;
+	width:200px;
+	right:0px;
+	}
+ul.menu li:hover ul{
+	opacity:1;
+	visibility:visible;
+	}	
+ul.menu li:hover ul li{
+	width:100%;
+	}	
+ul.menu li:hover ul li a{
+	display:block;
+	border-bottom:1px solid #222;
+	}	
+/* 1-Desktop Menu css end */
+
+/* 1-Mobile Menu css */
+#page {
+	position: relative;
+	left: 0
+}
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+	z-index: 20;
+	background: #000;
+	opacity: .2;
+	filter: alpha(opacity=20)
+}
+.mmPushBody {
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden
+}
+#mobile-menu {
+	position: absolute;
+	top: 0;
+	background: #fff;
+	z-index: 99999;
+	-webkit-box-shadow: 0 1px 8px #555;
+	-moz-box-shadow: 0 1px 8px #555;
+	-o-box-shadow: 0 1px 8px #555;
+	box-shadow: 0 1px 8px #555;
+	display: none;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-o-box-sizing: content-box;
+	box-sizing: content-box;
+	line-height: 1.42857
+}
+.mobile-menu {
+	list-style-type: none;
+	margin: 0;
+	width: 100%;
+	float: left;
+	margin-left: 0;
+	padding-left: 0;
+	position: fixed;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box
+}
+.mobile-menu ul {
+	margin-left: 0;
+	padding-left: 0
+}
+.mobile-menu ul .expand {
+	background: #eee
+}
+.mobile-menu .mm-search {
+	height: 50px;
+	background-color: #555;
+	color: #555;
+	padding: 10px 15px;
+	box-sizing: border-box
+}
+.mobile-menu .input-group {
+	position: relative;
+	display: table;
+	border-collapse: separate
+}
+.mobile-menu .input-group .form-control:last-child {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0
+}
+.mobile-menu .input-group .form-control {
+	display: table-cell;
+	position: relative;
+	z-index: 2;
+	float: left;
+	width: 100%;
+	margin-bottom: 0
+}
+.mobile-menu .input-group-btn {
+	position: relative;
+	font-size: 0;
+	white-space: nowrap;
+	width: 1%;
+	vertical-align: middle;
+	display: table-cell
+}
+.mobile-menu .input-group-btn:first-child > .btn {
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0
+}
+.mobile-menu .input-group-btn > .btn {
+	position: relative
+}
+.mobile-menu .btn {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 400;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	white-space: nowrap;
+	font-size: 15px;
+	line-height: 1.42857;
+	border-radius: 8px
+}
+.mobile-menu .form-control {
+	height: 18px;
+	padding: 6px 0;
+	font-size: 15px;
+	color: #555;
+	background-color: #FFF;
+	border-radius: 8px;
+	border: 0
+}
+.mobile-menu .btn-default {
+	height: 30px;
+	border: 0;
+	padding: 4px 5px;
+	background-color: #fff
+}
+.mobile-menu .btn-default:hover {
+	background-color: #fff
+}
+.mobile-menu .btn-default:focus {
+	background-color: #fff
+}
+.mobile-menu .btn-default:active {
+	background-color: #fff
+}
+.mobile-menu .home {
+	background-color: #01c7c5;
+	color: #fff;
+	height: 43px;
+	overflow: hidden
+}
+.mobile-menu .home i {
+	padding-right: 5px
+}
+.mobile-menu .home a.active {
+	color: #222!important
+}
+.mobile-menu .expand {
+	right: 0;
+	position: absolute;
+	border-left: 1px solid #ccc;
+	padding: 0 10px;
+	color: #01c7c5;
+	margin-left: 100px
+}
+.mobile-menu .expand:hover {
+	cursor: pointer
+}
+.mobile-menu li {
+	display: block;
+	border-top: 1px solid #e7e7e7;
+	width: 100%;
+	float: left;
+	margin-left: 0;
+	padding-left: 0;
+	position: relative;
+	
+}
+.mobile-menu li a {
+	display: block;
+	overflow: hidden;
+	white-space: normal;
+	color: #000;
+	text-transform: uppercase;
+	text-decoration: none;
+	padding: 10px;
+	font-size: 20px;
+	padding-left: 15px;
+	transition: ease .2s all;
+	-webkit-transition: ease .2s all;
+	-moz-transition: easet .2s all;
+	-ms-transition: easet .2s all;
+	-o-transition: ease .2s all;
+}
+.mobile-menu li a:hover {
+	background: #000;
+	color: #fff;
+}
+.mobile-menu li li {
+	background: #eee
+}
+.mobile-menu li li a {
+	padding-left: 25px
+}
+.mobile-menu li li li {
+	background: #ddd
+}
+.mobile-menu li li li a {
+	padding-left: 35px
+}
+.mobile-menu .social a {
+	float: left;
+	padding: 0;
+	margin: 10px 0 10px 15px
+}
+.mobile-menu .social i {
+	font-size: 22px;
+	color: #01c7c5
+}
+.mobile-menu input.simple:focus {
+	border: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-o-box-shadow: none;
+	box-shadow: none;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
+	transition: none
+}
+.mobile-menu [class^="icon-"]:before {
+	margin-right: 0;
+	margin-left: 0
+}
+.mobile-menu [class*=" icon-"]:before {
+	margin-right: 0;
+	margin-left: 0
+}
+.mm-toggle-wrap {
+	color: #fff;
+	line-height: 1;
+	float: right;
+	overflow: hidden;
+	margin: 6px 0
+}
+.mm-toggle {
+	cursor: pointer;
+	display: none;
+	padding: 10px;
+	width: auto;
+	float: right;
+	background: #000;
+	border: 1px solid #000;
+}
+/* 1-Mobile Menu css end */
+
+/* Media Query css */
+
+/* Landscape ipad 1024 */
+@media (max-width: 1024px) {
+.mm-toggle {
+	display: block
+}
+.mm-toggle .mm-label {
+	margin-left: 3px
+}
+.menu {
+	display: none
+}
+.mm-toggle .mm-label {
+	display: none
+}
+}
+
+/* All Mobile ipad 1024 */
+@media (max-width: 480px) {
+.mm-toggle .mm-label {
+	display: none
+}
+}
