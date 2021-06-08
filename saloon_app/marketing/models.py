@@ -21,8 +21,8 @@ class ItemCategorey(models.Model):
 
 class Item(models.Model):
       title = models.CharField(max_length=200,null=True,blank=True)
-      categorey = models.ForeignKey(ItemCategorey,on_delete=models.CASCADE,related_name="categorey")
-      supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE,related_name="categorey")
+      categorey = models.ForeignKey(ItemCategorey,on_delete=models.CASCADE)
+      #supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE,related_name="categorey")
       item_code = models.CharField(max_length=100,null=True,blank=True)
       brandname = models.CharField(max_length=100,null=True,blank=True)
       unitname = models.CharField(max_length=100,null=True,blank=True)
@@ -50,7 +50,7 @@ class Service(models.Model):
       cost = models.IntegerField(null=True,blank=True)
       taxes = models.IntegerField(null=True,blank=True)
       serviceduration= models,TimeField(null=True,blank=True)
-      provider = models.ForeignKey(to='staffall.Employe',on_delete=models.CASCADE)
+      #provider = models.ForeignKey(to='staffall.Employe',on_delete=models.CASCADE)
       servicecommision = models.IntegerField(null=True,blank=True)
       monthlytarget = models.IntegerField(null=True,blank=True)
       def __str__(self):
