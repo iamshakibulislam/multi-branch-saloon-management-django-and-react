@@ -177,7 +177,7 @@ return (
       <div className="row">
         <div className="col-md-7 col-lg-8">
           <div className="responsive-object">
-            <iframe src="https://www.youtube.com/embed/idjnjfPbRSg?rel=0&amp;controls=0&amp;showinfo=0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/idjnjfPbRSg?rel=0&amp;controls=0&amp;showinfo=0"></iframe>
           </div>
         </div>
         <div className="col-md-5 col-lg-4 pull-right">

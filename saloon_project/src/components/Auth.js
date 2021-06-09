@@ -1,7 +1,7 @@
 import React,{Component,Fragment} from 'react'
 import {Helmet} from 'react-helmet'
 import Navbar from './shared/Navbar'
-import  '../static_files/css/AuthPage.css'
+import  '../css/Authpage.css'
 import axios from 'axios'
 import baseContext from './shared/baseContext'
 import {Redirect} from 'react-router-dom'
@@ -231,8 +231,8 @@ render(){
 	return(
    <div>
    <Navbar/>
-    <div className='row justify-content-right'>
-    <div className="col col-md-5 col-lg-5" style={{marginLeft:'auto',marginRight:'auto',marginTop:'4rem'}}>
+    <div className='row justify-content-center'>
+    <div className="col col-sm-12 col-md-6 col-lg-5 mx-auto" style={{marginLeft:'auto',marginRight:'auto',marginTop:'7rem'}}>
 
 		<div className="form">
     {this.state.alert == true?
@@ -242,7 +242,7 @@ render(){
       
       <ul className="tab-group">
       { this.state.mode == 'signup' ?
-        <li className="tab active"><a onClick={this.modeChangeHandler.bind(this,'signup')}>Sign Up</a></li>
+        <li className="styles active"><a onClick={this.modeChangeHandler.bind(this,'signup')}>Sign Up</a></li>
         : <li className="tab"><a  onClick={this.modeChangeHandler.bind(this,'signup')}>Sign Up</a></li>
       }
 

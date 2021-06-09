@@ -1,7 +1,7 @@
 import React from 'react'
-import './App.css';
+
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
-import './static_files/css/master.css'
+
 import Homepage from './components/Homepage'
 import AuthPage from './components/Auth'
 function App() {
