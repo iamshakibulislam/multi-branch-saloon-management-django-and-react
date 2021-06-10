@@ -1,10 +1,11 @@
 import React,{Component,Fragment} from 'react'
 import {Helmet} from 'react-helmet'
 import Navbar from './shared/Navbar'
-import  '../css/Authpage.css'
+import styles from '../css/authPage.module.css'
 import axios from 'axios'
 import baseContext from './shared/baseContext'
 import {Redirect} from 'react-router-dom'
+
 class LoginPage extends Component {
 
 
@@ -229,74 +230,93 @@ if (inputId == 'password'){
 render(){
 
 	return(
-   <div>
+   <div className={styles.body}>
    <Navbar/>
+
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Your grooming solution at one place</title>
+
+
+
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300' rel='stylesheet' type='text/css'/>
+
+<link rel="stylesheet" type="text/css" href="/static_files/css/bootstrap.min.css" />
+
+
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+
+</head>
     <div className='row justify-content-center'>
     <div className="col col-sm-12 col-md-6 col-lg-5 mx-auto" style={{marginLeft:'auto',marginRight:'auto',marginTop:'7rem'}}>
 
-		<div className="form">
+		<div className={styles.form}>
     {this.state.alert == true?
       <div className="alert alert-warning">{this.state.errorMessage}</div>
       :null
     }
       
-      <ul className="tab-group">
+      <ul className={styles.tab_group}>
       { this.state.mode == 'signup' ?
-        <li className="styles active"><a onClick={this.modeChangeHandler.bind(this,'signup')}>Sign Up</a></li>
-        : <li className="tab"><a  onClick={this.modeChangeHandler.bind(this,'signup')}>Sign Up</a></li>
+        <li className={[styles.tab, styles.active].join(' ')}><a className={styles.a} className={styles.a} onClick={this.modeChangeHandler.bind(this,'signup')}>Sign Up</a></li>
+        : <li className={styles.tab}><a className={styles.a} className={styles.a}  onClick={this.modeChangeHandler.bind(this,'signup')}>Sign Up</a></li>
       }
 
       {this.state.mode == 'login' ?
-        <li className="tab active "><a  onClick={this.modeChangeHandler.bind(this,'login')}>Log In</a></li>
-        : <li className="tab"><a  onClick={this.modeChangeHandler.bind(this,'login')}>Log In</a></li>
+        <li className={[styles.tab,styles.active].join(' ')}><a className={styles.a}  onClick={this.modeChangeHandler.bind(this,'login')}>Log In</a></li>
+        : <li className="tab"><a className={styles.a}  onClick={this.modeChangeHandler.bind(this,'login')}>Log In</a></li>
       }
       </ul> 
       
-      <div className="tab-content">
+      <div className={styles.tab_content}>
       { this.state.mode == 'signup' ?
         <div id="signup" style={{display:'block'}}>   
-          <h1>Sign Up for Free</h1>
+          <h1 className={styles.h1}>Sign Up for Free</h1>
           
-          <form action="#" method="post" onSubmit={this.signUp.bind(this)}>
+          <form className={styles.form} action="#" method="post" onSubmit={this.signUp.bind(this)}>
           
-          <div className="top-row">
-            <div className="field-wrap">
+          
+            <div className={styles.field_wrap}>
               
-              <input type="text" required  placeholder="First Name" onChange={(event)=>this.signupInfoUpdate(event,'first_name')}/>
+              <input className={styles.input} type="text" required  placeholder="First Name" onChange={(event)=>this.signupInfoUpdate(event,'first_name')}/>
             </div>
         
-            <div className="field-wrap">
+            <div className={styles.field_wrap}>
               
-              <input type="text"required placeholder="Last name" onChange={(event)=>this.signupInfoUpdate(event,'last_name')} />
+              <input className={styles.input} type="text"required placeholder="Last name" onChange={(event)=>this.signupInfoUpdate(event,'last_name')} />
             </div>
+         
+
+          <div className={styles.field_wrap}>
+            
+            <input className={styles.input} type="text"required placeholder="Username"  onChange={(event)=>this.signupInfoUpdate(event,'username')}/>
           </div>
 
-          <div className="field-wrap">
+          <div className={styles.field_wrap}>
             
-            <input type="text"required placeholder="Username"  onChange={(event)=>this.signupInfoUpdate(event,'username')}/>
-          </div>
-
-          <div className="field-wrap">
-            
-            <input type="email"required placeholder="Email" onChange={(event)=>this.signupInfoUpdate(event,'email')}/>
+            <input className={styles.input} type="email"required placeholder="Email" onChange={(event)=>this.signupInfoUpdate(event,'email')}/>
           </div>
           
-          <div className="field-wrap">
+          <div className={styles.field_wrap}>
             
-            <input type="password"required placeholder="Password"  onChange={(event)=>this.signupInfoUpdate(event,'password1')}/>
+            <input className={styles.input} type="password"required placeholder="Password"  onChange={(event)=>this.signupInfoUpdate(event,'password1')}/>
           </div>
 
 
-          <div className="field-wrap">
+          <div className={styles.field_wrap}>
            
-            <input type="password" placeholder="Confirm Password" required  onChange={(event)=>this.signupInfoUpdate(event,'password2')}/>
+            <input className={styles.input} type="password" placeholder="Confirm Password" required  onChange={(event)=>this.signupInfoUpdate(event,'password2')}/>
           </div>
           { this.state.process == false ?
-          <button type="submit" className="button button-block">Get Started</button>
+          <button type="submit" className={[styles.button,styles.button_block].join(' ')}>Get Started</button>
           : this.state.process == true ?
          <div className="row justify-content-center">
-          <div className="loadingio-spinner-double-ring-g8plyq4mxma" style={{marginLeft:'auto',marginRight:'auto'}}>
-          <div className="ldio-gdeh23jxin ml-auto">
+          <div className={[styles.loadingio_spinner_double_ring_g8plyq4mxma].join(' ')} style={{marginLeft:'auto',marginRight:'auto'}}>
+          <div className={[styles.ldio_gdeh23jxin,'ml-auto'].join(' ')}>
           <div></div>
           <div></div>
           <div><div></div></div>
@@ -316,24 +336,24 @@ render(){
 
 
         <div id="login" style={{display:'block'}}>   
-          <h1>Welcome Back!</h1>
+          <h1 className={styles.h1}>Welcome Back!</h1>
           
-          <form action="#" method="post" onSubmit={this.loginHandler.bind(this)}>
+          <form action="#" className={styles.form} method="post" onSubmit={this.loginHandler.bind(this)}>
           
-            <div className="field-wrap">
+            <div className={styles.field_wrap}>
             
-            <input type="email" placeholder="Email" required onChange={(event)=>this.loginUpdate(event,'email')}/>
+            <input className={styles.input} type="email" placeholder="Email" required onChange={(event)=>this.loginUpdate(event,'email')}/>
           </div>
           
-          <div className="field-wrap">
+          <div className={styles.field_wrap}>
             
-            <input type="password" placeholder="Password" required onChange={(event)=>this.loginUpdate(event,'password')}/>
+            <input className={styles.input} type="password" placeholder="Password" required onChange={(event)=>this.loginUpdate(event,'password')}/>
           </div>
           
-          <p className="forgot"><a href="#">Forgot Password?</a></p>
+          <p className={styles.forgot}><a className={styles.a} href="#">Forgot Password?</a></p>
           
           {this.state.process == false ?
-            <button className="button button-block">Log In</button>
+            <button className={[styles.button,styles.button_block].join(' ')}>Log In</button>
             :this.state.process == true ?
 
             <div className="row justify-content-center">
