@@ -6,21 +6,21 @@ from django.db.models.fields import TimeField
 
 class Supplier(models.Model):
 
-    name = models.CharField(max_length=1500,null=True,blank=True)
-    phone_number = models.CharField(max_length=1500,null=True,blank=True)
-    address = models.CharField(max_length=1500,null=True,blank=True)
-    supplier_contact_person= models.CharField(max_length=1500,null=True,blank=True)
+    name = models.CharField(max_length=150,null=True,blank=True)
+    phone_number = models.CharField(max_length=150,null=True,blank=True)
+    address = models.CharField(max_length=100,null=True,blank=True)
+    supplier_contact_person= models.CharField(max_length=100,null=True,blank=True)
 
     def __str__(self):
         return self.name
 
 class ItemCategorey(models.Model):
-      title = models.CharField(max_length=150,null=True,blank=True)
+      title = models.CharField(max_length=151,null=True,blank=True)
       def __str__(self):
           return self.title
 
 class Item(models.Model):
-      title = models.CharField(max_length=200,null=True,blank=True)
+      title = models.CharField(max_length=220,null=True,blank=True)
       categorey = models.ForeignKey(ItemCategorey,on_delete=models.CASCADE)
       #supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE,related_name="categorey")
       item_code = models.CharField(max_length=100,null=True,blank=True)
@@ -39,12 +39,12 @@ class Item(models.Model):
 
 
 class ServiceCategorey(models.Model):
-      title = models.CharField(max_length=150,null=True,blank=True)
+      title = models.CharField(max_length=140,null=True,blank=True)
       def __str__(self):
           return self.title
 
 class Service(models.Model):
-      title = models.CharField(max_length=1500,null=True,blank=True)
+      title = models.CharField(max_length=150,null=True,blank=True)
       categorey = models.ForeignKey(ServiceCategorey,on_delete=models.CASCADE)
       servicelocation = models.CharField(max_length=300,null=True,blank=True)
       cost = models.IntegerField(null=True,blank=True)
