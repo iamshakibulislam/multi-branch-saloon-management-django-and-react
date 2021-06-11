@@ -1,10 +1,14 @@
 import React,{Fragment,Component} from 'react'
+import StaffRegister from './Dashboard/staffRegister'
+import {Route,Switch,Link} from 'react-router-dom'
+import baseContext from './shared/baseContext'
+
 
 
 
 class Dashboard extends Component{
 
-
+static contextType = baseContext
 
 render(){
 
@@ -16,147 +20,144 @@ return(
 
 
 <Fragment>
-	{/* begin::Head */ }
+
+	{/*begin::Head*/}
 	<head><base href=""/>
 		<meta charSet="utf-8" />
-		<title>Dashboard</title>
+		<title>Metronic Live preview | Keenthemes</title>
 		<meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="https://keenthemes.com/metronic" />
-		{/* begin::Fonts */ }
+		{/*begin::Fonts*/}
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-		{/* end::Fonts */ }
-		{/* begin::Page Vendors Styles(used by this page) */ }
-		<link href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-		{/* end::Page Vendors Styles */ }
-		{/* begin::Global Theme Styles(used by all pages) */ }
-		<link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-		{/* end::Global Theme Styles */ }
-		{/* begin::Layout Themes(used by all pages) */ }
-		<link href="/assets/css/themes/layout/header/base/light.css" rel="stylesheet" type="text/css" />
-		<link href="/assets/css/themes/layout/header/menu/light.css" rel="stylesheet" type="text/css" />
-		<link href="/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css" />
-		<link href="/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
-		{/* end::Layout Themes */ }
-		<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+		{/*end::Fonts*/}
+		{/*begin::Page Vendors Styles(used by this page)*/}
+		<link href={this.context.reactBase+"/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" } rel="stylesheet" type="text/css" />
+		{/*end::Page Vendors Styles*/}
+		{/*begin::Global Theme Styles(used by all pages)*/}
+		<link href={this.context.reactBase+"/assets/plugins/global/plugins.bundle.css" } rel="stylesheet" type="text/css" />
+		<link href={this.context.reactBase+"/assets/plugins/custom/prismjs/prismjs.bundle.css" }  rel="stylesheet" type="text/css" />
+		<link href={this.context.reactBase+"/assets/css/style.bundle.css" }  rel="stylesheet" type="text/css" />
+		{/*end::Global Theme Styles*/}
+		{/*begin::Layout Themes(used by all pages)*/}
+		<link href={this.context.reactBase+"/assets/css/themes/layout/header/base/light.css" } rel="stylesheet" type="text/css" />
+		<link href={this.context.reactBase+"/assets/css/themes/layout/header/menu/light.css" } rel="stylesheet" type="text/css" />
+		<link href={this.context.reactBase+"/assets/css/themes/layout/brand/dark.css" } rel="stylesheet" type="text/css" />
+		<link href={this.context.reactBase+"/assets/css/themes/layout/aside/dark.css" } rel="stylesheet" type="text/css" />
+		{/*end::Layout Themes*/}
+		<link rel="shortcut icon" href={this.context.reactBase+"/assets/media/logos/favicon.ico" } />
 	</head>
-	{/* end::Head */ }
-	{/* begin::Body */ }
+	{/*end::Head*/}
+	{/*begin::Body*/}
 	<body id="kt_body" className="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
-		{/* begin::Main */ }
-		{/* begin::Header Mobile */ }
+		{/*begin::Main*/}
+		{/*begin::Header Mobile*/}
 		<div id="kt_header_mobile" className="header-mobile align-items-center header-mobile-fixed">
-			{/* begin::Logo */ }
+			{/*begin::Logo*/}
 			<a href="index.html">
-				<img alt="Logo" src="/assets/media/logos/logo-light.png" />
+				<img alt="Logo" src={this.context.reactBase+"/assets/media/logos/logo-light.png"} />
 			</a>
-			{/* end::Logo */ }
-			{/* begin::Toolbar */ }
+			{/*end::Logo*/}
+			{/*begin::Toolbar*/}
 			<div className="d-flex align-items-center">
-				{/* begin::Aside Mobile Toggle */ }
+				{/*begin::Aside Mobile Toggle*/}
 				<button className="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
 					<span></span>
 				</button>
-				{/* end::Aside Mobile Toggle */ }
-				{/* begin::Header Menu Mobile Toggle */ }
+				{/*end::Aside Mobile Toggle*/}
+				{/*begin::Header Menu Mobile Toggle*/}
 				<button className="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
 					<span></span>
 				</button>
-				{/* end::Header Menu Mobile Toggle */ }
-				{/* begin::Topbar Mobile Toggle */ }
+				{/*end::Header Menu Mobile Toggle*/}
+				{/*begin::Topbar Mobile Toggle*/}
 				<button className="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
 					<span className="svg-icon svg-icon-xl">
-						{/* begin::Svg Icon | path:/assets/media/svg/icons/General/User.svg */ }
+						{/*begin::Svg Icon | path:./assets/media/svg/icons/General/User.svg*/}
 						<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-							<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+							<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 								<polygon points="0 0 24 0 24 24 0 24" />
-								<path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fillRule="nonzero" opacity="0.3" />
-								<path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fillRule="nonzero" />
+								<path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+								<path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
 							</g>
 						</svg>
-						{/* end::Svg Icon */ }
+						{/*end::Svg Icon*/}
 					</span>
 				</button>
-				{/* end::Topbar Mobile Toggle */ }
+				{/*end::Topbar Mobile Toggle*/}
 			</div>
-			{/* end::Toolbar */ }
+			{/*end::Toolbar*/}
 		</div>
-		{/* end::Header Mobile */ }
+		{/*end::Header Mobile*/}
 		<div className="d-flex flex-column flex-root">
-			{/* begin::Page */ }
+			{/*begin::Page*/}
 			<div className="d-flex flex-row flex-column-fluid page">
-				{/* begin::Aside */ }
+				{/*begin::Aside*/}
 				<div className="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
-					{/* begin::Brand */ }
+					{/*begin::Brand*/}
 					<div className="brand flex-column-auto" id="kt_brand">
-						{/* begin::Logo */ }
+						{/*begin::Logo*/}
 						<a href="index.html" className="brand-logo">
-							<img alt="Logo" src="/assets/media/logos/logo-light.png" />
+							<img alt="Logo" src={this.context.reactBase+"/assets/media/logos/logo-light.png"} />
 						</a>
-						{/* end::Logo */ }
-						{/* begin::Toggle */ }
+						{/*end::Logo*/}
+						{/*begin::Toggle*/}
 						<button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
 							<span className="svg-icon svg-icon svg-icon-xl">
-								{/* begin::Svg Icon | path:/assets/media/svg/icons/Navigation/Angle-double-left.svg */ }
+								{/*begin::Svg Icon | path:./assets/media/svg/icons/Navigation/Angle-double-left.svg*/}
 								<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-									<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 										<polygon points="0 0 24 0 24 24 0 24" />
-										<path d="M5.29288961,6.70710318 C4.90236532,6.31657888 4.90236532,5.68341391 5.29288961,5.29288961 C5.68341391,4.90236532 6.31657888,4.90236532 6.70710318,5.29288961 L12.7071032,11.2928896 C13.0856821,11.6714686 13.0989277,12.281055 12.7371505,12.675721 L7.23715054,18.675721 C6.86395813,19.08284 6.23139076,19.1103429 5.82427177,18.7371505 C5.41715278,18.3639581 5.38964985,17.7313908 5.76284226,17.3242718 L10.6158586,12.0300721 L5.29288961,6.70710318 Z" fill="#000000" fillRule="nonzero" transform="translate(8.999997, 11.999999) scale(-1, 1) translate(-8.999997, -11.999999)" />
-										<path d="M10.7071009,15.7071068 C10.3165766,16.0976311 9.68341162,16.0976311 9.29288733,15.7071068 C8.90236304,15.3165825 8.90236304,14.6834175 9.29288733,14.2928932 L15.2928873,8.29289322 C15.6714663,7.91431428 16.2810527,7.90106866 16.6757187,8.26284586 L22.6757187,13.7628459 C23.0828377,14.1360383 23.1103407,14.7686056 22.7371482,15.1757246 C22.3639558,15.5828436 21.7313885,15.6103465 21.3242695,15.2371541 L16.0300699,10.3841378 L10.7071009,15.7071068 Z" fill="#000000" fillRule="nonzero" opacity="0.3" transform="translate(15.999997, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-15.999997, -11.999999)" />
+										<path d="M5.29288961,6.70710318 C4.90236532,6.31657888 4.90236532,5.68341391 5.29288961,5.29288961 C5.68341391,4.90236532 6.31657888,4.90236532 6.70710318,5.29288961 L12.7071032,11.2928896 C13.0856821,11.6714686 13.0989277,12.281055 12.7371505,12.675721 L7.23715054,18.675721 C6.86395813,19.08284 6.23139076,19.1103429 5.82427177,18.7371505 C5.41715278,18.3639581 5.38964985,17.7313908 5.76284226,17.3242718 L10.6158586,12.0300721 L5.29288961,6.70710318 Z" fill="#000000" fill-rule="nonzero" transform="translate(8.999997, 11.999999) scale(-1, 1) translate(-8.999997, -11.999999)" />
+										<path d="M10.7071009,15.7071068 C10.3165766,16.0976311 9.68341162,16.0976311 9.29288733,15.7071068 C8.90236304,15.3165825 8.90236304,14.6834175 9.29288733,14.2928932 L15.2928873,8.29289322 C15.6714663,7.91431428 16.2810527,7.90106866 16.6757187,8.26284586 L22.6757187,13.7628459 C23.0828377,14.1360383 23.1103407,14.7686056 22.7371482,15.1757246 C22.3639558,15.5828436 21.7313885,15.6103465 21.3242695,15.2371541 L16.0300699,10.3841378 L10.7071009,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(15.999997, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-15.999997, -11.999999)" />
 									</g>
 								</svg>
-								{/* end::Svg Icon */ }
+								{/*end::Svg Icon*/}
 							</span>
 						</button>
-						{/* end::Toolbar */ }
+						{/*end::Toolbar*/}
 					</div>
-					{/* end::Brand */ }
-					{/* begin::Aside Menu */ }
+					{/*end::Brand*/}
+					{/*begin::Aside Menu*/}
 					<div className="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
-						{/* begin::Menu Container */ }
+						{/*begin::Menu Container*/}
 						<div id="kt_aside_menu" className="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
-							{/* begin::Menu Nav */ }
+							{/*begin::Menu Nav*/}
 							<ul className="menu-nav">
 								<li className="menu-item menu-item-active" aria-haspopup="true">
 									<a href="index.html" className="menu-link">
 										<span className="svg-icon menu-icon">
-											{/* begin::Svg Icon | path:/assets/media/svg/icons/Design/Layers.svg */ }
+											{/*begin::Svg Icon | path:./assets/media/svg/icons/Design/Layers.svg*/}
 											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-												<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 													<polygon points="0 0 24 0 24 24 0 24" />
-													<path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fillRule="nonzero" />
+													<path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
 													<path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
 												</g>
 											</svg>
-											{/* end::Svg Icon */ }
+											{/*end::Svg Icon*/}
 										</span>
 										<span className="menu-text">Dashboard</span>
 									</a>
 								</li>
-
-
 								<li className="menu-section">
 									<h4 className="menu-text">Management</h4>
 									<i className="menu-icon ki ki-bold-more-hor icon-md"></i>
 								</li>
-								{/*  begin of employee management section  */ }
-
-									<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+								<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 									<a href="javascript:;" className="menu-link menu-toggle">
 										<span className="svg-icon menu-icon">
-											{/* begin::Svg Icon | path:/assets/media/svg/icons/Layout/Layout-4-blocks.svg */ }
+											{/*begin::Svg Icon | path:./assets/media/svg/icons/Layout/Layout-4-blocks.svg*/}
 											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-												<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 													<rect x="0" y="0" width="24" height="24" />
 													<rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5" />
 													<path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3" />
 												</g>
 											</svg>
-											{/* end::Svg Icon */ }
+											{/*end::Svg Icon*/}
 										</span>
-										<span className="menu-text">Manage Staff</span>
+										<span className="menu-text">Staff Management</span>
 										<i className="menu-arrow"></i>
 									</a>
 									<div className="menu-submenu">
@@ -164,158 +165,151 @@ return(
 										<ul className="menu-subnav">
 											<li className="menu-item menu-item-parent" aria-haspopup="true">
 												<span className="menu-link">
-													<span className="menu-text"></span>
+													<span className="menu-text">Applications</span>
 												</span>
 											</li>
-											{/*  menu subitem start here  */ }
-											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="#" className="menu-link menu-toggle">
-													<i className="menu-bullet menu-bullet-line">
-														<span></span>
-													</i>
-													<span className="menu-text">Add Staff</span>
-													
-													
-												</a>
-												
-											</li>
-											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="#staff" className="menu-link menu-toggle">
-													<i className="menu-bullet menu-bullet-line">
-														<span></span>
-													</i>
-													<span className="menu-text">Staff List</span>
-													
-													
-												</a>
-												
-											</li>
-										</ul>
-									</div>
-											
-										</li>
-
-									{/*  menu subitem ends here  */ }
-
-										{/*  starts Branch managemnet  */ }
-
-										<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-									<a href="javascript:;" className="menu-link menu-toggle">
-										<span className="svg-icon menu-icon">
-											{/* begin::Svg Icon | path:/assets/media/svg/icons/Layout/Layout-4-blocks.svg */ }
-											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-												<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-													<rect x="0" y="0" width="24" height="24" />
-													<rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5" />
-													<path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3" />
-												</g>
-											</svg>
-											{/* end::Svg Icon */ }
-										</span>
-										<span className="menu-text">Manage Branch</span>
-										<i className="menu-arrow"></i>
-									</a>
-									<div className="menu-submenu">
-										<i className="menu-arrow"></i>
-										<ul className="menu-subnav">
-											<li className="menu-item menu-item-parent" aria-haspopup="true">
-												<span className="menu-link">
-													<span className="menu-text"></span>
-												</span>
-											</li>
-											{/*  menu subitem start here  */ }
-											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="#" className="menu-link menu-toggle">
-													<i className="menu-bullet menu-bullet-line">
-														<span></span>
-													</i>
-													<span class = "menu-text">Add New Branch</span>
-													
-													
-												</a>
-												
-											</li>
-											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="#staff" className="menu-link menu-toggle">
-													<i className="menu-bullet menu-bullet-line">
-														<span></span>
-													</i>
-													<span className="menu-text">Branch List</span>
-													
-													
-												</a>
-												
-											</li>
-											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="#staff" className="menu-link menu-toggle">
-													<i className="menu-bullet menu-bullet-line">
-														<span></span>
-													</i>
-													<span className="menu-text">Add Staff to Branch</span>
-													
-													
-												</a>
-												
-											</li>
-										</ul>
-									</div>
-											{/*  menu subitem ends here  */ }
-										</li>
-										{/*  end of branch management  */ }
-
-
-											</ul>
-										</div>
-
-
-
-							{/*  end of dropdown employee management  */ }
-								
-								
-									
-									
 										
-					{/* end::Aside Menu */ }
-				
-				{/* end::Aside */ }
-				{/* begin::Wrapper */ }
-				<div className="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
-					{/* begin::Header */ }
+											
+											
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<Link to="/dashboard/add_staff" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-line">
+														<span></span>
+													</i>
+													<span className="menu-text">Add staff</span>
+													
+												</Link>
+												
+											</li>
+
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<a href="#" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-line">
+														<span></span>
+													</i>
+													<span className="menu-text">Staff list</span>
+													
+												</a>
+												
+											</li>
+										
+										
+											
+										
+											
+										</ul>
+									</div>
+								</li>
+								<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+									<a href="javascript:;" className="menu-link menu-toggle">
+										<span className="svg-icon menu-icon">
+											{/*begin::Svg Icon | path:./assets/media/svg/icons/Shopping/Barcode-read.svg*/}
+											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24" />
+													<rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16" />
+													<path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero" />
+												</g>
+											</svg>
+											{/*end::Svg Icon*/}
+										</span>
+										<span className="menu-text">Branch Management</span>
+										<i className="menu-arrow"></i>
+									</a>
+									<div className="menu-submenu">
+										<i className="menu-arrow"></i>
+										<ul className="menu-subnav">
+											<li className="menu-item menu-item-parent" aria-haspopup="true">
+												<span className="menu-link">
+													<span className="menu-text">Branch Management</span>
+												</span>
+											</li>
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<a href="javascript:;" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Add new branch</span>
+													<i className="menu-arrow"></i>
+												</a>
+												
+											</li>
+
+
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<a href="javascript:;" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Branch list</span>
+													<i className="menu-arrow"></i>
+												</a>
+												
+											</li>
+
+
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<a href="javascript:;" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Add staff to branch</span>
+													<i className="menu-arrow"></i>
+												</a>
+												
+											</li>
+
+
+											
+											
+										</ul>
+									</div>
+								</li>
+								
+
+
+
+
+							</ul>
+							{/*end::Menu Nav*/}
+						</div>
+						{/*end::Menu Container*/}
+					</div>
+					{/*end::Aside Menu*/}
+				</div>
+				{/*end::Aside*/}
+				{/*begin::Wrapper*/}
+				<div className="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper" style={{paddingTop:'4rem'}}>
+					{/*begin::Header*/}
 					<div id="kt_header" className="header header-fixed">
-						{/* begin::Container */ }
+						{/*begin::Container*/}
 						<div className="container-fluid d-flex align-items-stretch justify-content-between">
-							{/* begin::Header Menu Wrapper */ }
+							{/*begin::Header Menu Wrapper*/}
 							<div className="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
-								{/* begin::Header Menu */ }
+								{/*begin::Header Menu*/}
 								<div id="kt_header_menu" className="header-menu header-menu-mobile header-menu-layout-default">
-									
-								</div>
-								{/* end::Header Menu */ }
-							</div>
-							{/* end::Header Menu Wrapper */ }
-							{/* begin::Topbar */ }
-							<div className="topbar">
-								
-								{/* end::Search */ }
-								{/* begin::Notifications */ }
-								
-								{/* end::Notifications */ }
-								{/* begin::Quick Actions */ }
+									{/*begin::Header Nav*/}
+									<ul className="menu-nav">
+										
 						
-								{/* end::Quick Actions */ }
-								{/* begin::Cart */ }
+									
+									</ul>
+									{/*end::Header Nav*/}
+								</div>
+								{/*end::Header Menu*/}
+							</div>
+							{/*end::Header Menu Wrapper*/}
+							{/*begin::Topbar*/}
+							<div className="topbar">
 							
-								{/* end::Cart */ }
-								{/* begin::Quick panel */ }
+							
 								
-								{/* end::Quick panel */ }
-								{/* begin::Chat */ }
 								
-								{/* end::Chat */ }
-								{/* begin::Languages */ }
 								
-								{/* end::Languages */ }
-								{/* begin::User */ }
+								
+								
+								
+								{/*begin::User*/}
 								<div className="topbar-item">
 									<div className="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
 										<span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
@@ -325,264 +319,65 @@ return(
 										</span>
 									</div>
 								</div>
-								{/* end::User */ }
+								{/*end::User*/}
 							</div>
-							{/* end::Topbar */ }
+							{/*end::Topbar*/}
 						</div>
-						{/* end::Container */ }
+						{/*end::Container*/}
 					</div>
-					{/* end::Header */ }
-					{/* begin::Content */ }
-
-					{/*  begin dashboard  */ }
-					<div className="content d-flex flex-column flex-column-fluid" id="kt_content">
+					{/*end::Header*/}
+					{/*begin::Content*/}
+					<div className="content d-flex flex-column flex-column-fluid" id="kt_content" style={{marginTop:'0rem'}}>
+						{/*begin::Subheader*/}
 						
-						
-						
-					<div className="d-flex flex-column-fluid">
-							
-						<div className="container">
+						{/*end::Subheader*/}
+						{/*begin::Entry*/}
+						<div className="d-flex flex-column-fluid">
+							{/*begin::Container*/}
+							<div className="container">
+								{/*begin::Dashboard*/}
+								{/*begin::Row*/}
+								<div className="row">
 								
-						<div className="row">
-
-							
-						
-						<div className="col lol col-md-6">
-							<div className="card card-custom card-stretch gutter-b">
-											{/*begin::Header*/}
-											<div className="card-header align-items-center border-0 mt-4">
-												<h3 className="card-title align-items-start flex-column">
-													<span className="font-weight-bolder text-dark">My Activity</span>
-													<span className="text-muted mt-3 font-weight-bold font-size-sm">890,344 Sales</span>
-												</h3>
-												<div className="card-toolbar">
-													<div className="dropdown dropdown-inline">
-														<a href="#" className="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-															<i className="ki ki-bold-more-hor"></i>
-														</a>
-														<div className="dropdown-menu dropdown-menu-md dropdown-menu-right">
-															{/*begin::Navigation*/}
-															<ul className="navi navi-hover">
-																<li className="navi-header font-weight-bold py-4">
-																	<span className="font-size-lg">Choose Label:</span>
-																	<i className="flaticon2-information icon-md text-muted" data-toggle="tooltip" data-placement="right" title="" data-original-title="Click to learn more..."></i>
-																</li>
-																<li className="navi-separator mb-3 opacity-70"></li>
-																<li className="navi-item">
-																	<a href="#" className="navi-link">
-																		<span className="navi-text">
-																			<span className="label label-xl label-inline label-light-success">Customer</span>
-																		</span>
-																	</a>
-																</li>
-																<li className="navi-item">
-																	<a href="#" className="navi-link">
-																		<span className="navi-text">
-																			<span className="label label-xl label-inline label-light-danger">Partner</span>
-																		</span>
-																	</a>
-																</li>
-																<li className="navi-item">
-																	<a href="#" className="navi-link">
-																		<span className="navi-text">
-																			<span className="label label-xl label-inline label-light-warning">Suplier</span>
-																		</span>
-																	</a>
-																</li>
-																<li className="navi-item">
-																	<a href="#" className="navi-link">
-																		<span className="navi-text">
-																			<span className="label label-xl label-inline label-light-primary">Member</span>
-																		</span>
-																	</a>
-																</li>
-																<li className="navi-item">
-																	<a href="#" className="navi-link">
-																		<span className="navi-text">
-																			<span className="label label-xl label-inline label-light-dark">Staff</span>
-																		</span>
-																	</a>
-																</li>
-																<li className="navi-separator mt-3 opacity-70"></li>
-																<li className="navi-footer py-4">
-																	<a className="btn btn-clean font-weight-bold btn-sm" href="#">
-																	<i className="ki ki-plus icon-sm"></i>Add new</a>
-																</li>
-															</ul>
-															{/*end::Navigation*/}
-														</div>
-													</div>
-												</div>
-											</div>
-											{/*end::Header*/}
-											{/*begin::Body*/}
-											<div className="card-body pt-4">
-												{/*begin::Timeline*/}
-												<div className="timeline timeline-6 mt-3">
-													{/*begin::Item*/}
-													<div className="timeline-item align-items-start">
-														{/*begin::Label*/}
-														<div className="timeline-label font-weight-bolder text-dark-75 font-size-lg">08:42</div>
-														{/*end::Label*/}
-														{/*begin::Badge*/}
-														<div className="timeline-badge">
-															<i className="fa fa-genderless text-warning icon-xl"></i>
-														</div>
-														{/*end::Badge*/}
-														{/*begin::Text*/}
-														<div className="font-weight-mormal font-size-lg timeline-content text-muted pl-3">Outlines keep you honest. And keep structure</div>
-														{/*end::Text*/}
-													</div>
-													{/*end::Item*/}
-													{/*begin::Item*/}
-													<div className="timeline-item align-items-start">
-														{/*begin::Label*/}
-														<div className="timeline-label font-weight-bolder text-dark-75 font-size-lg">10:00</div>
-														{/*end::Label*/}
-														{/*begin::Badge*/}
-														<div className="timeline-badge">
-															<i className="fa fa-genderless text-success icon-xl"></i>
-														</div>
-														{/*end::Badge*/}
-														{/*begin::Content*/}
-														<div className="timeline-content d-flex">
-															<span className="font-weight-bolder text-dark-75 pl-3 font-size-lg">AEOL meeting</span>
-														</div>
-														{/*end::Content*/}
-													</div>
-													{/*end::Item*/}
-													{/*begin::Item*/}
-													<div className="timeline-item align-items-start">
-														{/*begin::Label*/}
-														<div className="timeline-label font-weight-bolder text-dark-75 font-size-lg">14:37</div>
-														{/*end::Label*/}
-														{/*begin::Badge*/}
-														<div className="timeline-badge">
-															<i className="fa fa-genderless text-danger icon-xl"></i>
-														</div>
-														{/*end::Badge*/}
-														{/*begin::Desc*/}
-														<div className="timeline-content font-weight-bolder font-size-lg text-dark-75 pl-3">Make deposit
-														<a href="#" className="text-primary">USD 700</a>. to ESL</div>
-														{/*end::Desc*/}
-													</div>
-													{/*end::Item*/}
-													{/*begin::Item*/}
-													<div className="timeline-item align-items-start">
-														{/*begin::Label*/}
-														<div className="timeline-label font-weight-bolder text-dark-75 font-size-lg">16:50</div>
-														{/*end::Label*/}
-														{/*begin::Badge*/}
-														<div className="timeline-badge">
-															<i className="fa fa-genderless text-primary icon-xl"></i>
-														</div>
-														{/*end::Badge*/}
-														{/*begin::Text*/}
-														<div className="timeline-content font-weight-mormal font-size-lg text-muted pl-3">Indulging in poorly driving and keep structure keep great</div>
-														{/*end::Text*/}
-													</div>
-													{/*end::Item*/}
-													{/*begin::Item*/}
-													<div className="timeline-item align-items-start">
-														{/*begin::Label*/}
-														<div className="timeline-label font-weight-bolder text-dark-75 font-size-lg">21:03</div>
-														{/*end::Label*/}
-														{/*begin::Badge*/}
-														<div className="timeline-badge">
-															<i className="fa fa-genderless text-danger icon-xl"></i>
-														</div>
-														{/*end::Badge*/}
-														{/*begin::Desc*/}
-														<div className="timeline-content font-weight-bolder text-dark-75 pl-3 font-size-lg">New order placed
-														<a href="#" className="text-primary">#XF-2356</a>.</div>
-														{/*end::Desc*/}
-													</div>
-													{/*end::Item*/}
-													{/*begin::Item*/}
-													<div className="timeline-item align-items-start">
-														{/*begin::Label*/}
-														<div className="timeline-label font-weight-bolder text-dark-75 font-size-lg">23:07</div>
-														{/*end::Label*/}
-														{/*begin::Badge*/}
-														<div className="timeline-badge">
-															<i className="fa fa-genderless text-info icon-xl"></i>
-														</div>
-														{/*end::Badge*/}
-														{/*begin::Text*/}
-														<div className="timeline-content font-weight-mormal font-size-lg text-muted pl-3">Outlines keep and you honest. Indulging in poorly driving</div>
-														{/*end::Text*/}
-													</div>
-													{/*end::Item*/}
-													{/*begin::Item*/}
-													<div className="timeline-item align-items-start">
-														{/*begin::Label*/}
-														<div className="timeline-label font-weight-bolder text-dark-75 font-size-lg">16:50</div>
-														{/*end::Label*/}
-														{/*begin::Badge*/}
-														<div className="timeline-badge">
-															<i className="fa fa-genderless text-primary icon-xl"></i>
-														</div>
-														{/*end::Badge*/}
-														{/*begin::Text*/}
-														<div className="timeline-content font-weight-mormal font-size-lg text-muted pl-3">Indulging in poorly driving and keep structure keep great</div>
-														{/*end::Text*/}
-													</div>
-													{/*end::Item*/}
-													{/*begin::Item*/}
-													<div className="timeline-item align-items-start">
-														{/*begin::Label*/}
-														<div className="timeline-label font-weight-bolder text-dark-75 font-size-lg">21:03</div>
-														{/*end::Label*/}
-														{/*begin::Badge*/}
-														<div className="timeline-badge">
-															<i className="fa fa-genderless text-danger icon-xl"></i>
-														</div>
-														{/*end::Badge*/}
-														{/*begin::Desc*/}
-														<div className="timeline-content font-weight-bolder font-size-lg text-dark-75 pl-3">New order placed
-														<a href="#" className="text-primary">#XF-2356</a>.</div>
-														{/*end::Desc*/}
-													</div>
-													{/*end::Item*/}
-												</div>
-												{/*end::Timeline*/}
-											</div>
-											{/*end: Card Body*/}
-										</div>
+									<div className="col-lg-6 col-xxl-4" style={{marginLeft:'auto',marginRight:'auto'}}>
+									 <Route path="/dashboard/add_staff" exact component={StaffRegister} />
+									</div>
+								
+								</div>
+								{/*end::Row*/}
+								
+							</div>
+							{/*end::Container*/}
 						</div>
-
-
-
-
-						</div>
-						
+						{/*end::Entry*/}
 					</div>
+					{/*end::Content*/}
+					{/*begin::Footer*/}
 					
-			
-					
+					{/*end::Footer*/}
 				</div>
-				{/* end::Wrapper */ }
+				{/*end::Wrapper*/}
 			</div>
-			{/* end::Page */ }
+			{/*end::Page*/}
 		</div>
-		{/* end::Main */ }
-		{/*  begin::User Panel */ }
+		{/*end::Main*/}
+		{/* begin::User Panel*/}
 		<div id="kt_quick_user" className="offcanvas offcanvas-right p-10">
-			{/* begin::Header */ }
+			{/*begin::Header*/}
 			<div className="offcanvas-header d-flex align-items-center justify-content-between pb-5">
 				<h3 className="font-weight-bold m-0">User Profile
-				<small className="text-muted font-size-sm ml-2"></small></h3>
+				</h3>
 				<a href="#" className="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
 					<i className="ki ki-close icon-xs text-muted"></i>
 				</a>
 			</div>
-			{/* end::Header */ }
-			{/* begin::Content */ }
+			{/*end::Header*/}
+			{/*begin::Content*/}
 			<div className="offcanvas-content pr-5 mr-n5">
-				{/* begin::Header */ }
+				{/*begin::Header*/}
 				<div className="d-flex align-items-center mt-5">
 					<div className="symbol symbol-100 mr-5">
-						<div className="symbol-label" style={{backgroundImage:'url(/assets/media/users/300_21.jpg)'}}></div>
+						<div className="symbol-label" style={{backgroundImage:'url(./assets/media/users/300_21.jpg)'}}></div>
 						<i className="symbol-badge bg-success"></i>
 					</div>
 					<div className="d-flex flex-column">
@@ -593,15 +388,15 @@ return(
 								<span className="navi-link p-0 pb-2">
 									<span className="navi-icon mr-1">
 										<span className="svg-icon svg-icon-lg svg-icon-primary">
-											{/* begin::Svg Icon | path:/assets/media/svg/icons/Communication/Mail-notification.svg */ }
+											{/*begin::Svg Icon | path:./assets/media/svg/icons/Communication/Mail-notification.svg*/}
 											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-												<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 													<rect x="0" y="0" width="24" height="24" />
 													<path d="M21,12.0829584 C20.6747915,12.0283988 20.3407122,12 20,12 C16.6862915,12 14,14.6862915 14,18 C14,18.3407122 14.0283988,18.6747915 14.0829584,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12.0829584 Z M18.1444251,7.83964668 L12,11.1481833 L5.85557487,7.83964668 C5.4908718,7.6432681 5.03602525,7.77972206 4.83964668,8.14442513 C4.6432681,8.5091282 4.77972206,8.96397475 5.14442513,9.16035332 L11.6444251,12.6603533 C11.8664074,12.7798822 12.1335926,12.7798822 12.3555749,12.6603533 L18.8555749,9.16035332 C19.2202779,8.96397475 19.3567319,8.5091282 19.1603533,8.14442513 C18.9639747,7.77972206 18.5091282,7.6432681 18.1444251,7.83964668 Z" fill="#000000" />
 													<circle fill="#000000" opacity="0.3" cx="19.5" cy="17.5" r="2.5" />
 												</g>
 											</svg>
-											{/* end::Svg Icon */ }
+											{/*end::Svg Icon*/}
 										</span>
 									</span>
 									<span className="navi-text text-muted text-hover-primary">jm@softplus.com</span>
@@ -611,90 +406,76 @@ return(
 						</div>
 					</div>
 				</div>
-				{/* end::Header */ }
-				{/* begin::Separator */ }
+				{/*end::Header*/}
+				{/*begin::Separator*/}
 				<div className="separator separator-dashed mt-8 mb-5"></div>
-				{/* end::Separator */ }
-				{/* begin::Nav */ }
+				{/*end::Separator*/}
+				{/*begin::Nav*/}
 				<div className="navi navi-spacer-x-0 p-0">
-					{/* begin::Item */ }
+					{/*begin::Item*/}
 					<a href="custom/apps/user/profile-1/personal-information.html" className="navi-item">
 						<div className="navi-link">
 							<div className="symbol symbol-40 bg-light mr-3">
 								<div className="symbol-label">
 									<span className="svg-icon svg-icon-md svg-icon-success">
-										{/* begin::Svg Icon | path:/assets/media/svg/icons/General/Notification2.svg */ }
+										{/*begin::Svg Icon | path:./assets/media/svg/icons/General/Notification2.svg*/}
 										<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-											<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+											<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 												<rect x="0" y="0" width="24" height="24" />
 												<path d="M13.2070325,4 C13.0721672,4.47683179 13,4.97998812 13,5.5 C13,8.53756612 15.4624339,11 18.5,11 C19.0200119,11 19.5231682,10.9278328 20,10.7929675 L20,17 C20,18.6568542 18.6568542,20 17,20 L7,20 C5.34314575,20 4,18.6568542 4,17 L4,7 C4,5.34314575 5.34314575,4 7,4 L13.2070325,4 Z" fill="#000000" />
 												<circle fill="#000000" opacity="0.3" cx="18.5" cy="5.5" r="2.5" />
 											</g>
 										</svg>
-										{/* end::Svg Icon */ }
+										{/*end::Svg Icon*/}
 									</span>
 								</div>
 							</div>
 							<div className="navi-text">
 								<div className="font-weight-bold">My Profile</div>
-								<div className="text-muted">Account settings
+								<div className="text-muted">Account settings and more
 								<span className="label label-light-danger label-inline font-weight-bold">update</span></div>
 							</div>
 						</div>
 					</a>
-					{/* end:Item */ }
-					{/* begin::Item */ }
 					
-					{/* end:Item */ }
-					{/* begin::Item */ }
 					
-					{/* end:Item */ }
-					{/* begin::Item */ }
-					
-					{/* end:Item */ }
 				</div>
-				{/* end::Nav */ }
-				{/* begin::Separator */ }
+				{/*end::Nav*/}
+				{/*begin::Separator*/}
 				<div className="separator separator-dashed my-7"></div>
-				{/* end::Separator */ }
-				{/* begin::Notifications */ }
+				{/*end::Separator*/}
+				{/*begin::Notifications*/}
 				<div>
-					{/* begin:Heading */ }
+					{/*begin:Heading*/}
 					
-					{/* end:Heading */ }
-					{/* begin::Item */ }
 					
-					{/* end::Item */ }
-					{/* begin::Item */ }
 					
-					{/* end::Item */ }
-					{/* begin::Item */ }
 					
-					{/* end::Item */ }
-					{/* begin::Item */ }
-			
-					{/* end::Item */ }
+					
+					
+					
+					{/*end::Item*/}
 				</div>
-				{/* end::Notifications */ }
+				{/*end::Notifications*/}
 			</div>
-			{/* end::Content */ }
+			{/*end::Content*/}
 		</div>
-		{/*  end::User Panel */ }
-		{/* begin::Quick Cart */ }
+		{/* end::User Panel*/}
+		{/*begin::Quick Cart*/}
 		<div id="kt_quick_cart" className="offcanvas offcanvas-right p-10">
-			{/* begin::Header */ }
+			{/*begin::Header*/}
 			<div className="offcanvas-header d-flex align-items-center justify-content-between pb-7">
 				<h4 className="font-weight-bold m-0">Shopping Cart</h4>
 				<a href="#" className="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_cart_close">
 					<i className="ki ki-close icon-xs text-muted"></i>
 				</a>
 			</div>
-			{/* end::Header */ }
-			{/* begin::Content */ }
+			{/*end::Header*/}
+			{/*begin::Content*/}
 			<div className="offcanvas-content">
-				{/* begin::Wrapper */ }
+				{/*begin::Wrapper*/}
 				<div className="offcanvas-wrapper mb-5 scroll-pull">
-					{/* begin::Item */ }
+					{/*begin::Item*/}
 					<div className="d-flex align-items-center justify-content-between py-8">
 						<div className="d-flex flex-column mr-2">
 							<a href="#" className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">iBlender</a>
@@ -712,14 +493,14 @@ return(
 							</div>
 						</div>
 						<a href="#" className="symbol symbol-70 flex-shrink-0">
-							<img src="/assets/media/stock-600x400/img-1.jpg" title="" alt="" />
+							<img src="./assets/media/stock-600x400/img-1.jpg" title="" alt="" />
 						</a>
 					</div>
-					{/* end::Item */ }
-					{/* begin::Separator */ }
+					{/*end::Item*/}
+					{/*begin::Separator*/}
 					<div className="separator separator-solid"></div>
-					{/* end::Separator */ }
-					{/* begin::Item */ }
+					{/*end::Separator*/}
+					{/*begin::Item*/}
 					<div className="d-flex align-items-center justify-content-between py-8">
 						<div className="d-flex flex-column mr-2">
 							<a href="#" className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">SmartCleaner</a>
@@ -737,14 +518,14 @@ return(
 							</div>
 						</div>
 						<a href="#" className="symbol symbol-70 flex-shrink-0">
-							<img src="/assets/media/stock-600x400/img-2.jpg" title="" alt="" />
+							<img src="./assets/media/stock-600x400/img-2.jpg" title="" alt="" />
 						</a>
 					</div>
-					{/* end::Item */ }
-					{/* begin::Separator */ }
+					{/*end::Item*/}
+					{/*begin::Separator*/}
 					<div className="separator separator-solid"></div>
-					{/* end::Separator */ }
-					{/* begin::Item */ }
+					{/*end::Separator*/}
+					{/*begin::Item*/}
 					<div className="d-flex align-items-center justify-content-between py-8">
 						<div className="d-flex flex-column mr-2">
 							<a href="#" className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">CameraMax</a>
@@ -762,14 +543,14 @@ return(
 							</div>
 						</div>
 						<a href="#" className="symbol symbol-70 flex-shrink-0">
-							<img src="/assets/media/stock-600x400/img-3.jpg" title="" alt="" />
+							<img src="./assets/media/stock-600x400/img-3.jpg" title="" alt="" />
 						</a>
 					</div>
-					{/* end::Item */ }
-					{/* begin::Separator */ }
+					{/*end::Item*/}
+					{/*begin::Separator*/}
 					<div className="separator separator-solid"></div>
-					{/* end::Separator */ }
-					{/* begin::Item */ }
+					{/*end::Separator*/}
+					{/*begin::Item*/}
 					<div className="d-flex align-items-center justify-content-between py-8">
 						<div className="d-flex flex-column mr-2">
 							<a href="#" className="font-weight-bold text-dark text-hover-primary">4D Printer</a>
@@ -787,14 +568,14 @@ return(
 							</div>
 						</div>
 						<a href="#" className="symbol symbol-70 flex-shrink-0">
-							<img src="/assets/media/stock-600x400/img-4.jpg" title="" alt="" />
+							<img src="./assets/media/stock-600x400/img-4.jpg" title="" alt="" />
 						</a>
 					</div>
-					{/* end::Item */ }
-					{/* begin::Separator */ }
+					{/*end::Item*/}
+					{/*begin::Separator*/}
 					<div className="separator separator-solid"></div>
-					{/* end::Separator */ }
-					{/* begin::Item */ }
+					{/*end::Separator*/}
+					{/*begin::Item*/}
 					<div className="d-flex align-items-center justify-content-between py-8">
 						<div className="d-flex flex-column mr-2">
 							<a href="#" className="font-weight-bold text-dark text-hover-primary">MotionWire</a>
@@ -812,13 +593,13 @@ return(
 							</div>
 						</div>
 						<a href="#" className="symbol symbol-70 flex-shrink-0">
-							<img src="/assets/media/stock-600x400/img-8.jpg" title="" alt="" />
+							<img src="./assets/media/stock-600x400/img-8.jpg" title="" alt="" />
 						</a>
 					</div>
-					{/* end::Item */ }
+					{/*end::Item*/}
 				</div>
-				{/* end::Wrapper */ }
-				{/* begin::Purchase */ }
+				{/*end::Wrapper*/}
+				{/*begin::Purchase*/}
 				<div className="offcanvas-footer">
 					<div className="d-flex align-items-center justify-content-between mb-4">
 						<span className="font-weight-bold text-muted font-size-sm mr-2">Total</span>
@@ -832,14 +613,14 @@ return(
 						<button type="button" className="btn btn-primary text-weight-bold">Place Order</button>
 					</div>
 				</div>
-				{/* end::Purchase */ }
+				{/*end::Purchase*/}
 			</div>
-			{/* end::Content */ }
+			{/*end::Content*/}
 		</div>
-		{/* end::Quick Cart */ }
-		{/* begin::Quick Panel */ }
+		{/*end::Quick Cart*/}
+		{/*begin::Quick Panel*/}
 		<div id="kt_quick_panel" className="offcanvas offcanvas-right pt-5 pb-10">
-			{/* begin::Header */ }
+			{/*begin::Header*/}
 			<div className="offcanvas-header offcanvas-header-navs d-flex align-items-center justify-content-between mb-5">
 				<ul className="nav nav-bold nav-tabs nav-tabs-line nav-tabs-line-3x nav-tabs-primary flex-grow-1 px-10" role="tablist">
 					<li className="nav-item">
@@ -858,20 +639,20 @@ return(
 					</a>
 				</div>
 			</div>
-			{/* end::Header */ }
-			{/* begin::Content */ }
+			{/*end::Header*/}
+			{/*begin::Content*/}
 			<div className="offcanvas-content px-10">
 				<div className="tab-content">
-					{/* begin::Tabpane */ }
+					{/*begin::Tabpane*/}
 					<div className="tab-pane fade show pt-3 pr-5 mr-n5 active" id="kt_quick_panel_logs" role="tabpanel">
-						{/* begin::Section */ }
+						{/*begin::Section*/}
 						<div className="mb-15">
 							<h5 className="font-weight-bold mb-5">System Messages</h5>
-							{/* begin: Item */ }
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center flex-wrap mb-5">
 								<div className="symbol symbol-50 symbol-light mr-5">
 									<span className="symbol-label">
-										<img src="/assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
+										<img src="./assets/media/svg/misc/006-plurk.svg" className="h-50 align-self-center" alt="" />
 									</span>
 								</div>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -880,12 +661,12 @@ return(
 								</div>
 								<span className="btn btn-sm btn-light font-weight-bolder py-1 my-lg-0 my-2 text-dark-50">+82$</span>
 							</div>
-							{/* end: Item */ }
-							{/* begin: Item */ }
+							{/*end: Item*/}
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center flex-wrap mb-5">
 								<div className="symbol symbol-50 symbol-light mr-5">
 									<span className="symbol-label">
-										<img src="/assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
+										<img src="./assets/media/svg/misc/015-telegram.svg" className="h-50 align-self-center" alt="" />
 									</span>
 								</div>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -894,12 +675,12 @@ return(
 								</div>
 								<span className="btn btn-sm btn-light font-weight-bolder my-lg-0 my-2 py-1 text-dark-50">+280$</span>
 							</div>
-							{/* end: Item */ }
-							{/* begin: Item */ }
+							{/*end: Item*/}
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center flex-wrap mb-5">
 								<div className="symbol symbol-50 symbol-light mr-5">
 									<span className="symbol-label">
-										<img src="/assets/media/svg/misc/003-puzzle.svg" className="h-50 align-self-center" alt="" />
+										<img src="./assets/media/svg/misc/003-puzzle.svg" className="h-50 align-self-center" alt="" />
 									</span>
 								</div>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -908,12 +689,12 @@ return(
 								</div>
 								<span className="btn btn-sm btn-light font-weight-bolder my-lg-0 my-2 py-1 text-dark-50">+4500$</span>
 							</div>
-							{/* end: Item */ }
-							{/* begin: Item */ }
+							{/*end: Item*/}
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center flex-wrap mb-5">
 								<div className="symbol symbol-50 symbol-light mr-5">
 									<span className="symbol-label">
-										<img src="/assets/media/svg/misc/005-bebo.svg" className="h-50 align-self-center" alt="" />
+										<img src="./assets/media/svg/misc/005-bebo.svg" className="h-50 align-self-center" alt="" />
 									</span>
 								</div>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -922,12 +703,12 @@ return(
 								</div>
 								<span className="btn btn-sm btn-light font-weight-bolder my-lg-0 my-2 py-1 text-dark-50">+4500$</span>
 							</div>
-							{/* end: Item */ }
-							{/* begin: Item */ }
+							{/*end: Item*/}
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center flex-wrap">
 								<div className="symbol symbol-50 symbol-light mr-5">
 									<span className="symbol-label">
-										<img src="/assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
+										<img src="./assets/media/svg/misc/014-kickstarter.svg" className="h-50 align-self-center" alt="" />
 									</span>
 								</div>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -936,25 +717,25 @@ return(
 								</div>
 								<span className="btn btn-sm btn-light font-weight-bolder my-lg-0 my-2 py-1 text-dark-50">+4500$</span>
 							</div>
-							{/* end: Item */ }
+							{/*end: Item*/}
 						</div>
-						{/* end::Section */ }
-						{/* begin::Section */ }
+						{/*end::Section*/}
+						{/*begin::Section*/}
 						<div className="mb-5">
 							<h5 className="font-weight-bold mb-5">Notifications</h5>
-							{/* begin: Item */ }
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center bg-light-warning rounded p-5 mb-5">
 								<span className="svg-icon svg-icon-warning mr-5">
 									<span className="svg-icon svg-icon-lg">
-										{/* begin::Svg Icon | path:/assets/media/svg/icons/Home/Library.svg */ }
+										{/*begin::Svg Icon | path:./assets/media/svg/icons/Home/Library.svg*/}
 										<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-											<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+											<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 												<rect x="0" y="0" width="24" height="24" />
 												<path d="M5,3 L6,3 C6.55228475,3 7,3.44771525 7,4 L7,20 C7,20.5522847 6.55228475,21 6,21 L5,21 C4.44771525,21 4,20.5522847 4,20 L4,4 C4,3.44771525 4.44771525,3 5,3 Z M10,3 L11,3 C11.5522847,3 12,3.44771525 12,4 L12,20 C12,20.5522847 11.5522847,21 11,21 L10,21 C9.44771525,21 9,20.5522847 9,20 L9,4 C9,3.44771525 9.44771525,3 10,3 Z" fill="#000000" />
 												<rect fill="#000000" opacity="0.3" transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519)" x="16.3255682" y="2.94551858" width="3" height="18" rx="1" />
 											</g>
 										</svg>
-										{/* end::Svg Icon */ }
+										{/*end::Svg Icon*/}
 									</span>
 								</span>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -963,20 +744,20 @@ return(
 								</div>
 								<span className="font-weight-bolder text-warning py-1 font-size-lg">+28%</span>
 							</div>
-							{/* end: Item */ }
-							{/* begin: Item */ }
+							{/*end: Item*/}
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center bg-light-success rounded p-5 mb-5">
 								<span className="svg-icon svg-icon-success mr-5">
 									<span className="svg-icon svg-icon-lg">
-										{/* begin::Svg Icon | path:/assets/media/svg/icons/Communication/Write.svg */ }
+										{/*begin::Svg Icon | path:./assets/media/svg/icons/Communication/Write.svg*/}
 										<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-											<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+											<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 												<rect x="0" y="0" width="24" height="24" />
-												<path d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z" fill="#000000" fillRule="nonzero" transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953)" />
-												<path d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z" fill="#000000" fillRule="nonzero" opacity="0.3" />
+												<path d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953)" />
+												<path d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
 											</g>
 										</svg>
-										{/* end::Svg Icon */ }
+										{/*end::Svg Icon*/}
 									</span>
 								</span>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -985,20 +766,20 @@ return(
 								</div>
 								<span className="font-weight-bolder text-success py-1 font-size-lg">+50%</span>
 							</div>
-							{/* end: Item */ }
-							{/* begin: Item */ }
+							{/*end: Item*/}
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center bg-light-danger rounded p-5 mb-5">
 								<span className="svg-icon svg-icon-danger mr-5">
 									<span className="svg-icon svg-icon-lg">
-										{/* begin::Svg Icon | path:/assets/media/svg/icons/Communication/Group-chat.svg */ }
+										{/*begin::Svg Icon | path:./assets/media/svg/icons/Communication/Group-chat.svg*/}
 										<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-											<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+											<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 												<rect x="0" y="0" width="24" height="24" />
 												<path d="M16,15.6315789 L16,12 C16,10.3431458 14.6568542,9 13,9 L6.16183229,9 L6.16183229,5.52631579 C6.16183229,4.13107011 7.29290239,3 8.68814808,3 L20.4776218,3 C21.8728674,3 23.0039375,4.13107011 23.0039375,5.52631579 L23.0039375,13.1052632 L23.0206157,17.786793 C23.0215995,18.0629336 22.7985408,18.2875874 22.5224001,18.2885711 C22.3891754,18.2890457 22.2612702,18.2363324 22.1670655,18.1421277 L19.6565168,15.6315789 L16,15.6315789 Z" fill="#000000" />
 												<path d="M1.98505595,18 L1.98505595,13 C1.98505595,11.8954305 2.88048645,11 3.98505595,11 L11.9850559,11 C13.0896254,11 13.9850559,11.8954305 13.9850559,13 L13.9850559,18 C13.9850559,19.1045695 13.0896254,20 11.9850559,20 L4.10078614,20 L2.85693427,21.1905292 C2.65744295,21.3814685 2.34093638,21.3745358 2.14999706,21.1750444 C2.06092565,21.0819836 2.01120804,20.958136 2.01120804,20.8293182 L2.01120804,18.32426 C1.99400175,18.2187196 1.98505595,18.1104045 1.98505595,18 Z M6.5,14 C6.22385763,14 6,14.2238576 6,14.5 C6,14.7761424 6.22385763,15 6.5,15 L11.5,15 C11.7761424,15 12,14.7761424 12,14.5 C12,14.2238576 11.7761424,14 11.5,14 L6.5,14 Z M9.5,16 C9.22385763,16 9,16.2238576 9,16.5 C9,16.7761424 9.22385763,17 9.5,17 L11.5,17 C11.7761424,17 12,16.7761424 12,16.5 C12,16.2238576 11.7761424,16 11.5,16 L9.5,16 Z" fill="#000000" opacity="0.3" />
 											</g>
 										</svg>
-										{/* end::Svg Icon */ }
+										{/*end::Svg Icon*/}
 									</span>
 								</span>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -1007,14 +788,14 @@ return(
 								</div>
 								<span className="font-weight-bolder text-danger py-1 font-size-lg">-27%</span>
 							</div>
-							{/* end: Item */ }
-							{/* begin: Item */ }
+							{/*end: Item*/}
+							{/*begin: Item*/}
 							<div className="d-flex align-items-center bg-light-info rounded p-5">
 								<span className="svg-icon svg-icon-info mr-5">
 									<span className="svg-icon svg-icon-lg">
-										{/* begin::Svg Icon | path:/assets/media/svg/icons/General/Attachment2.svg */ }
+										{/*begin::Svg Icon | path:./assets/media/svg/icons/General/Attachment2.svg*/}
 										<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-											<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+											<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 												<rect x="0" y="0" width="24" height="24" />
 												<path d="M11.7573593,15.2426407 L8.75735931,15.2426407 C8.20507456,15.2426407 7.75735931,15.6903559 7.75735931,16.2426407 C7.75735931,16.7949254 8.20507456,17.2426407 8.75735931,17.2426407 L11.7573593,17.2426407 L11.7573593,18.2426407 C11.7573593,19.3472102 10.8619288,20.2426407 9.75735931,20.2426407 L5.75735931,20.2426407 C4.65278981,20.2426407 3.75735931,19.3472102 3.75735931,18.2426407 L3.75735931,14.2426407 C3.75735931,13.1380712 4.65278981,12.2426407 5.75735931,12.2426407 L9.75735931,12.2426407 C10.8619288,12.2426407 11.7573593,13.1380712 11.7573593,14.2426407 L11.7573593,15.2426407 Z" fill="#000000" opacity="0.3" transform="translate(7.757359, 16.242641) rotate(-45.000000) translate(-7.757359, -16.242641)" />
 												<path d="M12.2426407,8.75735931 L15.2426407,8.75735931 C15.7949254,8.75735931 16.2426407,8.30964406 16.2426407,7.75735931 C16.2426407,7.20507456 15.7949254,6.75735931 15.2426407,6.75735931 L12.2426407,6.75735931 L12.2426407,5.75735931 C12.2426407,4.65278981 13.1380712,3.75735931 14.2426407,3.75735931 L18.2426407,3.75735931 C19.3472102,3.75735931 20.2426407,4.65278981 20.2426407,5.75735931 L20.2426407,9.75735931 C20.2426407,10.8619288 19.3472102,11.7573593 18.2426407,11.7573593 L14.2426407,11.7573593 C13.1380712,11.7573593 12.2426407,10.8619288 12.2426407,9.75735931 L12.2426407,8.75735931 Z" fill="#000000" transform="translate(16.242641, 7.757359) rotate(-45.000000) translate(-16.242641, -7.757359)" />
@@ -1022,7 +803,7 @@ return(
 												<path d="M17.9142136,15.4497475 C18.4664983,15.4497475 18.9142136,15.8974627 18.9142136,16.4497475 L18.9142136,18.4497475 C18.9142136,19.0020322 18.4664983,19.4497475 17.9142136,19.4497475 C17.3619288,19.4497475 16.9142136,19.0020322 16.9142136,18.4497475 L16.9142136,16.4497475 C16.9142136,15.8974627 17.3619288,15.4497475 17.9142136,15.4497475 Z M23.4497475,17.1568542 C23.8402718,17.5473785 23.8402718,18.1805435 23.4497475,18.5710678 L22.0355339,19.9852814 C21.6450096,20.3758057 21.0118446,20.3758057 20.6213203,19.9852814 C20.2307961,19.5947571 20.2307961,18.9615921 20.6213203,18.5710678 L22.0355339,17.1568542 C22.4260582,16.76633 23.0592232,16.76633 23.4497475,17.1568542 Z M12.6213203,17.1568542 C13.0118446,16.76633 13.6450096,16.76633 14.0355339,17.1568542 L15.4497475,18.5710678 C15.8402718,18.9615921 15.8402718,19.5947571 15.4497475,19.9852814 C15.0592232,20.3758057 14.4260582,20.3758057 14.0355339,19.9852814 L12.6213203,18.5710678 C12.2307961,18.1805435 12.2307961,17.5473785 12.6213203,17.1568542 Z" fill="#000000" opacity="0.3" transform="translate(18.035534, 17.863961) scale(1, -1) rotate(45.000000) translate(-18.035534, -17.863961)" />
 											</g>
 										</svg>
-										{/* end::Svg Icon */ }
+										{/*end::Svg Icon*/}
 									</span>
 								</span>
 								<div className="d-flex flex-column flex-grow-1 mr-2">
@@ -1031,16 +812,16 @@ return(
 								</div>
 								<span className="font-weight-bolder text-info py-1 font-size-lg">+8%</span>
 							</div>
-							{/* end: Item */ }
+							{/*end: Item*/}
 						</div>
-						{/* end::Section */ }
+						{/*end::Section*/}
 					</div>
-					{/* end::Tabpane */ }
-					{/* begin::Tabpane */ }
+					{/*end::Tabpane*/}
+					{/*begin::Tabpane*/}
 					<div className="tab-pane fade pt-2 pr-5 mr-n5" id="kt_quick_panel_notifications" role="tabpanel">
-						{/* begin::Nav */ }
+						{/*begin::Nav*/}
 						<div className="navi navi-icon-circle navi-spacer-x-0">
-							{/* begin::Item */ }
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1048,11 +829,14 @@ return(
 											<i className="flaticon-bell text-success icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">5 new user generated report</div>
+										<div className="text-muted">Reports based on sales</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1060,11 +844,14 @@ return(
 											<i className="flaticon2-box text-danger icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">2 new items submited</div>
+										<div className="text-muted">by Grog John</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1072,11 +859,14 @@ return(
 											<i className="flaticon-psd text-primary icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">79 PSD files generated</div>
+										<div className="text-muted">Reports based on sales</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1084,11 +874,14 @@ return(
 											<i className="flaticon2-supermarket text-warning icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">$2900 worth producucts sold</div>
+										<div className="text-muted">Total 234 items</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1096,11 +889,14 @@ return(
 											<i className="flaticon-paper-plane-1 text-success icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">4.5h-avarage response time</div>
+										<div className="text-muted">Fostest is Barry</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1108,11 +904,14 @@ return(
 											<i className="flaticon-safe-shield-protection text-danger icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">3 Defence alerts</div>
+										<div className="text-muted">40% less alerts thar last week</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1120,11 +919,14 @@ return(
 											<i className="flaticon-notepad text-primary icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">Avarage 4 blog posts per author</div>
+										<div className="text-muted">Most posted 12 time</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1132,11 +934,14 @@ return(
 											<i className="flaticon-users-1 text-warning icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">16 authors joined last week</div>
+										<div className="text-muted">9 photodrapehrs, 7 designer</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1144,11 +949,14 @@ return(
 											<i className="flaticon2-box text-info icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">2 new items have been submited</div>
+										<div className="text-muted">by Grog John</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1156,11 +964,14 @@ return(
 											<i className="flaticon2-download text-success icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">2.8 GB-total downloads size</div>
+										<div className="text-muted">Mostly PSD end AL concepts</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1168,11 +979,14 @@ return(
 											<i className="flaticon2-supermarket text-danger icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">$2900 worth producucts sold</div>
+										<div className="text-muted">Total 234 items</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1180,11 +994,14 @@ return(
 											<i className="flaticon-bell text-primary icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">7 new user generated report</div>
+										<div className="text-muted">Reports based on sales</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
-							{/* begin::Item */ }
+							{/*end::Item*/}
+							{/*begin::Item*/}
 							<a href="#" className="navi-item">
 								<div className="navi-link rounded">
 									<div className="symbol symbol-50 mr-3">
@@ -1192,22 +1009,25 @@ return(
 											<i className="flaticon-paper-plane-1 text-success icon-lg"></i>
 										</div>
 									</div>
-									
+									<div className="navi-text">
+										<div className="font-weight-bold font-size-lg">4.5h-avarage response time</div>
+										<div className="text-muted">Fostest is Barry</div>
+									</div>
 								</div>
 							</a>
-							{/* end::Item */ }
+							{/*end::Item*/}
 						</div>
-						{/* end::Nav */ }
+						{/*end::Nav*/}
 					</div>
-					{/* end::Tabpane */ }
-					{/* begin::Tabpane */ }
+					{/*end::Tabpane*/}
+					{/*begin::Tabpane*/}
 					<div className="tab-pane fade pt-3 pr-5 mr-n5" id="kt_quick_panel_settings" role="tabpanel">
 						<form className="form">
-							{/* begin::Section */ }
+							{/*begin::Section*/}
 							<div>
-								
+								<h5 className="font-weight-bold mb-3">Customer Care</h5>
 								<div className="form-group mb-0 row align-items-center">
-									
+									<label className="col-8 col-form-label">Enable Notifications:</label>
 									<div className="col-4 d-flex justify-content-end">
 										<span className="switch switch-success switch-sm">
 											<label>
@@ -1240,9 +1060,9 @@ return(
 									</div>
 								</div>
 							</div>
-							{/* end::Section */ }
+							{/*end::Section*/}
 							<div className="separator separator-dashed my-6"></div>
-							{/* begin::Section */ }
+							{/*begin::Section*/}
 							<div className="pt-2">
 								<h5 className="font-weight-bold mb-3">Reports</h5>
 								<div className="form-group mb-0 row align-items-center">
@@ -1279,9 +1099,9 @@ return(
 									</div>
 								</div>
 							</div>
-							{/* end::Section */ }
+							{/*end::Section*/}
 							<div className="separator separator-dashed my-6"></div>
-							{/* begin::Section */ }
+							{/*begin::Section*/}
 							<div className="pt-2">
 								<h5 className="font-weight-bold mb-3">Memebers</h5>
 								<div className="form-group mb-0 row align-items-center">
@@ -1318,41 +1138,41 @@ return(
 									</div>
 								</div>
 							</div>
-							{/* end::Section */ }
+							{/*end::Section*/}
 						</form>
 					</div>
-					{/* end::Tabpane */ }
+					{/*end::Tabpane*/}
 				</div>
 			</div>
-			{/* end::Content */ }
+			{/*end::Content*/}
 		</div>
-		{/* end::Quick Panel */ }
-		{/* begin::Chat Panel */ }
+		{/*end::Quick Panel*/}
+		{/*begin::Chat Panel*/}
 		<div className="modal modal-sticky modal-sticky-bottom-right" id="kt_chat_modal" role="dialog" data-backdrop="false">
 			<div className="modal-dialog" role="document">
 				<div className="modal-content">
-					{/* begin::Card */ }
+					{/*begin::Card*/}
 					<div className="card card-custom">
-						{/* begin::Header */ }
+						{/*begin::Header*/}
 						<div className="card-header align-items-center px-4 py-3">
 							<div className="text-left flex-grow-1">
-								{/* begin::Dropdown Menu */ }
+								{/*begin::Dropdown Menu*/}
 								<div className="dropdown dropdown-inline">
 									<button type="button" className="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										<span className="svg-icon svg-icon-lg">
-											{/* begin::Svg Icon | path:/assets/media/svg/icons/Communication/Add-user.svg */ }
+											{/*begin::Svg Icon | path:./assets/media/svg/icons/Communication/Add-user.svg*/}
 											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-												<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 													<polygon points="0 0 24 0 24 24 0 24" />
-													<path d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fillRule="nonzero" opacity="0.3" />
-													<path d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fillRule="nonzero" />
+													<path d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+													<path d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
 												</g>
 											</svg>
-											{/* end::Svg Icon */ }
+											{/*end::Svg Icon*/}
 										</span>
 									</button>
 									<div className="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-md">
-										{/* begin::Navigation */ }
+										{/*begin::Navigation*/}
 										<ul className="navi navi-hover py-5">
 											<li className="navi-item">
 												<a href="#" className="navi-link">
@@ -1418,10 +1238,10 @@ return(
 												</a>
 											</li>
 										</ul>
-										{/* end::Navigation */ }
+										{/*end::Navigation*/}
 									</div>
 								</div>
-								{/* end::Dropdown Menu */ }
+								{/*end::Dropdown Menu*/}
 							</div>
 							<div className="text-center flex-grow-1">
 								<div className="text-dark-75 font-weight-bold font-size-h5">Matt Pears</div>
@@ -1436,18 +1256,18 @@ return(
 								</button>
 							</div>
 						</div>
-						{/* end::Header */ }
-						{/* begin::Body */ }
+						{/*end::Header*/}
+						{/*begin::Body*/}
 						<div className="card-body">
-							{/* begin::Scroll */ }
+							{/*begin::Scroll*/}
 							<div className="scroll scroll-pull" data-height="375" data-mobile-height="300">
-								{/* begin::Messages */ }
+								{/*begin::Messages*/}
 								<div className="messages">
-									{/* begin::Message In */ }
+									{/*begin::Message In*/}
 									<div className="d-flex flex-column mb-5 align-items-start">
 										<div className="d-flex align-items-center">
 											<div className="symbol symbol-circle symbol-40 mr-3">
-												<img alt="Pic" src="/assets/media/users/300_12.jpg" />
+												<img alt="Pic" src="./assets/media/users/300_12.jpg" />
 											</div>
 											<div>
 												<a href="#" className="text-dark-75 text-hover-primary font-weight-bold font-size-h6">Matt Pears</a>
@@ -1456,8 +1276,8 @@ return(
 										</div>
 										<div className="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left max-w-400px">How likely are you to recommend our company to your friends and family?</div>
 									</div>
-									{/* end::Message In */ }
-									{/* begin::Message Out */ }
+									{/*end::Message In*/}
+									{/*begin::Message Out*/}
 									<div className="d-flex flex-column mb-5 align-items-end">
 										<div className="d-flex align-items-center">
 											<div>
@@ -1465,17 +1285,17 @@ return(
 												<a href="#" className="text-dark-75 text-hover-primary font-weight-bold font-size-h6">You</a>
 											</div>
 											<div className="symbol symbol-circle symbol-40 ml-3">
-												<img alt="Pic" src="/assets/media/users/300_21.jpg" />
+												<img alt="Pic" src="./assets/media/users/300_21.jpg" />
 											</div>
 										</div>
 										<div className="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">Hey there, we’re just writing to let you know that you’ve been subscribed to a repository on GitHub.</div>
 									</div>
-									{/* end::Message Out */ }
-									{/* begin::Message In */ }
+									{/*end::Message Out*/}
+									{/*begin::Message In*/}
 									<div className="d-flex flex-column mb-5 align-items-start">
 										<div className="d-flex align-items-center">
 											<div className="symbol symbol-circle symbol-40 mr-3">
-												<img alt="Pic" src="/assets/media/users/300_21.jpg" />
+												<img alt="Pic" src="./assets/media/users/300_21.jpg" />
 											</div>
 											<div>
 												<a href="#" className="text-dark-75 text-hover-primary font-weight-bold font-size-h6">Matt Pears</a>
@@ -1484,8 +1304,8 @@ return(
 										</div>
 										<div className="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left max-w-400px">Ok, Understood!</div>
 									</div>
-									{/* end::Message In */ }
-									{/* begin::Message Out */ }
+									{/*end::Message In*/}
+									{/*begin::Message Out*/}
 									<div className="d-flex flex-column mb-5 align-items-end">
 										<div className="d-flex align-items-center">
 											<div>
@@ -1493,17 +1313,17 @@ return(
 												<a href="#" className="text-dark-75 text-hover-primary font-weight-bold font-size-h6">You</a>
 											</div>
 											<div className="symbol symbol-circle symbol-40 ml-3">
-												<img alt="Pic" src="/assets/media/users/300_21.jpg" />
+												<img alt="Pic" src="./assets/media/users/300_21.jpg" />
 											</div>
 										</div>
 										<div className="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">You’ll receive notifications for all issues, pull requests!</div>
 									</div>
-									{/* end::Message Out */ }
-									{/* begin::Message In */ }
+									{/*end::Message Out*/}
+									{/*begin::Message In*/}
 									<div className="d-flex flex-column mb-5 align-items-start">
 										<div className="d-flex align-items-center">
 											<div className="symbol symbol-circle symbol-40 mr-3">
-												<img alt="Pic" src="/assets/media/users/300_12.jpg" />
+												<img alt="Pic" src="./assets/media/users/300_12.jpg" />
 											</div>
 											<div>
 												<a href="#" className="text-dark-75 text-hover-primary font-weight-bold font-size-h6">Matt Pears</a>
@@ -1513,8 +1333,8 @@ return(
 										<div className="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left max-w-400px">You can unwatch this repository immediately by clicking here:
 										<a href="#">https://github.com</a></div>
 									</div>
-									{/* end::Message In */ }
-									{/* begin::Message Out */ }
+									{/*end::Message In*/}
+									{/*begin::Message Out*/}
 									<div className="d-flex flex-column mb-5 align-items-end">
 										<div className="d-flex align-items-center">
 											<div>
@@ -1522,17 +1342,17 @@ return(
 												<a href="#" className="text-dark-75 text-hover-primary font-weight-bold font-size-h6">You</a>
 											</div>
 											<div className="symbol symbol-circle symbol-40 ml-3">
-												<img alt="Pic" src="/assets/media/users/300_21.jpg" />
+												<img alt="Pic" src="./assets/media/users/300_21.jpg" />
 											</div>
 										</div>
 										<div className="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">Discover what students who viewed Learn Figma - UI/UX Design. Essential Training also viewed</div>
 									</div>
-									{/* end::Message Out */ }
-									{/* begin::Message In */ }
+									{/*end::Message Out*/}
+									{/*begin::Message In*/}
 									<div className="d-flex flex-column mb-5 align-items-start">
 										<div className="d-flex align-items-center">
 											<div className="symbol symbol-circle symbol-40 mr-3">
-												<img alt="Pic" src="/assets/media/users/300_12.jpg" />
+												<img alt="Pic" src="./assets/media/users/300_12.jpg" />
 											</div>
 											<div>
 												<a href="#" className="text-dark-75 text-hover-primary font-weight-bold font-size-h6">Matt Pears</a>
@@ -1541,8 +1361,8 @@ return(
 										</div>
 										<div className="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left max-w-400px">Most purchased Business courses during this sale!</div>
 									</div>
-									{/* end::Message In */ }
-									{/* begin::Message Out */ }
+									{/*end::Message In*/}
+									{/*begin::Message Out*/}
 									<div className="d-flex flex-column mb-5 align-items-end">
 										<div className="d-flex align-items-center">
 											<div>
@@ -1550,21 +1370,21 @@ return(
 												<a href="#" className="text-dark-75 text-hover-primary font-weight-bold font-size-h6">You</a>
 											</div>
 											<div className="symbol symbol-circle symbol-40 ml-3">
-												<img alt="Pic" src="/assets/media/users/300_21.jpg" />
+												<img alt="Pic" src="./assets/media/users/300_21.jpg" />
 											</div>
 										</div>
 										<div className="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">Company BBQ to celebrate the last quater achievements and goals. Food and drinks provided</div>
 									</div>
-									{/* end::Message Out */ }
+									{/*end::Message Out*/}
 								</div>
-								{/* end::Messages */ }
+								{/*end::Messages*/}
 							</div>
-							{/* end::Scroll */ }
+							{/*end::Scroll*/}
 						</div>
-						{/* end::Body */ }
-						{/* begin::Footer */ }
+						{/*end::Body*/}
+						{/*begin::Footer*/}
 						<div className="card-footer align-items-center">
-							{/* begin::Compose */ }
+							{/*begin::Compose*/}
 							<textarea className="form-control border-0 p-0" rows="2" placeholder="Type a message"></textarea>
 							<div className="d-flex align-items-center justify-content-between mt-5">
 								<div className="mr-3">
@@ -1579,49 +1399,50 @@ return(
 									<button type="button" className="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Send</button>
 								</div>
 							</div>
-							{/* begin::Compose */ }
+							{/*begin::Compose*/}
 						</div>
-						{/* end::Footer */ }
+						{/*end::Footer*/}
 					</div>
-					{/* end::Card */ }
+					{/*end::Card*/}
 				</div>
 			</div>
 		</div>
-		{/* end::Chat Panel */ }
-		{/* begin::Scrolltop */ }
+		{/*end::Chat Panel*/}
+		{/*begin::Scrolltop*/}
 		<div id="kt_scrolltop" className="scrolltop">
 			<span className="svg-icon">
-				{/* begin::Svg Icon | path:/assets/media/svg/icons/Navigation/Up-2.svg */ }
+				{/*begin::Svg Icon | path:./assets/media/svg/icons/Navigation/Up-2.svg*/}
 				<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-					<g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 						<polygon points="0 0 24 0 24 24 0 24" />
 						<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
-						<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fillRule="nonzero" />
+						<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
 					</g>
 				</svg>
-				{/* end::Svg Icon */ }
+				{/*end::Svg Icon*/}
 			</span>
 		</div>
-		{/* end::Scrolltop */ }
-	
-		{/* begin::Demo Panel */ }
+		{/*end::Scrolltop*/}
+		
+		{/*end::Sticky Toolbar*/}
+		{/*begin::Demo Panel*/}
 		<div id="kt_demo_panel" className="offcanvas offcanvas-right p-10">
-			{/* begin::Header */ }
+			{/*begin::Header*/}
 			<div className="offcanvas-header d-flex align-items-center justify-content-between pb-7">
 				<h4 className="font-weight-bold m-0">Select A Demo</h4>
 				<a href="#" className="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_demo_panel_close">
 					<i className="ki ki-close icon-xs text-muted"></i>
 				</a>
 			</div>
-			{/* end::Header */ }
-			{/* begin::Content */ }
+			{/*end::Header*/}
+			{/*begin::Content*/}
 			<div className="offcanvas-content">
-				{/* begin::Wrapper */ }
+				{/*begin::Wrapper*/}
 				<div className="offcanvas-wrapper mb-5 scroll-pull">
 					<h5 className="font-weight-bold mb-4 text-center">Demo 1</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo offcanvas-demo-active">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo1.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo1.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo1/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1631,7 +1452,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 2</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo2.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo2.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo2/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1641,7 +1462,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 3</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo3.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo3.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo3/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1651,7 +1472,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 4</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo4.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo4.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo4/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1661,7 +1482,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 5</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo5.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo5.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo5/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1671,7 +1492,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 6</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo6.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo6.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo6/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1681,7 +1502,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 7</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo7.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo7.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo7/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1691,7 +1512,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 8</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo8.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo8.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo8/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1701,7 +1522,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 9</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo9.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo9.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo9/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1711,7 +1532,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 10</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo10.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo10.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo10/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1721,7 +1542,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 11</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo11.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo11.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo11/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1731,7 +1552,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 12</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo12.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo12.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo12/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1741,7 +1562,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 13</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo13.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo13.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="../../demo13/dist" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow" target="_blank">Default</a>
@@ -1751,7 +1572,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 14</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo14.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo14.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1760,7 +1581,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 15</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo15.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo15.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1769,7 +1590,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 16</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo16.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo16.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1778,7 +1599,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 17</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo17.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo17.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1787,7 +1608,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 18</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo18.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo18.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1796,7 +1617,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 19</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo19.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo19.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1805,7 +1626,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 20</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo20.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo20.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1814,7 +1635,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 21</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo21.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo21.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1823,7 +1644,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 22</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo22.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo22.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1832,7 +1653,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 23</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo23.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo23.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1841,7 +1662,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 24</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo24.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo24.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1850,7 +1671,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 25</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo25.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo25.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1859,7 +1680,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 26</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo26.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo26.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1868,7 +1689,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 27</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo27.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo27.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1877,7 +1698,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 28</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo28.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo28.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1886,7 +1707,7 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 29</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo29.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo29.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
@@ -1895,34 +1716,28 @@ return(
 					<h5 className="font-weight-bold mb-4 text-center">Demo 30</h5>
 					<div className="overlay rounded-lg mb-8 offcanvas-demo">
 						<div className="overlay-wrapper rounded-lg">
-							<img src="/assets/media/demos/demo30.png" alt="" className="w-100" />
+							<img src="./assets/media/demos/demo30.png" alt="" className="w-100" />
 						</div>
 						<div className="overlay-layer">
 							<a href="#" className="btn btn-white btn-text-primary btn-hover-primary font-weight-boldest text-center min-w-75px shadow disabled opacity-90">Coming soon</a>
 						</div>
 					</div>
 				</div>
-				{/* end::Wrapper */ }
-				{/* begin::Purchase */ }
+				{/*end::Wrapper*/}
+				{/*begin::Purchase*/}
 				<div className="offcanvas-footer">
 					<a href="https://1.envato.market/EA4JP" target="_blank" className="btn btn-block btn-danger btn-shadow font-weight-bolder text-uppercase">Buy Metronic Now!</a>
 				</div>
-				{/* end::Purchase */ }
+				{/*end::Purchase*/}
 			</div>
-			{/* end::Content */ }
-		</div></div></div>
-		{/* end::Demo Panel */ }
-		<script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
-		{/* begin::Global Config(global config for global JS scripts) */ }
-		
-		{/* end::Global Config */ }
-		{/* begin::Global Theme Bundle(used by all pages) */ }
-		
-		</div>
+			{/*end::Content*/}
 		</div>
 		
 	</body>
-	</Fragment>
+	{/*end::Body*/}
+
+<script src={this.context.reactBase+"/assets/plugins/global/plugins.bundle.js" }></script>
+</Fragment>
 	
 	
 
