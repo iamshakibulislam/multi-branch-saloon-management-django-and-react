@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-
+from staffall.models import Employe
 from django.conf import settings
 from django.db.models.signals import post_save 
 from django.dispatch import receiver 
@@ -43,9 +43,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-      first_name = models.CharField(max_length=40,default='')
-      last_name = models.CharField(max_length=40,default='')
-      username = models.CharField(max_length=40,default='',unique=True)
+      first_name = models.CharField(max_length=40)
+      last_name = models.CharField(max_length=40)
+      username = models.CharField(max_length=40,unique=True)
 
       email = models.EmailField(max_length=255, unique=True, db_index=True)
       is_manager=models.BooleanField(default=False)
@@ -70,7 +70,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
+def create_auth_token(sender, instance, created=False, **kwargs):
       if created:
             Token.objects.create(user=instance)
+
+      
+
+      if instance.is_staff == True or instance.is_manager == True or instance.is_admin == True:
+            
+            Employe.objects.get_or_create(user_staff=instance)
 

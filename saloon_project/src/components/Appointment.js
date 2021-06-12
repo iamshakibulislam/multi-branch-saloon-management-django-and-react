@@ -4,7 +4,6 @@ let Appointment = () =>{
 
 	return (
 
-	<Fragment>
 
 	<section id="appoinment" className="col-padtop wow fadeInUp">
     <div className="container">
@@ -74,7 +73,7 @@ let Appointment = () =>{
     </div>
   </section>
 
-	</Fragment>
+	
 
 		)
 }

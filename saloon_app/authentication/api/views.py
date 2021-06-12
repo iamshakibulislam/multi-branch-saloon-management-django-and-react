@@ -2,7 +2,7 @@ from authentication.api import serializers
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
+from rest_framework.permissions import IsAuthenticated
 from authentication.api.serializers import RegistrationSerializers
 
 from rest_framework.authtoken.models import Token
@@ -25,3 +25,5 @@ def registration_view(request):
             else:
                   data = serializer.errors
             return Response(data)
+
+
