@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
 # Create your models here.
+
 class Manager(models.Model):
 
       user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -19,13 +20,25 @@ class Manager(models.Model):
 
 
 class Branch(models.Model):
-      title = models.CharField(max_length=330,null=True,blank=True)
-      manager =  models.ForeignKey(Manager, on_delete=models.CASCADE)
+
+      name = models.CharField(max_length=330,null=True,blank=True)
+      
       address = models.TextField(max_length=320,null=True,blank=True)
-      mobile_no = models.CharField(max_length=230,null=True,blank=True)
-      status = models.BooleanField(default=True)
       created_date = models.DateTimeField(auto_now_add=True)
       updated_date = models.DateTimeField(auto_now=True)
 
       def __str__(self):
-          return self.title
+          return self.name
+
+
+
+
+
+class BranchEmployee(models.Model):
+
+  branch_name = models.ForeignKey(Branch,on_delete=models.CASCADE,null=True)
+  staff = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+
+
+  def __str__(self):
+    return str(self.staff.first_name)

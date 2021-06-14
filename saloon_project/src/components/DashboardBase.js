@@ -1,5 +1,7 @@
 import React,{Fragment,Component} from 'react'
 import StaffRegister from './Dashboard/staffRegister'
+import staffList from './Dashboard/staffList'
+import branchList from './Dashboard/branchList'
 import {Route,Switch,Link} from 'react-router-dom'
 import baseContext from './shared/baseContext'
 
@@ -45,6 +47,7 @@ return(
 		<link href={this.context.reactBase+"/assets/css/themes/layout/brand/dark.css" } rel="stylesheet" type="text/css" />
 		<link href={this.context.reactBase+"/assets/css/themes/layout/aside/dark.css" } rel="stylesheet" type="text/css" />
 		{/*end::Layout Themes*/}
+		
 		<link rel="shortcut icon" href={this.context.reactBase+"/assets/media/logos/favicon.ico" } />
 	</head>
 	{/*end::Head*/}
@@ -183,13 +186,13 @@ return(
 											</li>
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="#" className="menu-link menu-toggle">
+												<Link to="/dashboard/staff_list" className="menu-link menu-toggle">
 													<i className="menu-bullet menu-bullet-line">
 														<span></span>
 													</i>
 													<span className="menu-text">Staff list</span>
 													
-												</a>
+												</Link>
 												
 											</li>
 										
@@ -224,26 +227,16 @@ return(
 													<span className="menu-text">Branch Management</span>
 												</span>
 											</li>
-											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="javascript:;" className="menu-link menu-toggle">
-													<i className="menu-bullet menu-bullet-dot">
-														<span></span>
-													</i>
-													<span className="menu-text">Add new branch</span>
-													<i className="menu-arrow"></i>
-												</a>
-												
-											</li>
-
+											
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="javascript:;" className="menu-link menu-toggle">
+												<Link to="/dashboard/branch_list" className="menu-link menu-toggle">
 													<i className="menu-bullet menu-bullet-dot">
 														<span></span>
 													</i>
 													<span className="menu-text">Branch list</span>
 													<i className="menu-arrow"></i>
-												</a>
+												</Link>
 												
 											</li>
 
@@ -339,9 +332,13 @@ return(
 								{/*begin::Row*/}
 								<div className="row">
 								
-									<div className="col-lg-6 col-xxl-4" style={{marginLeft:'auto',marginRight:'auto'}}>
+									<div className="col-lg-10 col-xxl-4" style={{marginLeft:'auto',marginRight:'auto'}}>
 									 <Route path="/dashboard/add_staff" exact component={StaffRegister} />
+									 <Route path="/dashboard/staff_list" exact component={staffList} />
+									 <Route path="/dashboard/branch_list" exact component={branchList}/>
 									</div>
+
+									
 								
 								</div>
 								{/*end::Row*/}

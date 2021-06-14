@@ -135,31 +135,49 @@ render(){
     :null}
 
    </div>
+   <div className="row">
+   <div className="col-md-6">
      <div className="form-group">
     <label>First name <span className="text-danger">*</span></label>
     <input type="text" className="form-control"  placeholder="John" onChange={(event)=>this.setInfo(event,'first_name')} required />
     <span className="form-text text-muted"></span>
    </div>
+   </div>
+   <div className="col-md-6">
    <div className="form-group">
     <label>Last Name <span className="text-danger">*</span></label>
     <input type="text" className="form-control"  placeholder="Doe" onChange={(event)=>this.setInfo(event,'last_name')} required/>
     <span className="form-text text-muted"></span>
    </div>
+   </div>
+   </div>
+
+   <div className="row">
+   <div className="col-md-6">
      <div className="form-group">
     <label>Username <span className="text-danger">*</span></label>
     <input type="text" className="form-control"  placeholder="User122" onChange={(event)=>this.setInfo(event,'username')} required/>
     <span className="form-text text-muted"></span>
    </div>
+   </div>
+   <div className="col-md-6">
    <div className="form-group">
     <label>Email address <span className="text-danger">*</span></label>
     <input type="email" className="form-control"  placeholder="Enter email" onChange={(event)=>this.setInfo(event,'email')} required/>
     <span className="form-text text-muted">We'll never share your email with anyone else.</span>
    </div>
+   </div>
+
+   </div>
+   <div className="row">
+   <div className="col-md-6">
    <div className="form-group">
     <label for="exampleInputPassword1">Password <span className="text-danger">*</span></label>
     <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={(event)=>this.setInfo(event,'password')} required/>
    </div>
-   
+   </div>
+
+   <div className="col-md-6">
    <div className="form-group">
     <label for="exampleSelect1">Role<span className="text-danger">*</span></label>
     <select name="role" className="form-control" id="exampleSelect1" onChange={(event)=>this.setInfo(event,'role')}>
@@ -170,7 +188,8 @@ render(){
      
     </select>
    </div>
-   
+   </div>
+   </div>
    
   </div>
   <div className="card-footer">
