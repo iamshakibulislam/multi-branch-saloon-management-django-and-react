@@ -2,6 +2,7 @@ import React,{Fragment,Component} from 'react'
 import StaffRegister from './Dashboard/staffRegister'
 import staffList from './Dashboard/staffList'
 import branchList from './Dashboard/branchList'
+import addStaffToBranch from './Dashboard/addStaffToBranch'
 import {Route,Switch,Link} from 'react-router-dom'
 import baseContext from './shared/baseContext'
 
@@ -242,13 +243,13 @@ return(
 
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="javascript:;" className="menu-link menu-toggle">
+												<Link to="/dashboard/add_staff_to_branch" className="menu-link menu-toggle">
 													<i className="menu-bullet menu-bullet-dot">
 														<span></span>
 													</i>
 													<span className="menu-text">Add staff to branch</span>
 													<i className="menu-arrow"></i>
-												</a>
+												</Link>
 												
 											</li>
 
@@ -336,6 +337,7 @@ return(
 									 <Route path="/dashboard/add_staff" exact component={StaffRegister} />
 									 <Route path="/dashboard/staff_list" exact component={staffList} />
 									 <Route path="/dashboard/branch_list" exact component={branchList}/>
+									 <Route path="/dashboard/add_staff_to_branch" exact component={addStaffToBranch} />
 									</div>
 
 									

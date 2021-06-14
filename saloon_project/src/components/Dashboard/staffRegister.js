@@ -47,14 +47,14 @@ setInfo(event,name){
 
     if(name == 'role'){
         if(event.target.value == 'admin'){
-            this.setState({is_admin:true,is_staff:false})
+            this.setState({is_admin:true,is_staff:false,is_manager:false})
         }
         else if(event.target.value=='manager'){
-            this.setState({is_manager:true,is_staff:false})
+            this.setState({is_manager:true,is_admin:false,is_staff:false})
         }
 
         else if(event.target.value=='employee'){
-            this.setState({is_staff:true})
+            this.setState({is_staff:true,is_manager:false,is_admin:false})
         }
 
 

@@ -3,10 +3,63 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import staff_list as staffs
+from .serializers import staff_list as staffs , add_to_branch
 from companybranch.models import Branch,BranchEmployee
 from authentication.models import User
 from django.db.models import Q
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def add_to_branch_employee(request):
+	getdata = add_to_branch(data=request.data)
+
+	if getdata.is_valid():
+		userid = getdata.validated_data['userid']
+		branchid = getdata.validated_data['branchid']
+
+		sel_emp = User.objects.get(id=int(userid))
+		sel_branch = Branch.objects.get(id=int(branchid))
+
+
+
+		BranchEmployee.objects.create(branch_name=sel_branch,staff=sel_emp)
+
+		return Response({"created":"ok"})
+
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated])
+def staff_to_add(request):
+	role = 'Emoloyee'
+	info = {"employee":[],"branch":[]}
+	find = User.objects.filter(Q(is_admin=True) | Q(is_staff=True) | Q(is_manager=True))
+	for x in find:
+		if BranchEmployee.objects.filter(staff=x).exists() == False:
+			if x.is_manager == True:
+				role='Manager'
+
+			if x.is_staff ==  True:
+				role = "Employee"
+
+			if x.is_admin == True:
+				role = 'Admin'
+			info["employee"].append({"id":x.id,"name":str(x.first_name +' '+ x.last_name),"role":str(role)})
+
+
+	all_branch = Branch.objects.all()
+
+	for x in all_branch:
+		info["branch"].append({"name":x.name,"id":x.id})
+
+
+	return Response(info)
+
 
 
 @api_view(['POST',])
