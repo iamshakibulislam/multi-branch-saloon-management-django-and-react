@@ -1,5 +1,9 @@
 import React,{Fragment,Component} from 'react'
 import StaffRegister from './Dashboard/staffRegister'
+import staffList from './Dashboard/staffList'
+import branchList from './Dashboard/branchList'
+import itemList from './Dashboard/itemList'
+import addStaffToBranch from './Dashboard/addStaffToBranch'
 import {Route,Switch,Link} from 'react-router-dom'
 import baseContext from './shared/baseContext'
 
@@ -45,6 +49,7 @@ return(
 		<link href={this.context.reactBase+"/assets/css/themes/layout/brand/dark.css" } rel="stylesheet" type="text/css" />
 		<link href={this.context.reactBase+"/assets/css/themes/layout/aside/dark.css" } rel="stylesheet" type="text/css" />
 		{/*end::Layout Themes*/}
+		
 		<link rel="shortcut icon" href={this.context.reactBase+"/assets/media/logos/favicon.ico" } />
 	</head>
 	{/*end::Head*/}
@@ -183,13 +188,13 @@ return(
 											</li>
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="#" className="menu-link menu-toggle">
+												<Link to="/dashboard/staff_list" className="menu-link menu-toggle">
 													<i className="menu-bullet menu-bullet-line">
 														<span></span>
 													</i>
 													<span className="menu-text">Staff list</span>
 													
-												</a>
+												</Link>
 												
 											</li>
 										
@@ -224,38 +229,28 @@ return(
 													<span className="menu-text">Branch Management</span>
 												</span>
 											</li>
-											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="javascript:;" className="menu-link menu-toggle">
-													<i className="menu-bullet menu-bullet-dot">
-														<span></span>
-													</i>
-													<span className="menu-text">Add new branch</span>
-													<i className="menu-arrow"></i>
-												</a>
-												
-											</li>
-
+											
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="javascript:;" className="menu-link menu-toggle">
+												<Link to="/dashboard/branch_list" className="menu-link menu-toggle">
 													<i className="menu-bullet menu-bullet-dot">
 														<span></span>
 													</i>
 													<span className="menu-text">Branch list</span>
 													<i className="menu-arrow"></i>
-												</a>
+												</Link>
 												
 											</li>
 
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="javascript:;" className="menu-link menu-toggle">
+												<Link to="/dashboard/add_staff_to_branch" className="menu-link menu-toggle">
 													<i className="menu-bullet menu-bullet-dot">
 														<span></span>
 													</i>
 													<span className="menu-text">Add staff to branch</span>
 													<i className="menu-arrow"></i>
-												</a>
+												</Link>
 												
 											</li>
 
@@ -267,7 +262,75 @@ return(
 								</li>
 								
 
+							{/* adding product management */}
 
+							<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+									<a href="javascript:;" className="menu-link menu-toggle">
+										<span className="svg-icon menu-icon">
+											{/*begin::Svg Icon | path:./assets/media/svg/icons/Shopping/Barcode-read.svg*/}
+											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24" />
+													<rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16" />
+													<path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero" />
+												</g>
+											</svg>
+											{/*end::Svg Icon*/}
+										</span>
+										<span className="menu-text">Item Management</span>
+										<i className="menu-arrow"></i>
+									</a>
+									<div className="menu-submenu">
+										<i className="menu-arrow"></i>
+										<ul className="menu-subnav">
+											<li className="menu-item menu-item-parent" aria-haspopup="true">
+												<span className="menu-link">
+													<span className="menu-text">Item Management</span>
+												</span>
+											</li>
+											
+
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<Link to="/dashboard/item_list" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Item list</span>
+													<i className="menu-arrow"></i>
+												</Link>
+												
+											</li>
+
+
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<Link to="/dashboard/add_staff_to_branch" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Add Provider</span>
+													<i className="menu-arrow"></i>
+												</Link>
+												
+											</li>
+
+
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<Link to="/dashboard/add_staff_to_branch" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Assign items to Provider</span>
+													<i className="menu-arrow"></i>
+												</Link>
+												
+											</li>
+
+
+											
+											
+										</ul>
+									</div>
+								</li>
 
 
 							</ul>
@@ -339,9 +402,15 @@ return(
 								{/*begin::Row*/}
 								<div className="row">
 								
-									<div className="col-lg-6 col-xxl-4" style={{marginLeft:'auto',marginRight:'auto'}}>
+									<div className="col-lg-10 col-xxl-4" style={{marginLeft:'auto',marginRight:'auto'}}>
 									 <Route path="/dashboard/add_staff" exact component={StaffRegister} />
+									 <Route path="/dashboard/staff_list" exact component={staffList} />
+									 <Route path="/dashboard/branch_list" exact component={branchList}/>
+									 <Route path="/dashboard/add_staff_to_branch" exact component={addStaffToBranch} />
+									 <Route path="/dashboard/item_list" exact component={itemList} />
 									</div>
+
+									
 								
 								</div>
 								{/*end::Row*/}

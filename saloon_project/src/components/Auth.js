@@ -182,8 +182,9 @@ event.preventDefault();
   }).then((response)=>{
     
     sessionStorage.setItem("token", response.data.token);
-    this.props.history.push('/dashboard');
-    this.setState({process:false});
+    document.location.href = '/dashboard'
+
+    
 
 
 
