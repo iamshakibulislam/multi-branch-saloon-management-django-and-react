@@ -162,8 +162,8 @@ return(
 <div className="card card-custom">
 	<div className="card-header flex-wrap border-0 pt-6 pb-0">
 		<div className="card-title">
-			<h3 className="card-label">Branch list 
-											<span className="text-muted pt-2 font-size-sm d-block">Add new branch and delete from list</span></h3> </div>
+			<h3 className="card-label">Add staff to branch 
+											<span className="text-muted pt-2 font-size-sm d-block">Add unallocated staff to branch </span></h3> </div>
 		<div className="card-toolbar">
 			{/*  begin::Dropdown*/ } 
 		
