@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'authentication',
     'companybranch.apps.CompanybranchConfig',
     'staffall.apps.StaffallConfig',
-    'marketing.apps.MarketingConfig', 
+    'marketing.apps.MarketingConfig',
+    'items.apps.ItemsConfig',
      
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
+         'rest_framework.authentication.TokenAuthentication',
        
     ]
 }

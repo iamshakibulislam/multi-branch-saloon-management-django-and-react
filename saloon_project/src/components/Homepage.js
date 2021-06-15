@@ -42,17 +42,17 @@ let IndexPage = ()=>{
        
         <li data-index="rs-16" data-transition="zoomout" data-slotamount="default"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-description=""> 
          
-          <img src="http://www.placehold.it/2560x1080"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" className="rev-slidebg" data-no-retina/> 
+          <img src="/images/main/slider1.jpg"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" className="rev-slidebg" data-no-retina/> 
         </li>
       
         <li data-index="rs-17" data-transition="zoomout" data-slotamount="default"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-description=""> 
           
-          <img src="http://www.placehold.it/2560x1080"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" className="rev-slidebg" data-no-retina/> 
+          <img src="/images/main/slider2.jpg"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" className="rev-slidebg" data-no-retina/> 
     
         </li>
         <li data-index="rs-18" data-transition="zoomout" data-slotamount="default"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-description=""> 
          
-          <img src="http://www.placehold.it/2560x1080"  alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" className="rev-slidebg" data-no-retina /> 
+          <img src="/images/main/slider3.jpg"   alt="slider"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" className="rev-slidebg" data-no-retina /> 
         </li>
       </ul>
       <div className="tp-static-layers"></div>
@@ -82,9 +82,9 @@ let IndexPage = ()=>{
   <section id="salon" className="col-padtop wow fadeInUp">
     <div className="container">
       <div className="row">
-        <div className="col-sm-6 col-md-6 col-lg-6 col-padright-none wow fadeInLeft"><img src="http://www.placehold.it/587x500" alt="Saloon" /></div>
-        <div className="col-sm-6 col-md-6 col-lg-6 col-padleft-none wow fadeInRight"><img src="http://www.placehold.it/587x250" alt="Saloon" /></div>
-        <div className="col-sm-6 col-md-6 col-lg-6 col-padleft-none wow fadeInRight"><img src="http://www.placehold.it/587x250" alt="Saloon" /></div>
+        <div className="col-sm-6 col-md-6 col-lg-6 col-padright-none wow fadeInLeft"><img src="/images/main/saloon-1.jpg" alt="Saloon" /></div>
+        <div className="col-sm-6 col-md-6 col-lg-6 col-padleft-none wow fadeInRight"><img src="/images/main/saloon-2.jpg" alt="Saloon" /></div>
+        <div className="col-sm-6 col-md-6 col-lg-6 col-padleft-none wow fadeInRight"><img src="/images/main/saloon-3.jpg" alt="Saloon" /></div>
       </div>
     </div>
   </section>
