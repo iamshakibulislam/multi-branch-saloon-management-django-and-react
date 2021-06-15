@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'authentication',
     'companybranch.apps.CompanybranchConfig',
     'staffall.apps.StaffallConfig',
-    'marketing.apps.MarketingConfig', 
+    'marketing.apps.MarketingConfig',
+    'items.apps.ItemsConfig',
      
     'django.contrib.admin',
     'django.contrib.auth',
