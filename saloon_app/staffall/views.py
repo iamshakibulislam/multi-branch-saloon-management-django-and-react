@@ -40,6 +40,8 @@ def staff_to_add(request):
 	info = {"employee":[],"branch":[]}
 	find = User.objects.filter(Q(is_admin=True) | Q(is_staff=True) | Q(is_manager=True))
 	for x in find:
+		if x.is_superuser == True:
+			continue
 		if BranchEmployee.objects.filter(staff=x).exists() == False:
 			if x.is_manager == True:
 				role='Manager'
@@ -90,6 +92,8 @@ def staff_list(request):
 
 
 			for empdata in all_employee:
+				if empdata.is_superuser == True:
+					continue
 				branchName='no branch'
 				try:
 					findStaff=BranchEmployee.objects.get(staff = empdata)

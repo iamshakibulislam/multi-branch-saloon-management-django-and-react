@@ -59,8 +59,8 @@ return(
 		{/*begin::Header Mobile*/}
 		<div id="kt_header_mobile" className="header-mobile align-items-center header-mobile-fixed">
 			{/*begin::Logo*/}
-			<a href="index.html">
-				<img alt="Logo" src={this.context.reactBase+"/assets/media/logos/logo-light.png"} />
+			<a href="#">
+				<img alt="Logo" src={this.context.reactBase+"/assets/logos/logo-light.png"} />
 			</a>
 			{/*end::Logo*/}
 			{/*begin::Toolbar*/}
@@ -103,7 +103,7 @@ return(
 					<div className="brand flex-column-auto" id="kt_brand">
 						{/*begin::Logo*/}
 						<a href="index.html" className="brand-logo">
-							<img alt="Logo" src={this.context.reactBase+"/assets/media/logos/logo-light.png"} />
+							<img alt="Logo" src={this.context.reactBase+"/assets/logos/logo-light.png"} />
 						</a>
 						{/*end::Logo*/}
 						{/*begin::Toggle*/}
