@@ -294,7 +294,7 @@ header {
    #Make Appoinment div css 
   ========================================================================== */
 .appoimentbg {
-	background: url(http://www.placehold.it/1170x1280) no-repeat fixed center top;
+	background: url(/images/main/appoinment-bg.jpg) no-repeat fixed center top;
 	padding: 100px 70px 50px;
 	color: #fff;
 	width: 100%;
@@ -372,7 +372,7 @@ header {
   ========================================================================== */
 
 #parallax-2 {
-	background: url(http://www.placehold.it/2560x1000) 50% 0 no-repeat;
+	background: url(/images/main/parallax-bg.jpg) 50% 0 no-repeat;
 	height: 640px;
 }
 .parallax {
@@ -520,7 +520,7 @@ header {
   ========================================================================== */
 
 #contact {
-	background: url(http://www.placehold.it/2560x1440) no-repeat left center #ccc;
+	background: url(/images/main/footerbg.jpg) no-repeat left center #ccc;
 	padding: 100px 0px;
 }
 #contact h2 {
