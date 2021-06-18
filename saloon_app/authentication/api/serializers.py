@@ -1,9 +1,22 @@
 from rest_framework import serializers
-from authentication.models import User
-from staffall.models import Employe
+from marketing.models import *
+from companybranch.models import *
 
+from staffall.models import *
+from authentication.models import User
+import json
 class RegistrationSerializers(serializers.ModelSerializer):
       password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+      dob = serializers.CharField(max_length=120)
+      services = serializers.CharField(max_length=100)
+      workdays_from = serializers.CharField(max_length=22)
+      workdays_to = serializers.CharField(max_length=22)
+      time_from = serializers.CharField(max_length=22)
+      time_to = serializers.CharField(max_length=22)
+      mobile = serializers.CharField(max_length=22)
+      address = serializers.CharField(max_length=44)
+      color = serializers.CharField(max_length=33)
+      branch = serializers.IntegerField()
 
       class Meta:
             model = User
@@ -33,7 +46,46 @@ class RegistrationSerializers(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
 
-            
+            #profile adding would be heere
+            if self.validated_data['is_manager'] == True or self.validated_data['is_staff'] == True or self.validated_data['is_admin']:
+                  if self.validated_data['is_superuser'] == True:
+                        pass
+                  else:
+
+                        getuser = User.objects.get(email=user.email)
+
+
+                        sel_branch = Branch.objects.get(id=int(self.validated_data['branch']))
+                        Employe.objects.create(
+
+                              user_staff = getuser,
+                              address = self.validated_data['address'],
+                              mobile = self.validated_data['mobile'],
+                              dob = self.validated_data['dob'],
+                              color =  self.validated_data['color'],
+                              workdays_from = self.validated_data['workdays_from'],
+                              workdays_to = self.validated_data['workdays_to'],
+                              time_from = self.validated_data['time_from'],
+                              time_to = self.validated_data['time_to'],
+                              branch = sel_branch
+
+
+
+
+                              )
+
+
+
+                        get_services_list = list(json.loads(self.validated_data['services']))
+
+                        for ser in get_services_list:
+
+
+                              track_service_providers.objects.create(
+                                    service = Service.objects.get(id=int(ser)),
+                                    provider = user
+                                    )
+
 
             return user
 

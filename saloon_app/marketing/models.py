@@ -45,11 +45,11 @@ class ServiceCategorey(models.Model):
 
 class Service(models.Model):
       title = models.CharField(max_length=150,null=True,blank=True)
-      categorey = models.ForeignKey(ServiceCategorey,on_delete=models.CASCADE)
+      
       servicelocation = models.CharField(max_length=300,null=True,blank=True)
       cost = models.IntegerField(null=True,blank=True)
       taxes = models.IntegerField(null=True,blank=True)
-      serviceduration= models,TimeField(null=True,blank=True)
+      serviceduration= models.IntegerField(null=True,blank=True)
       #provider = models.ForeignKey(to='staffall.Employe',on_delete=models.CASCADE)
       servicecommision = models.IntegerField(null=True,blank=True)
       monthlytarget = models.IntegerField(null=True,blank=True)

@@ -7,8 +7,10 @@ static contextType = baseContext
 
 
     state = {
+        service_data:null,
         processing:false,
         alert:false,
+        staff_data:null,
         errorMessage:false,
         first_name:null,
         last_name:null,
@@ -18,8 +20,85 @@ static contextType = baseContext
         role:'employee',
         is_admin:false,
         is_staff:true,
-        is_manager:false
+        is_manager:false,
+
+        dob:null,
+        services:[],
+        workdays_from:'Sat',
+        workdays_to:'Sat',
+        time_from:null,
+        time_to:null,
+        mobile:null,
+        color:'red',
+        address:null,
+        branch:null,
+       
+
+
     }
+
+
+
+
+componentDidMount(){
+
+this.setState({processing:true});
+        axios.post(this.context.baseUrl+'/staff/staff_to_add/',
+    { 
+        
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      
+      this.setState({staff_data:response.data,processing:false,parsed:true})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      console.log(error.response);
+      this.setState({processing:false,alert:true,message:'Can not load data !'})
+    })
+
+
+
+
+
+    axios.post(this.context.baseUrl+'/staff/get_services/',
+    { 
+        
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      
+      this.setState({service_data:response.data,processing:false,parsed:true})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      console.log(error.response);
+      this.setState({processing:false,alert:true,message:'Can not load data !'})
+    })
+
+
+
+
+}
 
 
 
@@ -59,6 +138,68 @@ setInfo(event,name){
 
 
     }
+
+
+    if(name=='dob'){
+        this.setState({dob:event.target.value})
+    }
+
+
+    if(name=='services'){
+
+        this.setState({services:[]});
+        let opt =[];
+        let selectElement = document.getElementById('SelectServices');
+        Array.from(selectElement.selectedOptions).map(option => opt.push(option.value));
+
+        this.setState({services:opt});
+
+
+    }
+
+
+    if(name=='workdays_from'){
+
+        this.setState({workdays_from:event.target.value})
+    }
+
+
+    if(name=='workdays_to'){
+        this.setState({workdays_to:event.target.value})
+    }
+
+    if(name=='time_from'){
+
+        this.setState({time_from:event.target.value})
+    }
+
+
+    if(name == 'time_to'){
+        this.setState({time_to:event.target.value})
+    }
+
+
+    if(name=='mobile'){
+
+        this.setState({mobile:event.target.value})
+    }
+
+
+    if(name=='address'){
+        this.setState({address:event.target.value})
+    }
+
+
+    if(name=='color'){
+        this.setState({color:event.target.value})
+    }
+
+
+    if(name=='branch'){
+        this.setState({branch:event.target.value})
+    }
+
+
 }
 
 
@@ -78,7 +219,21 @@ axios.post(this.context.baseUrl+'/api/authentication/register',
     username:this.state.username,
     is_admin:this.state.is_admin,
     is_manager:this.state.is_manager,
-    is_staff:this.state.is_staff
+    is_staff:this.state.is_staff,
+    dob:this.state.dob,
+    services:JSON.stringify(this.state.services),
+    workdays_from:this.state.workdays_from,
+    workdays_to:this.state.workdays_to,
+    time_from:this.state.time_from,
+    time_to:this.state.time_to,
+    mobile:this.state.mobile,
+    address:this.state.address,
+    color:this.state.color,
+    branch:Number(this.state.branch),
+    is_superuser:false
+
+
+    
 
 
     }).then((response)=>{
@@ -179,8 +334,8 @@ render(){
 
    <div className="col-md-6">
    <div className="form-group">
-    <label for="exampleSelect1">Role<span className="text-danger">*</span></label>
-    <select name="role" className="form-control" id="exampleSelect1" onChange={(event)=>this.setInfo(event,'role')}>
+    <label for="exampleSelectRole">Role<span className="text-danger">*</span></label>
+    <select name="role" className="form-control" id="exampleSelectRole" onChange={(event)=>this.setInfo(event,'role')}>
      
      <option value="employee">Employee</option>
      <option value="admin">Admin</option>
@@ -190,6 +345,161 @@ render(){
    </div>
    </div>
    </div>
+
+   <div className="row">
+   <div className="col-md-6">
+   <div className="form-group">
+    <label for="exampleInputDate">Date of birth <span className="text-danger">*</span></label>
+    <input type="date" className="form-control" id="exampleInputDate"  onChange={(event)=>this.setInfo(event,'dob')} required/>
+   </div>
+   </div>
+
+   <div className="col-md-6">
+   <div className="form-group">
+    <label for="exampleSelectServices">Services<span className="text-danger">*</span></label>
+    <select name="role" multiple className="form-control" id="SelectServices" onChange={(event)=>this.setInfo(event,'services')}>
+     
+     {this.state.service_data != null?
+
+    this.state.service_data.map((data,index)=>{
+        return(
+
+
+            <option value={data.id}>{data.name}</option>
+
+
+            )
+    }):null
+
+     
+     
+     }
+    </select>
+   </div>
+   </div>
+   </div>
+
+
+   <div className="row">
+   <div className="col-md-3">
+      <div className="form-group">
+    <label for="exampleSelectFrom">Work days(From)<span className="text-danger">*</span></label>
+    <select name="workday" className="form-control" id="exampleSelectworkday" onChange={(event)=>this.setInfo(event,'workdays_from')}>
+     
+     <option value="Sat">Saturday</option>
+     <option value="Sun">Sunday</option>
+     <option value="Mon">Monday</option>
+     <option value="Tue">Tuesday</option>
+     <option value="Wed">Wednesday</option>
+     <option value="Thu">Thursday</option>
+     <option value="Fri">Friday</option>
+     
+    </select>
+   </div>
+   </div>
+
+   <div className="col-md-3">
+      <div className="form-group">
+    <label for="exampleSelectWorkdayto">Work days(To)<span className="text-danger">*</span></label>
+    <select name="role" className="form-control" id="exampleSelectWorkdayto" onChange={(event)=>this.setInfo(event,'workdays_to')}>
+     
+     <option value="Sat">Saturday</option>
+     <option value="Sun">Sunday</option>
+     <option value="Mon">Monday</option>
+     <option value="Tue">Tuesday</option>
+     <option value="Wed">Wednesday</option>
+     <option value="Thu">Thursday</option>
+     <option value="Fri">Friday</option>
+     
+    </select>
+   </div>
+   </div>
+
+   <div className="col-md-3">
+   <div className="form-group">
+    <label for="exampleTimeFrom">Time (From)<span className="text-danger">*</span></label>
+    <input type="time" id="timeFrom" className="form-control" onChange={(event)=>this.setInfo(event,'time_from')}/>
+   </div>
+   </div>
+   <div className="col-md-3">
+   <div className="form-group">
+    <label for="exampleSelect1">Time (To)<span className="text-danger">*</span></label>
+    <input type="time" id="timeTo" className="form-control" onChange={(event)=>this.setInfo(event,'time_to')}/>
+   </div>
+   </div>
+   </div>
+
+
+     <div className="row">
+   <div className="col-md-6">
+   <div className="form-group">
+    <label for="exampleInputDate">Mobile no <span className="text-danger">*</span></label>
+    <input type="text" placeholder="+913xxxxxxxxx" className="form-control" id="exampleInputmobile"  onChange={(event)=>this.setInfo(event,'mobile')} required/>
+   </div>
+   </div>
+
+
+   <div className="col-md-6">
+      <div className="form-group">
+    <label for="exampleSelectColour">Color<span className="text-danger">*</span></label>
+    <select name="color" className="form-control" id="exampleSelectcolor" onChange={(event)=>this.setInfo(event,'color')}>
+     
+     <option value="red">Red</option>
+     <option value="blue">Blue</option>
+     <option value="green">Green</option>
+     <option value="yellow">Yellow</option>
+     <option value="orange">Orange</option>
+     <option value="pink">Pink</option>
+     <option value="purple">Purple</option>
+     <option value="skyblue">Sky blue</option>
+    
+     
+    </select>
+   </div>
+   </div>
+
+   
+   </div>
+
+
+
+
+   <div className="row">
+   <div className="col-md-6">
+   <div className="form-group">
+    <label for="exampleInputDate">Address <span className="text-danger">*</span></label>
+    <textarea className="form-control" id="exampleInputAddress"  onChange={(event)=>this.setInfo(event,'address')} required/>
+   </div>
+   </div>
+
+
+   <div className="col-md-6">
+      <div className="form-group">
+    <label for="exampleSelectBranch">Branch<span className="text-danger">*</span></label>
+    <select name="branch" className="form-control" id="exampleSelectBranch" onChange={(event)=>this.setInfo(event,'branch')}>
+    <option>Select branch</option>
+     
+     {this.state.staff_data != null?
+    this.state.staff_data.branch.map((data,index)=>{
+        return(
+        <option value={data.id}>{data.name}</option>
+        )
+    }):null
+     
+    }
+    }
+ }
+     
+    
+     
+    </select>
+   </div>
+   </div>
+
+   
+   </div>
+
+
    
   </div>
   <div className="card-footer">
