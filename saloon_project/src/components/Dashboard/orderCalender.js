@@ -7,12 +7,7 @@ class orderCalender extends Component{
 static contextType = baseContext
 
 componentDidMount(){
-let eles = document.createElement('script');
-  eles.src= this.context.reactBase+'/assets/js/scripts.bundle.js';
-  document.getElementById('root').appendChild(eles);
-  let ele = document.createElement('script');
-  ele.src= this.context.reactBase+'/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js';
-  document.getElementById('root').appendChild(ele);
+
 
  let el= document.createElement('script');
   el.src=this.context.reactBase+'/js/calender.js';
