@@ -47,8 +47,9 @@ class RegistrationSerializers(serializers.ModelSerializer):
             user.save()
 
             #profile adding would be heere
+            
             if user.is_manager == True or user.is_staff == True or user.is_admin == True:
-                  
+
                   if self.validated_data['is_manager'] == True or self.validated_data['is_staff'] == True or self.validated_data['is_admin']:
                         if self.validated_data['is_superuser'] == True:
                               pass
