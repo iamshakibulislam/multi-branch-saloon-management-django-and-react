@@ -75,8 +75,11 @@ def create_auth_token(sender, instance, created=False, **kwargs):
             Token.objects.create(user=instance)
 
       
-
+'''       
       if instance.is_staff == True or instance.is_manager == True or instance.is_admin == True:
             
             Employe.objects.get_or_create(user_staff=instance)
+
+
+'''
 

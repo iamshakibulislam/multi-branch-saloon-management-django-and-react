@@ -5,9 +5,22 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import staff_list as staffs , add_to_branch
 from companybranch.models import Branch,BranchEmployee
+from .models import *
+from marketing.models import *
 from authentication.models import User
 from django.db.models import Q
 
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_services(request):
+	sr= Service.objects.all()
+	info = []
+
+	for x in sr:
+		info.append({'id':x.id,'name':x.title})
+
+	return Response(info)
 
 
 

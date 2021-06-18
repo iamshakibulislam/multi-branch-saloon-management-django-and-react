@@ -1,7 +1,7 @@
-import React,{Fragment} from 'react'
+import React,{Fragment,Component} from 'react'
 import Navbar from './shared/Navbar'
 import IndexScript from './shared/sharable-script'
-
+import baseContext from './shared/baseContext'
 import Slider from './Slider'
 import Gallary from './Gallary'
 import Services from './Services'
@@ -9,7 +9,15 @@ import Appointment from './Appointment'
 import BottomSection from './BottomSection'
 import Footer from './shared/Footer'
 import $ from 'jquery'
-let IndexPage = ()=>{
+class IndexPage extends Component{
+
+static contextType = baseContext
+
+  
+
+
+
+  render(){
 
 	return (
     <div>
@@ -1398,7 +1406,7 @@ let IndexPage = ()=>{
         Top
       </a>
     </div>
-  );
+  );}
 }
 
 

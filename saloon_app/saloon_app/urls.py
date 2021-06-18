@@ -25,6 +25,7 @@ urlpatterns = [
     path('staff/',include('staffall.urls')),
     path('branch/',include('companybranch.urls')),
     path('items/',include('items.urls')),
+    path('marketing/',include('marketing.urls')),
     #this re_path should connect to a view (while deploying to the server) to get react routing advantages which renders react build index.html file .
     re_path('',views.testing)
     
