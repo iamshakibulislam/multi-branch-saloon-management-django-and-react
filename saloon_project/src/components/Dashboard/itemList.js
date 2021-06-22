@@ -193,12 +193,12 @@ return(
 							<form action="#" className="from form-inline" onSubmit={this.addItems.bind(this)}>
 							<div className="form-group mr-4">
 								
-								<input type="text" className="form-control" name="itemname" placeholder="New Item name" onChange={(event)=>this.add_items_update(event,'name')} />
+								<input type="text" className="form-control" name="itemname" placeholder="New Item name" onChange={(event)=>this.add_items_update(event,'name')} required/>
 								</div>
 
 								<div className="form-group">
 				
-								<input type="text" className="form-control" name="price" placeholder="Price / Unit" onChange={(event)=>this.add_items_update(event,'price')}/>
+								<input type="text" className="form-control" name="price" placeholder="Price / Unit" onChange={(event)=>this.add_items_update(event,'price')} required/>
 								</div>
 								<div className="ml-4"> <button type="submit"  className="btn btn-danger px-6 font-weight-bold">{this.state.addingstatus==false?
 				 <span>Add </span> :

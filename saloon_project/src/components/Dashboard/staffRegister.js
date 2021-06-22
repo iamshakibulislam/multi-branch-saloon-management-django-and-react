@@ -32,6 +32,8 @@ static contextType = baseContext
         color:'red',
         address:null,
         branch:null,
+
+        workdays:[]
        
 
 
@@ -158,15 +160,24 @@ setInfo(event,name){
     }
 
 
-    if(name=='workdays_from'){
 
-        this.setState({workdays_from:event.target.value})
+
+    if(name=='workdays'){
+
+        this.setState({workdays:[]});
+        let opt =[];
+        let selectElement = document.getElementById('workdays');
+        Array.from(selectElement.selectedOptions).map(option => opt.push(option.value));
+
+        this.setState({workdays:opt});
+
+
     }
 
 
-    if(name=='workdays_to'){
-        this.setState({workdays_to:event.target.value})
-    }
+    
+
+
 
     if(name=='time_from'){
 
@@ -222,8 +233,8 @@ axios.post(this.context.baseUrl+'/api/authentication/register',
     is_staff:this.state.is_staff,
     dob:this.state.dob,
     services:JSON.stringify(this.state.services),
-    workdays_from:this.state.workdays_from,
-    workdays_to:this.state.workdays_to,
+    workdays:JSON.stringify(this.state.workdays),
+    
     time_from:this.state.time_from,
     time_to:this.state.time_to,
     mobile:this.state.mobile,
@@ -380,11 +391,11 @@ render(){
    </div>
 
 
-   <div className="row">
-   <div className="col-md-3">
+   <div className="row justify-content-center">
+   <div className="col-md-6">
       <div className="form-group">
-    <label for="exampleSelectFrom">Work days(From)<span className="text-danger">*</span></label>
-    <select name="workday" className="form-control" id="exampleSelectworkday" onChange={(event)=>this.setInfo(event,'workdays_from')}>
+    <label for="exampleSelectFrom">Work days<span className="text-danger">*</span></label>
+    <select name="workdays" multiple className="form-control" id="workdays" onChange={(event)=>this.setInfo(event,'workdays')}>
      
      <option value="Sat">Saturday</option>
      <option value="Sun">Sunday</option>
@@ -398,22 +409,7 @@ render(){
    </div>
    </div>
 
-   <div className="col-md-3">
-      <div className="form-group">
-    <label for="exampleSelectWorkdayto">Work days(To)<span className="text-danger">*</span></label>
-    <select name="role" className="form-control" id="exampleSelectWorkdayto" onChange={(event)=>this.setInfo(event,'workdays_to')}>
-     
-     <option value="Sat">Saturday</option>
-     <option value="Sun">Sunday</option>
-     <option value="Mon">Monday</option>
-     <option value="Tue">Tuesday</option>
-     <option value="Wed">Wednesday</option>
-     <option value="Thu">Thursday</option>
-     <option value="Fri">Friday</option>
-     
-    </select>
-   </div>
-   </div>
+   
 
    <div className="col-md-3">
    <div className="form-group">

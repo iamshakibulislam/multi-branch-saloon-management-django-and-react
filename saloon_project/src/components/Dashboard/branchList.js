@@ -2,7 +2,8 @@ import React,{Component,Fragment} from 'react'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
 import {Route,Link,Switch} from 'react-router-dom'
-import Modal from 'react-modal';
+import Modal from 'react-modal'
+import EditBranch from './EditBranch'
 
 class branchList extends Component{
 
@@ -21,7 +22,10 @@ state = {
 	message:null,
 	is_modal_open:false,
 	delete_id:null,
-	index:null
+	index:null,
+	branch_info:null,
+	editingmode:false,
+	updateid:0
 
 }
 
@@ -71,7 +75,43 @@ componentDidMount(){
 }
 
 
+editClick(event){
 
+	this.setState({updateid:event.currentTarget.id,editingmode:true})
+}
+
+
+needRefresh(){
+	this.setState({processing:true});
+	axios.post(this.context.baseUrl+'/branch/show_branch/',
+    { 
+    	
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      this.setState({branch:response.data,processing:false})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({processing:false,alert:true,message:'Can not load data !'})
+    })
+}
+
+
+closeModal(){
+	this.needRefresh();
+	this.setState({editingmode:false,updateid:0})
+}
 
 add_branch_update(event,identify){
 	if(identify=='name'){
@@ -245,17 +285,28 @@ this.state.branch.map((data,index)=>{
 	
 	<td  data-field="Actions" data-autohide-disabled="false" aria-label="null" className="datatable-cell"><span style={{overflow: 'visible', position: 'relative', width: '125px'}}>						
 
-		<span id={data.id}  onClick={(event)=>this.preDelete(event,index)}>
-		<a href="#" value={data.id}  className="btn btn-sm btn-clean btn-icon" title="Delete"> 
-		<span className="svg-icon svg-icon-md">	                               
-		 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">	
+		<div id={data.id} className="d-inline" onClick={(event)=>this.preDelete(event,index)}>
+		<a href="#" value={data.id}  className="btn btn-sm btn-clean btn-icon " title="Delete"> 
+		
 
-		 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-		 	<rect x="0" y="0" width="24" height="24"></rect>	
-		 	<path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero"></path>
-		 	<path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3"></path> </g>	</svg> </span> 
-		 	</a></span>
-		</span>
+		 <i class="fas fa-trash-alt"></i>                               
+		 
+		 	
+		 	</a>
+		</div>
+
+
+
+
+						
+
+		<div id={data.id} className="d-inline" onClick={(event)=>this.editClick(event)}>
+		<a href="#" value={data.id}   className="btn btn-sm btn-clean btn-icon" title="edit"> 
+		<i class="fas fa-edit"></i>
+		 	</a></div>
+		
+
+   </span>
 	</td>
 </tr>)}):<h1 className="text-center text-success">Waiting for update.... </h1>
 }
@@ -283,6 +334,8 @@ this.state.branch.map((data,index)=>{
           </div>
           
         </Modal>
+
+        <EditBranch closemodal = {this.closeModal.bind(this)} editingmode={this.state.editingmode} updateid={this.state.updateid}/>
 </div>
 
 

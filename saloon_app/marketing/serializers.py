@@ -14,3 +14,19 @@ class adding_services(serializers.Serializer):
 	duration = serializers.IntegerField()
 	commision = serializers.IntegerField()
 	target = serializers.IntegerField()
+
+
+class service_id(serializers.Serializer):
+	serviceid = serializers.IntegerField(allow_null=True,required=False)
+
+
+
+class updateservice(serializers.Serializer):
+	identify = serializers.IntegerField(allow_null=False,required=True)
+	title = serializers.CharField(max_length=200,allow_null=True,required=False)
+	servicelocation = serializers.CharField(max_length=300,allow_null=True,required=False)
+	cost = serializers.IntegerField(required=False,allow_null=True)
+	taxes = serializers.IntegerField(required=False,allow_null=True)
+	serviceduration = serializers.IntegerField(required=False,allow_null=True)
+	servicecommision = serializers.IntegerField(required=False,allow_null=True)
+	monthlytarget = serializers.IntegerField(required=False,allow_null=True)

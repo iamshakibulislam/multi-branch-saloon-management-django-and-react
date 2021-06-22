@@ -5,6 +5,7 @@ import branchList from './Dashboard/branchList'
 import itemList from './Dashboard/itemList'
 import ServiceList from './Dashboard/serviceList'
 import addService from './Dashboard/addService'
+
 import addStaffToBranch from './Dashboard/addStaffToBranch'
 import orderCalender from './Dashboard/orderCalender'
 import {Route,Switch,Link} from 'react-router-dom'
@@ -456,10 +457,10 @@ return(
 								{/*begin::Row*/}
 								<div className="row">
 								
-									<div className="col-lg-10 col-xxl-4" style={{marginLeft:'auto',marginRight:'auto'}}>
+									<div className="col-lg-10 col-xxl-10" style={{marginLeft:'auto',marginRight:'auto'}}>
 									<Route path="/dashboard/" exact component={orderCalender} />
 									 <Route path="/dashboard/add_staff" exact component={StaffRegister} />
-									 <Route path="/dashboard/staff_list" exact component={staffList} />
+									 <Route path="/dashboard/staff_list"  component={staffList} />
 									 <Route path="/dashboard/branch_list" exact component={branchList}/>
 									 <Route path="/dashboard/add_staff_to_branch" exact component={addStaffToBranch} />
 									 <Route path="/dashboard/item_list" exact component={itemList} />

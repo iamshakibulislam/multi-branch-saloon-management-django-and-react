@@ -2,7 +2,9 @@ import React,{Component,Fragment} from 'react'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
 import {Route,Link,Switch} from 'react-router-dom'
+import Editing from './Editing'
 import Modal from 'react-modal';
+
 
 class staffList extends Component{
 
@@ -19,7 +21,9 @@ state = {
 	message:null,
 	is_modal_open:false,
 	delete_id:null,
-	index:null
+	index:null,
+	editingmode:false,
+	updateid:0
 
 }
 
@@ -69,6 +73,36 @@ componentDidMount(){
 }
 
 
+needRefresh(){
+
+
+	this.setState({processing:true});
+	axios.post(this.context.baseUrl+'/staff/staff_list/',
+    { 
+    	branch:this.state.branch
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      this.setState({staff_data:response.data,processing:false})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({processing:false,alert:true,message:'Can not load data !'})
+    })
+
+
+
+}
 
 
 updateBranch(event){
@@ -104,7 +138,16 @@ searchEmployee(){
 
 }
 
+editClick(event){
 
+	this.setState({updateid:event.currentTarget.id,editingmode:true})
+}
+
+
+closeModal(){
+	this.needRefresh();
+	this.setState({editingmode:false,updateid:0})
+}
 
 preDelete(event,index){
 	let getid = event.currentTarget.id;
@@ -152,9 +195,11 @@ render(){
 return(
 
 <div className="card card-custom">
+
 	<div className="card-header flex-wrap border-0 pt-6 pb-0">
 		<div className="card-title">
 			<h3 className="card-label">Staff list 
+
 											<span className="text-muted pt-2 font-size-sm d-block">Select branch to get targeted branch staff list</span></h3> </div>
 		<div className="card-toolbar">
 			{/*  begin::Dropdown*/ } 
@@ -238,23 +283,33 @@ this.state.staff_data['employee'].map((data,index)=>{
 	<td data-field="Full Name"  className="datatable-cell"><span style={{width: '108px'}}>{data.full_name}</span></td>
 	<td data-field="Email"  className="datatable-cell"><span style={{width: '108px'}}>{data.email}</span></td>
 	<td data-field="Role"  className="datatable-cell"><span style={{width: '108px'}}>{data.role}</span></td>
-	<td data-field="Username"  className="datatable-cell" style={{width: '108px'}}><span style={{width: '108px'}}>{data.username}</span></td>
+	<td data-field="Username"  className="datatable-cell" style={{width: '108px',textAlign:'left'}}><span style={{width: '108px'}}>{data.username}</span></td>
 	<td data-field="Branch Name"  className="datatable-cell" style={{width: '108px'}}><span style={{width: '108px'}}><span style={{width:'100%',height:'100%'}} className="label font-weight-bold label-lg  label-light-danger label-inline">{data.branchname}</span></span>
 	</td>
 	
-	<td  data-field="Actions" data-autohide-disabled="false" aria-label="null" className="datatable-cell"><span style={{overflow: 'visible', position: 'relative', width: '125px'}}>						
+	<td  data-field="Actions" data-autohide-disabled="false" aria-label="null" className="datatable-cell ml-2" style={{width:'140px',textAlign:'left'}}>
+							
 
-		<span id={data.id}  onClick={(event)=>this.preDelete(event,index)}>
-		<a href="#" value={data.id}  className="btn btn-sm btn-clean btn-icon" title="Delete"> 
-		<span className="svg-icon svg-icon-md">	                               
-		 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">	
+		<div id={data.id} className="d-inline" onClick={(event)=>this.preDelete(event,index)}>
+		<a href="#" value={data.id}  className="btn btn-sm btn-clean btn-icon " title="Delete"> 
+		
 
-		 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-		 	<rect x="0" y="0" width="24" height="24"></rect>	
-		 	<path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero"></path>
-		 	<path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3"></path> </g>	</svg> </span> 
-		 	</a></span>
-		</span>
+		 <i class="fas fa-trash-alt"></i>                               
+		 
+		 	
+		 	</a>
+		</div>
+
+
+
+
+						
+
+		<div id={data.id} className="d-inline" onClick={(event)=>this.editClick(event)}>
+		<a href="#" value={data.id}   className="btn btn-sm btn-clean btn-icon" title="edit"> 
+		<i class="fas fa-edit"></i>
+		 	</a></div>
+		
 	</td>
 </tr>)}):<h1 className="text-center text-success">Waiting for update.... </h1>
 }
@@ -263,6 +318,7 @@ this.state.staff_data['employee'].map((data,index)=>{
 
 </div>
 {/*  end: Datatable*/ } 
+
 </div>
 <Modal
           isOpen={this.state.is_modal_open}
@@ -282,6 +338,14 @@ this.state.staff_data['employee'].map((data,index)=>{
           </div>
           
         </Modal>
+
+
+        <Editing editingmode={this.state.editingmode} updateid={this.state.updateid} closemodal = {this.closeModal.bind(this)}/>
+
+
+
+        
+
 </div>
 
 

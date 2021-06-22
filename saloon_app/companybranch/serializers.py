@@ -8,3 +8,13 @@ class get_branch_add_data(serializers.Serializer):
 
 class get_delete_id(serializers.Serializer):
 	identify = serializers.IntegerField()
+
+
+class get_branch_id(serializers.Serializer):
+	getid=serializers.IntegerField()
+
+
+class update_branches(serializers.Serializer):
+	identify = serializers.IntegerField()
+	name = serializers.CharField(max_length=200,allow_null=True,required=False)
+	address = serializers.CharField(max_length=200,allow_null=True,required=False)

@@ -3,12 +3,233 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import staff_list as staffs , add_to_branch
+from .serializers import staff_list as staffs , add_to_branch,user_data,updateUser
 from companybranch.models import Branch,BranchEmployee
 from .models import *
 from marketing.models import *
 from authentication.models import User
 from django.db.models import Q
+import json
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def updateInfo(request):
+	info = updateUser(data=request.data)
+
+	if info.is_valid():
+
+		first_name = info.validated_data['first_name']
+		print('your first name is ',first_name)
+		last_name = info.validated_data['last_name']
+		print('last name ',last_name)
+		
+		is_staff = info.validated_data['is_staff']
+		is_manager = info.validated_data['is_manager']
+		is_admin = info.validated_data['is_admin']
+	
+
+		email = info.validated_data['email']
+		print('your email is here ',email)
+		
+		username = info.validated_data['username']
+
+		password = info.validated_data['password']
+
+
+		dob = info.validated_data['dob']
+
+		service = info.validated_data['service']
+		workday = info.validated_data['workday']
+		time_from = info.validated_data['time_from']
+		time_to = info.validated_data['time_to']
+		mobile = info.validated_data['mobile']
+		address = info.validated_data['address']
+		color = info.validated_data['color']
+		branchid = info.validated_data['branchid']
+		
+
+		
+		seluser = User.objects.get(email=email)
+
+		if first_name != None:
+			seluser.first_name=first_name
+
+		if last_name != None:
+			seluser.last_name = last_name
+
+		if is_staff == True:
+			seluser.is_staff = True
+			seluser.is_admin = False
+			seluser.is_manager = False
+
+
+		if is_manager == True:
+			seluser.is_staff = False
+			seluser.is_admin = False
+			seluser.is_manager = True
+
+
+		if is_admin == True:
+			seluser.is_staff=False
+			seluser.is_manager=False
+			seluser.is_admin=True
+
+
+		if username != None:
+			seluser.username = username
+
+		if password != None:
+			seluser.set_password(password)
+
+		seluser.save()
+		get_services_list = list(json.loads(info.validated_data['service']))
+		print('your service list',get_services_list)
+		if len(get_services_list) !=0:
+			#get_services_list = list(json.loads(info.validated_data['services']))
+			
+			sel_service=track_service_providers.objects.filter(provider=seluser)
+
+			for x in sel_service:
+				x.delete()
+
+			for x in get_services_list:
+				print('get services list item ',x)
+				ser=Service.objects.get(id=int(x))
+				track_service_providers.objects.create(provider=seluser,service = ser)
+
+
+		get_emp = Employe.objects.get(user_staff=seluser)
+
+		if dob != None:
+			get_emp.dob = dob
+
+
+		if time_from != None:
+			get_emp.time_from = time_from
+
+		if time_to != None:
+			get_emp.time_to = time_to
+
+		if mobile != None:
+			get_emp.mobile = mobile
+
+		if address != None:
+			get_emp.address = address
+
+		if color != None:
+			get_emp.color = color
+
+		get_emp.save()
+
+		get_workdays_list = list(json.loads(info.validated_data['workday']))
+		print('workdays are ',get_workdays_list)
+		if len(get_workdays_list) != 0:
+			
+
+			sel_workday_table=workdays.objects.filter(staff=seluser)
+
+			for x in sel_workday_table:
+				x.delete()
+
+			for x in get_workdays_list:
+				
+				workdays.objects.create(staff=seluser,day=x)
+
+		
+		if branchid != None and branchid !=0:
+			br=BranchEmployee.objects.filter(staff=seluser)
+
+			for x in br:
+				x.delete()
+
+			sel_branch = Branch.objects.get(id=int(branchid))
+			BranchEmployee.objects.create(staff=seluser,branch_name=sel_branch)
+		
+		
+
+		return Response({'status':'updated'})
+
+	return Response({'status':'failed'})
+			
+
+
+
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_user_info(request):
+	serializer = user_data(data=request.data)
+
+	if serializer.is_valid():
+		info = {}
+		selectUser = User.objects.get(id=int(serializer.validated_data['userid']))
+		
+		info['id'] = selectUser.id
+		info['first_name'] = selectUser.first_name
+		info['last_name'] = selectUser.last_name
+		info['email'] = selectUser.email
+		info['username'] = selectUser.username
+
+
+		selectemp = Employe.objects.get(user_staff=selectUser)
+
+		info['address'] = selectemp.address
+		info['mobile'] = selectemp.mobile
+		info['dob'] = selectemp.dob
+		info['color'] = selectemp.color
+		info['time_from'] = selectemp.time_from
+		info['time_to'] = selectemp.time_to
+		role = 'employee'
+		if selectUser.is_admin == True:
+			role = 'admin'
+
+		if selectUser.is_manager == True :
+			role='manager'
+
+		if selectUser.is_staff == True:
+			role='employee'
+
+		info['role'] = role
+
+
+		servicesselect = track_service_providers.objects.filter(provider=selectUser)
+
+		info['services'] = []
+		for x in servicesselect:
+			info['services'].append(x.service.id)
+
+
+		selworkday = workdays.objects.filter(staff=selectUser)
+
+		info['workdays'] = []
+
+		for x in selworkday:
+			info['workdays'].append(x.day)
+
+
+		
+		sel_branch = BranchEmployee.objects.get(staff = selectUser)
+
+		info['branchid'] = sel_branch.branch_name.id
+
+
+
+		return Response(info)
+
+
+
+
+
+
+
+
+
+
 
 
 @api_view(['POST',])

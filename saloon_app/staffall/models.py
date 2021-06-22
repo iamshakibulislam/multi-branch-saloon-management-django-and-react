@@ -55,8 +55,7 @@ class Employe(models.Model):
       mobile = models.CharField(max_length=200,null=True,blank=True)
       dob = models.DateField(max_length=200,null=True,blank=True)
       color = models.CharField(choices=colorchoise,max_length=200,null=True)
-      workdays_from = models.CharField(choices=daychoise,max_length=200,null=True)
-      workdays_to = models.CharField(choices=daychoise,max_length=200,null=True)
+      
 
       time_from = models.TimeField(null=True)
       time_to = models.TimeField(null=True)
@@ -82,6 +81,25 @@ class Employe(models.Model):
 
 
 
+class workdays(models.Model):
+
+  daychoise = [
+      ('Sat','Saturday'),
+      ('Sun','Sunday'),
+      ('Mon','Monday'),
+      ('Tue','Tuesday'),
+      ('Wed','Wednesday'),
+      ('Thu','Thursday'),
+      ('Fri','Friday')
+      ]
+
+  staff = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
+  day = models.CharField(choices=daychoise,blank=True,max_length=33)
+
+
+
+  def __str__(self):
+    return str(self.staff.first_name)
 
 
 

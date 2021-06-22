@@ -13,7 +13,147 @@ class IndexPage extends Component{
 
 static contextType = baseContext
 
-  
+  componentDidMount(){
+
+    let ele25 = document.createElement('script');
+    ele25.src = this.context.reactBase+"/assets/js/scripts.bundle.js";
+
+    document.getElementById('script').appendChild(ele25);
+
+    let ele24 = document.createElement('script');
+    ele24.src = this.context.reactBase+"/assets/js/pages/widgets.js";
+
+    document.getElementById('script').appendChild(ele24);
+
+    let ele23 = document.createElement('script');
+    ele23.src = this.context.reactBase+"/assets/plugins/global/plugins.bundle.js";
+
+    document.getElementById('script').appendChild(ele23);
+
+    let ele22 = document.createElement('script');
+    ele22.src = this.context.reactBase+"/static_files/js/jquery.1.11.2.js";
+
+    document.getElementById('script').appendChild(ele22);
+
+
+    let ele21 = document.createElement('script');
+    ele21.src = this.context.reactBase+"/static_files/js/bootstrap.js";
+
+    document.getElementById('script').appendChild(ele21);
+
+    let ele20 = document.createElement('script');
+    ele20.src = this.context.reactBase+"/static_files/js/function.js";
+
+    document.getElementById('script').appendChild(ele20);
+
+    let ele19 = document.createElement('script');
+    ele19.src = this.context.reactBase+"/static_files/js/bootstrap-datepicker.js";
+
+    document.getElementById('script').appendChild(ele19);
+
+    let ele18 = document.createElement('script');
+    ele18.src = this.context.reactBase+"/static_files/js/parallax.js";
+
+    document.getElementById('script').appendChild(ele18);
+
+    let ele17 = document.createElement('script');
+    ele17.src = this.context.reactBase+"/static_files/js/scorll.js";
+
+    document.getElementById('script').appendChild(ele17);
+
+    let ele16 = document.createElement('script');
+    ele16.src = this.context.reactBase+"/static_files/js/jquery.easing.min.js";
+
+    document.getElementById('script').appendChild(ele16);
+
+    let ele15 = document.createElement('script');
+    ele15.src = this.context.reactBase+"/static_files/js/slick.js";
+
+    document.getElementById('script').appendChild(ele15);
+
+    let ele14 = document.createElement('script');
+    ele14.src = this.context.reactBase+"/static_files/js/menu.js";
+
+    document.getElementById('script').appendChild(ele14);
+
+    let ele13 = document.createElement('script');
+    ele13.src = this.context.reactBase+"/static_files/js/ios-timer.js";
+
+    document.getElementById('script').appendChild(ele13);
+
+    let ele12 = document.createElement('script');
+    ele12.src = this.context.reactBase+"/static_files/js/jquery.fencybox.js";
+
+    document.getElementById('script').appendChild(ele12);
+
+    let ele11 = document.createElement('script');
+    ele11.src = this.context.reactBase+"/static_files/js/jquery.portfolio.js";
+
+    document.getElementById('script').appendChild(ele11);
+
+
+    let ele10 = document.createElement('script');
+    ele10.src = this.context.reactBase+"/static_files/js/jquery.mousewheel-3.0.6.pack.js";
+
+    document.getElementById('script').appendChild(ele10);
+
+    let ele9 = document.createElement('script');
+    ele9.src = this.context.reactBase+"/static_files/js/wow.js";
+
+    document.getElementById('script').appendChild(ele9);
+
+    let ele8 = document.createElement('script');
+    ele8.src = this.context.reactBase+"/static_files/js/jquery.validate.js";
+
+    document.getElementById('script').appendChild(ele8);
+
+    let ele7 = document.createElement('script');
+    ele7.src = this.context.reactBase+"/static_files/js/revoluation/jquery.themepunch.tools.min.js";
+
+    document.getElementById('script').appendChild(ele7);
+
+
+    let ele6 = document.createElement('script');
+    ele6.src = this.context.reactBase+"/static_files/js/revoluation/jquery.themepunch.revolution.min.js";
+
+    document.getElementById('script').appendChild(ele6);
+
+
+    let ele5 = document.createElement('script');
+    ele5.src = this.context.reactBase+"/static_files/js/revoluation/revolution.extension.layeranimation.min.js";
+
+    document.getElementById('script').appendChild(ele5);
+
+
+    let ele4 = document.createElement('script');
+    ele4.src = this.context.reactBase+"/static_files/js/revoluation/revolution.extension.migration.min.js";
+
+    document.getElementById('script').appendChild(ele4);
+
+    let ele3 = document.createElement('script');
+    ele3.src = this.context.reactBase+"/static_files/js/revoluation/revolution.extension.navigation.min.js";
+
+    document.getElementById('script').appendChild(ele3);
+
+    let ele2 = document.createElement('script');
+    ele2.src = this.context.reactBase+"/static_files/js/revoluation/revolution.extension.parallax.min.js";
+
+    document.getElementById('script').appendChild(ele2);
+
+    let ele1 = document.createElement('script');
+    ele1.src = this.context.reactBase+"/static_files/js/revoluation/revolution.extension.slideanims.min.js";
+
+    document.getElementById('script').appendChild(ele1);
+
+
+
+   let ele = document.createElement('script');
+    ele.src = this.context.reactBase+"/static_files/js/revoluation/revoluationfunction.js";
+
+    document.getElementById('script').appendChild(ele)
+
+
+  }
 
 
 

@@ -5,12 +5,13 @@ from companybranch.models import *
 from staffall.models import *
 from authentication.models import User
 import json
+
 class RegistrationSerializers(serializers.ModelSerializer):
       password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True,required=False)
       dob = serializers.CharField(max_length=120,required=False)
       services = serializers.CharField(max_length=100,required=False)
-      workdays_from = serializers.CharField(max_length=22,required=False)
-      workdays_to = serializers.CharField(max_length=22,required=False)
+      workdays = serializers.CharField(max_length=22,required=False)
+      
       time_from = serializers.CharField(max_length=22,required=False)
       time_to = serializers.CharField(max_length=22,required=False)
       mobile = serializers.CharField(max_length=22,required=False)
@@ -66,13 +67,21 @@ class RegistrationSerializers(serializers.ModelSerializer):
                                     mobile = self.validated_data['mobile'],
                                     dob = self.validated_data['dob'],
                                     color =  self.validated_data['color'],
-                                    workdays_from = self.validated_data['workdays_from'],
-                                    workdays_to = self.validated_data['workdays_to'],
+                                    
                                     time_from = self.validated_data['time_from'],
                                     time_to = self.validated_data['time_to'],
-                                    branch = sel_branch
+                                    
 
 
+
+
+                                    )
+
+
+                              BranchEmployee.objects.create(
+
+                                    branch_name = sel_branch,
+                                    staff = user
 
 
                                     )
@@ -87,6 +96,17 @@ class RegistrationSerializers(serializers.ModelSerializer):
                                     track_service_providers.objects.create(
                                           service = Service.objects.get(id=int(ser)),
                                           provider = user
+                                          )
+
+
+                              get_workdays= list(json.loads(self.validated_data['workdays']))
+
+                              for x in get_workdays:
+                                    workdays.objects.create(
+
+                                          staff = user,
+                                          day = x
+
                                           )
 
 
