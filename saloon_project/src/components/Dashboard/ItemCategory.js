@@ -2,9 +2,8 @@ import React,{Component,Fragment} from 'react'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
 import {Route,Link,Switch} from 'react-router-dom'
-import Modal from 'react-modal'
-import EditItems from './EditItems'
-
+import Modal from 'react-modal';
+import EditCategory from './EditCategory'
 class itemList extends Component{
 
 
@@ -15,15 +14,14 @@ state = {
 
 	processing:false,
 	addingstatus:false,
-	item_name:null,
-	item_price:null,
-	items:null,
+	cat_name:null,
+	cat_items:null,
+	
 	alert:false,
 	message:null,
 	is_modal_open:false,
 	delete_id:null,
 	index:null,
-	cat:'selectcat',
 	editingmode:false,
 	updateid:0
 
@@ -48,7 +46,7 @@ static contextType=baseContext
 componentDidMount(){
 
 	this.setState({processing:true});
-	axios.post(this.context.baseUrl+'/items/list_items/',
+	axios.post(this.context.baseUrl+'/items/view_categories/',
     { 
     	
 
@@ -59,7 +57,7 @@ componentDidMount(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({items:response.data,processing:false})
+      this.setState({cat_items:response.data,processing:false})
       
       }
       
@@ -75,39 +73,26 @@ componentDidMount(){
 }
 
 
-
-
-closeModal(){
-	this.needRefresh();
-	this.setState({editingmode:false,updateid:0})
-}
 
 editClick(event){
 
 	this.setState({updateid:event.currentTarget.id,editingmode:true})
 }
 
-add_items_update(event,identify){
+add_category_update(event,identify){
 	if(identify=='name'){
 	let getValue = event.target.value;
-	this.setState({item_name:getValue})
+	this.setState({cat_name:getValue})
 }
 
- if(identify=='price'){
- 	this.setState({item_price:event.target.value})
- }
-
-
- if(identify=='category'){
- 	this.setState({cat:event.target.value})
- }
+ 
 
 }
 
 needRefresh(){
 
 	this.setState({processing:true});
-	axios.post(this.context.baseUrl+'/items/list_items/',
+	axios.post(this.context.baseUrl+'/items/view_categories/',
     { 
     	
 
@@ -118,7 +103,7 @@ needRefresh(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({items:response.data,processing:false})
+      this.setState({cat_items:response.data,processing:false})
       
       }
       
@@ -129,20 +114,16 @@ needRefresh(){
       
       this.setState({processing:false,alert:true,message:'Can not load data !'})
     })
+
 }
 
-addItems(event){
+addCategory(event){
 	event.preventDefault();
-	if(this.state.cat == 'selectcat'){
-		alert('category must be selected');
-		return false
-	}
 	this.setState({addingstatus:true});
-	axios.post(this.context.baseUrl+'/items/add_items/',
+	axios.post(this.context.baseUrl+'/items/add_category/',
     { 
-    	name:this.state.item_name,
-    	price:this.state.item_price,
-    	cat:Number(this.state.cat)
+    	name:this.state.cat_name,
+    	
 
 
     },{
@@ -154,9 +135,9 @@ addItems(event){
       
       event.target.reset();
       
-      this.setState({addingstatus:false,cat:'selectcat'});
+      
+      this.setState({addingstatus:false,processing:false,alert:true,message:'added category'});
       this.needRefresh()
-
       
       }
       
@@ -179,9 +160,15 @@ preDelete(event,index){
 }
 
 
+closeModal(){
+	this.needRefresh();
+	this.setState({editingmode:false,updateid:0})
+}
+
+
 deleteConfirmation(event){
  this.setState({is_modal_open:false});
-	axios.post(this.context.baseUrl+'/items/delete_items/',
+	axios.post(this.context.baseUrl+'/items/delete_category/',
     { 
     	
     	identify:Number(this.state.delete_id)
@@ -195,8 +182,9 @@ deleteConfirmation(event){
       
       if(response.data['status'] == 'deleted'){
 
-      	
-      	this.needRefresh()
+      	this.state.cat_items.splice(Number(this.state.index),1);
+      	let copy=[...this.state.cat_items];
+      	this.setState({cat_items:copy})
       }
       
       }
@@ -219,8 +207,8 @@ return(
 <div className="card card-custom">
 	<div className="card-header flex-wrap border-0 pt-6 pb-0">
 		<div className="card-title">
-			<h3 className="card-label">Item list 
-											<span className="text-muted pt-2 font-size-sm d-block">Add new Item and delete from list</span></h3> </div>
+			<h3 className="card-label">Category list 
+											<span className="text-muted pt-2 font-size-sm d-block">Add new category and delete from list</span></h3> </div>
 		<div className="card-toolbar">
 			{/*  begin::Dropdown*/ } 
 		
@@ -235,39 +223,18 @@ return(
 		{/*  begin::Search Form*/ } 
 		<div className="mb-7">
 			<div className="row align-items-center">
-				<div className="col-lg-12 col-xl-12 col-md-12">
+				<div className="col-lg-11 col-xl-10">
 					<div className="row align-items-center">
 						
 						<div className="col-md-12 my-2 my-md-0">
 							<div className="d-flex align-items-center">
-							<form action="#" className="from  d-flex" onSubmit={this.addItems.bind(this)}>
+							<form action="#" className="from form-inline" onSubmit={this.addCategory.bind(this)}>
 							<div className="form-group mr-4">
 								
-								<input type="text" className="form-control" name="itemname" placeholder="New Item name" onChange={(event)=>this.add_items_update(event,'name')} required/>
+								<input type="text" className="form-control" name="categoryname" placeholder="New Category Name" onChange={(event)=>this.add_category_update(event,'name')} required/>
 								</div>
 
-								<div className="form-group" >
-				
-								<input type="number" className="form-control"  name="price" placeholder="Price / Unit" onChange={(event)=>this.add_items_update(event,'price')} required/>
-								</div>
-								<div className="form-group">
-				
-								<select  className="form-control ml-2" name="category"  onChange={(event)=>this.add_items_update(event,'category')} required>
-								<option value="selectcat">Select category</option>
-								{this.state.items != null?
-
-									this.state.items.categories.map((data,index)=>{
-
-										return (
-											<option value={data.id} key={index}>{data.name}</option>
-
-											)
-									}):null
-
-
-								}
-								</select>
-								</div>
+								
 								<div className="ml-4"> <button type="submit"  className="btn btn-danger px-6 font-weight-bold">{this.state.addingstatus==false?
 				 <span>Add </span> :
 					 this.state.addingstatus==true? <span>wait...</span>:null }</button> </div>
@@ -286,14 +253,13 @@ return(
 		{/*  end: Search Form*/ } 
 		{/*  begin: Datatable*/ } 
 		<div className="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable" >
-			<table className="datatable-table" style={{display: 'block'}}>
+			<table className="datatable-table" style={{display: 'block',width:'60%'}}>
 				<thead className="datatable-head">
 					<tr className="datatable-row" style={{left: '0px'}}>
 						
 						
-						<th data-field="Branch name" className="datatable-cell datatable-cell-sort"><span style={{width: '108px'}}>Item Name</span></th>
-						<th data-field="Branch Address" className="datatable-cell datatable-cell-sort"><span style={{width: '150px',textAlign:'center'}}>Price / Unit</span></th>
-						<th data-field="Branch Address" className="datatable-cell datatable-cell-sort"><span style={{width: '150px',textAlign:'center'}}>Category</span></th>
+						<th data-field="Branch name" className="datatable-cell datatable-cell-sort"><span style={{width: '140px'}}>Category Name</span></th>
+						<th data-field="Branch Address" className="datatable-cell datatable-cell-sort"><span style={{width: '150px',textAlign:'center'}}>Total items</span></th>
 						
 						<th data-field="Actions" data-autohide-disabled="false" className="datatable-cell datatable-cell-sort"><span style={{width: '125px'}}>Actions</span></th>
 					</tr>
@@ -304,15 +270,15 @@ return(
 
 
 
-{this.state.proccesing != true && this.state.items != null ?
+{this.state.proccesing != true && this.state.cat_items != null ?
 
-this.state.items.items.map((data,index)=>{
+this.state.cat_items.map((data,index)=>{
 	return (
 <tr data-row="0" className="datatable-row datatable-row-even" style={{left: '0px'}} key={data.id}>
 	
 	<td data-field="Full Name"  className="datatable-cell"><span style={{width: '108px'}}>{data.name}</span></td>
-	<td data-field="Email"  className="datatable-cell text-center"><span style={{width: '158px'}}>{data.price}  $</span></td>
-	<td data-field="Email"  className="datatable-cell text-center"><span style={{width: '158px'}}>{data.category}  </span></td>
+	<td data-field="Email"  className="datatable-cell text-center"><span style={{width: '158px'}}>{data.total_items}  </span></td>
+	
 	
 	<td  data-field="Actions" data-autohide-disabled="false" aria-label="null" className="datatable-cell"><span style={{overflow: 'visible', position: 'relative', width: '125px'}}>						
 
@@ -366,7 +332,7 @@ this.state.items.items.map((data,index)=>{
           
         </Modal>
 
-        <EditItems closemodal = {this.closeModal.bind(this)} editingmode={this.state.editingmode} updateid={this.state.updateid}/>
+        <EditCategory closemodal = {this.closeModal.bind(this)} editingmode={this.state.editingmode} updateid={this.state.updateid}/>
 </div>
 
 

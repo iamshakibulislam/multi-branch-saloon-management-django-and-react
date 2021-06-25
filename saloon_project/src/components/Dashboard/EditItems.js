@@ -1,10 +1,11 @@
 import React,{Component,Fragment} from 'react'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
-import Modal from 'react-modal';
+import Modal from 'react-modal'
 
 
-class EditServices extends Component{
+
+class EditItems extends Component{
 
 static contextType = baseContext
 
@@ -16,6 +17,8 @@ static contextType = baseContext
         
 
         user_info:0,
+        items_info:null
+
        
 
 
@@ -40,9 +43,9 @@ customStyles = {
 componentDidUpdate(prevprops,prevstate){
 
     if(prevprops.updateid != this.props.updateid && this.props.updateid != 0){
-axios.post(this.context.baseUrl+'/marketing/get_service_info/',
+axios.post(this.context.baseUrl+'/items/get_item_info/',
     { 
-        serviceid:Number(this.props.updateid)
+        identify:Number(this.props.updateid)
 
 
     },{
@@ -52,7 +55,7 @@ axios.post(this.context.baseUrl+'/marketing/get_service_info/',
   }}).then((response)=>{
       console.log(response.data);
       
-      this.setState({service_info:response.data,processing:false,parsed:true,errorMessage:false,alert:false})
+      this.setState({items_info:response.data,processing:false,parsed:true,errorMessage:false,alert:false})
       
       }
       
@@ -135,66 +138,46 @@ componentDidMount(){
 
 
 setInfo(event,name){
-    let copy = {...this.state.service_info};
-    if(name == 'title'){
-        copy['title'] = event.target.value;
-        this.setState({service_info:copy})
+    let copy = {...this.state.items_info};
+    if(name == 'name'){
+        copy['item_info']['name'] = event.target.value;
+        this.setState({items_info:copy})
     }
 
-    if(name == 'location'){
-        copy['servicelocation'] = event.target.value;
-        this.setState({service_info:copy})
+    if(name == 'price'){
+        copy['item_info']['price'] = event.target.value;
+        this.setState({items_info:copy})
     }
 
-    if(name == 'cost'){
-        copy['cost'] = event.target.value;
-        this.setState({service_info:copy})
+
+    if(name == 'cat'){
+        copy['item_info']['category'] = event.target.value;
+        this.setState({items_info:copy})
     }
 
-    if(name == 'taxes'){
-        copy['taxes'] = event.target.value;
-        this.setState({service_info:copy})
-    }
+    
 
-    if(name == 'duration'){
-        copy['serviceduration'] = event.target.value;
-        this.setState({service_info:copy})
-    }
-
-    if(name == 'commision'){
-        copy['servicecommision'] = event.target.value;
-        this.setState({service_info:copy})
-    }
-
-    if(name == 'target'){
-        copy['monthlytarget'] = event.target.value;
-        this.setState({service_info:copy})
-    }
-
+    
     
 
 
 }
 
 
-editService(event){
+editItems(event){
 
  event.preventDefault();
  this.setState({processing:true});
 
 
 
-axios.post(this.context.baseUrl+'/marketing/update_services/',
+axios.post(this.context.baseUrl+'/items/update_item/',
     {
     
-        identify:Number(this.state.service_info.id),
-        title:this.state.service_info.title,
-        servicelocation:this.state.service_info.servicelocation,
-        cost:Number(this.state.service_info.cost),
-        taxes:Number(this.state.service_info.taxes),
-        serviceduration:Number(this.state.service_info.serviceduration),
-        servicecommision:Number(this.state.service_info.servicecommision),
-        monthlytarget:Number(this.state.service_info.monthlytarget)
+        identify:Number(this.state.items_info.item_info.id),
+        name:this.state.items_info.item_info.name,
+        cat:Number(this.state.items_info.item_info.category),
+        price:Number(this.state.items_info.item_info.price)
 
     
     
@@ -216,7 +199,7 @@ axios.post(this.context.baseUrl+'/marketing/update_services/',
       this.setState({
         processing:false,
         alert:true,
-        errorMessage:'Service has been updated ! ',
+        errorMessage:'Category has been updated ! ',
 
     
 
@@ -248,19 +231,19 @@ render(){
           style={{
     overlay: {
       position: 'fixed',
-      top: 0,
+      top: 50,
       left: 0,
       right: 0,
-      bottom: 0,
+      bottom: 50,
       backgroundColor: 'rgba(255, 255, 255,0.70)'
     },
     content: {
 
       position: 'absolute',
       top: '40px',
-      left: '30%',
+      left: '40%',
       right: 'auto',
-      bottom: '40px',
+      bottom: '0%',
       border: '1px solid #ccc',
       background: '#fff',
       overflow: 'auto',
@@ -276,14 +259,14 @@ render(){
 <div className="card card-custom" style={{overflow:'scroll',height:'100%'}}>
  <div className="card-header">
   <h3 className="card-title">
-   Edit Service
+   Edit Items
   </h3>
   <div className="card-toolbar">
    <button className="btn btn-danger text-white" onClick={this.props.closemodal}>Close</button>
   </div>
  </div>
  {/*begin::Form*/}
- <form onSubmit={this.editService.bind(this)}>
+ <form onSubmit={this.editItems.bind(this)}>
   <div className="card-body">
    <div className="form-group mb-8">
   {this.state.alert == true ?
@@ -296,79 +279,49 @@ render(){
     :null}
 
    </div>
-   {this.state.service_info != null?
+   {this.state.items_info != null?
    <div className="row">
-   <div className="col-md-6">
+   <div className="col-md-10">
      <div className="form-group">
-    <label>Title <span className="text-danger">*</span></label>
-    <input type="text" className="form-control" value={this.state.service_info.title} placeholder="Service title" onChange={(event)=>this.setInfo(event,'title')}  />
+    <label>Name <span className="text-danger">*</span></label>
+    <input type="text" className="form-control" value={this.state.items_info.item_info.name} placeholder="item name" onChange={(event)=>this.setInfo(event,'name')}  />
     <span className="form-text text-muted"></span>
+   </div>
+
+   <div className="form-group">
+    <label>Price <span className="text-danger">*</span></label>
+    <input type="number" className="form-control" value={this.state.items_info.item_info.price} placeholder="item price" onChange={(event)=>this.setInfo(event,'price')}  />
+    <span className="form-text text-muted"></span>
+   </div>
+   <div className="form-group">
+   <label>Select Category <span className="text-danger">*</span></label>
+     <select name="categories" onChange={(event)=>this.setInfo(event,'cat')} className="form-control" >
+      {this.state.items_info.categories.map((data,index)=>{
+
+        return (
+
+        this.state.items_info.item_info.category == data.id?
+
+          <option selected key={data.id} value={data.id}>{data.name}</option>
+          :<option  key={data.id} value={data.id}>{data.name}</option>
+
+        )
+      })}
+     
+       
+     </select>
    </div>
    </div>
    
 
-   <div className="col-md-6">
-   <div className="form-group">
-    <label for="exampleInputDate">Duration(minute)<span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.service_info.serviceduration} id="exampleInputDate"  onChange={(event)=>this.setInfo(event,'duration')} />
-   </div>
-   </div>
-   </div>:null}
-   {this.state.service_info != null?
-   <div className="row">
-   <div className="col-md-6">
-     <div className="form-group">
-    <label>Cost <span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.service_info.cost}  placeholder="22" onChange={(event)=>this.setInfo(event,'cost')} />
-    <span className="form-text text-muted"></span>
-   </div>
-   </div>
-   <div className="col-md-6">
-   <div className="form-group">
-    <label>Tax <span className="text-danger">*</span></label>
-    <input type="number" value={this.state.service_info.taxes} className="form-control"  placeholder="2" onChange={(event)=>this.setInfo(event,'taxes')} />
-    
-   </div>
-   </div>
-
-   </div>:null}
-
-   {this.state.service_info != null ?
-   <div className="row">
-   <div className="col-md-12">
-   <div className="form-group">
-    <label>Service location <span className="text-danger">*</span></label>
-    <textarea type="text" className="form-control" value={this.state.service_info.servicelocation}  placeholder="Location" onChange={(event)=>this.setInfo(event,'location')} />
-    <span className="form-text text-muted"></span>
-   </div>
-   </div>
-
-  
-   </div>:null}
-
-
-
-
-{this.state.service_info != null?
-   <div className="row">
-   <div className="col-md-6">
-   <div className="form-group">
-    <label for="exampleInputDate">Commision($) <span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.service_info.servicecommision}  id="exampleCommison"  onChange={(event)=>this.setInfo(event,'commision')} />
-   </div>
-   </div>
-
-   <div className="col-md-6">
-   <div className="form-group">
-    <label for="exampleInputDate">Monthly target($) <span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.service_info.monthlytarget}  id="exampleTarget"  onChange={(event)=>this.setInfo(event,'target')} />
-   </div>
-   </div>
-
-
- 
    
    </div>:null}
+   
+
+
+
+
+
 
 
    
@@ -376,7 +329,7 @@ render(){
   <div className="card-footer">
   {this.state.processing == true ?
    <button type="submit" className="btn btn-primary mr-2">proccesing data ! Please wait...</button>
-   : <button type="submit" className="btn btn-primary mr-2">Update </button>}
+   : <button type="submit" className="btn btn-primary mr-2">Update</button>}
 
 
 
@@ -404,4 +357,4 @@ render(){
 }
 
 
-export default EditServices
+export default EditItems

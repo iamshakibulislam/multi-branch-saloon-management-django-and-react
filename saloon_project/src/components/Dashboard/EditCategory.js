@@ -1,10 +1,11 @@
 import React,{Component,Fragment} from 'react'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
-import Modal from 'react-modal';
+import Modal from 'react-modal'
 
 
-class EditBranch extends Component{
+
+class EditCategory extends Component{
 
 static contextType = baseContext
 
@@ -16,7 +17,7 @@ static contextType = baseContext
         
 
         user_info:0,
-        branch_info:null
+        category_info:null
 
        
 
@@ -42,9 +43,9 @@ customStyles = {
 componentDidUpdate(prevprops,prevstate){
 
     if(prevprops.updateid != this.props.updateid && this.props.updateid != 0){
-axios.post(this.context.baseUrl+'/branch/get_branch/',
+axios.post(this.context.baseUrl+'/items/get_cat_info/',
     { 
-        getid:Number(this.props.updateid)
+        identify:Number(this.props.updateid)
 
 
     },{
@@ -54,7 +55,7 @@ axios.post(this.context.baseUrl+'/branch/get_branch/',
   }}).then((response)=>{
       console.log(response.data);
       
-      this.setState({branch_info:response.data,processing:false,parsed:true,errorMessage:false,alert:false})
+      this.setState({category_info:response.data,processing:false,parsed:true,errorMessage:false,alert:false})
       
       }
       
@@ -137,36 +138,32 @@ componentDidMount(){
 
 
 setInfo(event,name){
-    let copy = {...this.state.branch_info};
+    let copy = {...this.state.category_info};
     if(name == 'name'){
         copy['name'] = event.target.value;
-        this.setState({branch_info:copy})
+        this.setState({category_info:copy})
     }
 
-    if(name == 'address'){
-        copy['address'] = event.target.value;
-        this.setState({branch_info:copy})
-    }
-
+    
     
 
 
 }
 
 
-editBranch(event){
+editCategory(event){
 
  event.preventDefault();
  this.setState({processing:true});
 
 
 
-axios.post(this.context.baseUrl+'/branch/update_branch/',
+axios.post(this.context.baseUrl+'/items/cat_update/',
     {
     
-        identify:Number(this.state.branch_info.id),
-        name:this.state.branch_info.name,
-        address:this.state.branch_info.address
+        identify:Number(this.state.category_info.id),
+        name:this.state.category_info.name,
+        
 
     
     
@@ -188,7 +185,7 @@ axios.post(this.context.baseUrl+'/branch/update_branch/',
       this.setState({
         processing:false,
         alert:true,
-        errorMessage:'Branch has been updated ! ',
+        errorMessage:'Category has been updated ! ',
 
     
 
@@ -220,10 +217,10 @@ render(){
           style={{
     overlay: {
       position: 'fixed',
-      top: 0,
+      top: 50,
       left: 0,
       right: 0,
-      bottom: 0,
+      bottom: 50,
       backgroundColor: 'rgba(255, 255, 255,0.70)'
     },
     content: {
@@ -232,7 +229,7 @@ render(){
       top: '40px',
       left: '30%',
       right: 'auto',
-      bottom: '40px',
+      bottom: '20%',
       border: '1px solid #ccc',
       background: '#fff',
       overflow: 'auto',
@@ -248,14 +245,14 @@ render(){
 <div className="card card-custom" style={{overflow:'scroll',height:'100%'}}>
  <div className="card-header">
   <h3 className="card-title">
-   Edit Branch
+   Edit Category
   </h3>
   <div className="card-toolbar">
    <button className="btn btn-danger text-white" onClick={this.props.closemodal}>Close</button>
   </div>
  </div>
  {/*begin::Form*/}
- <form onSubmit={this.editBranch.bind(this)}>
+ <form onSubmit={this.editCategory.bind(this)}>
   <div className="card-body">
    <div className="form-group mb-8">
   {this.state.alert == true ?
@@ -268,23 +265,18 @@ render(){
     :null}
 
    </div>
-   {this.state.branch_info != null?
+   {this.state.category_info != null?
    <div className="row">
-   <div className="col-md-6">
+   <div className="col-md-9">
      <div className="form-group">
     <label>Name <span className="text-danger">*</span></label>
-    <input type="text" className="form-control" value={this.state.branch_info.name} placeholder="Branch name" onChange={(event)=>this.setInfo(event,'name')}  />
+    <input type="text" className="form-control" value={this.state.category_info.name} placeholder="category name" onChange={(event)=>this.setInfo(event,'name')}  />
     <span className="form-text text-muted"></span>
    </div>
    </div>
    
 
-   <div className="col-md-6">
-   <div className="form-group">
-    <label for="exampleInputDate">Address<span className="text-danger">*</span></label>
-    <input type="text" className="form-control" value={this.state.branch_info.address} id="exampleInputDate"  onChange={(event)=>this.setInfo(event,'address')} />
-   </div>
-   </div>
+   
    </div>:null}
    
 
@@ -327,4 +319,4 @@ render(){
 }
 
 
-export default EditBranch
+export default EditCategory

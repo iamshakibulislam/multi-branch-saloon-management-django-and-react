@@ -5,8 +5,10 @@ import branchList from './Dashboard/branchList'
 import itemList from './Dashboard/itemList'
 import ServiceList from './Dashboard/serviceList'
 import addService from './Dashboard/addService'
+import itemProviderList from './Dashboard/itemProviderList'
 
 import addStaffToBranch from './Dashboard/addStaffToBranch'
+import ItemCategory from './Dashboard/ItemCategory'
 import orderCalender from './Dashboard/orderCalender'
 import {Route,Switch,Link} from 'react-router-dom'
 import baseContext from './shared/baseContext'
@@ -344,6 +346,16 @@ return(
 												</span>
 											</li>
 											
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<Link to="/dashboard/item_category/" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Item Category</span>
+													<i className="menu-arrow"></i>
+												</Link>
+												
+											</li>
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 												<Link to="/dashboard/item_list" className="menu-link menu-toggle">
@@ -358,11 +370,11 @@ return(
 
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<Link to="/dashboard/add_staff_to_branch" className="menu-link menu-toggle">
+												<Link to="/dashboard/provider_list" className="menu-link menu-toggle">
 													<i className="menu-bullet menu-bullet-dot">
 														<span></span>
 													</i>
-													<span className="menu-text">Add Provider</span>
+													<span className="menu-text">Item Providers</span>
 													<i className="menu-arrow"></i>
 												</Link>
 												
@@ -466,6 +478,8 @@ return(
 									 <Route path="/dashboard/item_list" exact component={itemList} />
 									 <Route path="/dashboard/service_list" exact component={ServiceList} />
 									 <Route path="/dashboard/add_service" exact component={addService} />
+									 <Route path="/dashboard/item_category/" exact component={ItemCategory} />
+									 <Route path="/dashboard/provider_list/" exact component={itemProviderList} />
 
 									</div>
 

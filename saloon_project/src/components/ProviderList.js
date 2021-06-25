@@ -3,9 +3,9 @@ import axios from 'axios'
 import baseContext from '../shared/baseContext'
 import {Route,Link,Switch} from 'react-router-dom'
 import Modal from 'react-modal'
-import EditItems from './EditItems'
+import EditBranch from './EditBranch'
 
-class itemList extends Component{
+class ProviderList extends Component{
 
 
 
@@ -15,15 +15,15 @@ state = {
 
 	processing:false,
 	addingstatus:false,
-	item_name:null,
-	item_price:null,
-	items:null,
+	branch_name:null,
+	branch_address:null,
+	branch:null,
 	alert:false,
 	message:null,
 	is_modal_open:false,
 	delete_id:null,
 	index:null,
-	cat:'selectcat',
+	branch_info:null,
 	editingmode:false,
 	updateid:0
 
@@ -48,7 +48,7 @@ static contextType=baseContext
 componentDidMount(){
 
 	this.setState({processing:true});
-	axios.post(this.context.baseUrl+'/items/list_items/',
+	axios.post(this.context.baseUrl+'/branch/show_branch/',
     { 
     	
 
@@ -59,7 +59,7 @@ componentDidMount(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({items:response.data,processing:false})
+      this.setState({branch:response.data,processing:false})
       
       }
       
@@ -75,6 +75,37 @@ componentDidMount(){
 }
 
 
+editClick(event){
+
+	this.setState({updateid:event.currentTarget.id,editingmode:true})
+}
+
+
+needRefresh(){
+	this.setState({processing:true});
+	axios.post(this.context.baseUrl+'/branch/show_branch/',
+    { 
+    	
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      this.setState({branch:response.data,processing:false})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({processing:false,alert:true,message:'Can not load data !'})
+    })
+}
 
 
 closeModal(){
@@ -82,67 +113,26 @@ closeModal(){
 	this.setState({editingmode:false,updateid:0})
 }
 
-editClick(event){
-
-	this.setState({updateid:event.currentTarget.id,editingmode:true})
-}
-
-add_items_update(event,identify){
+add_branch_update(event,identify){
 	if(identify=='name'){
 	let getValue = event.target.value;
-	this.setState({item_name:getValue})
+	this.setState({branch_name:getValue})
 }
 
- if(identify=='price'){
- 	this.setState({item_price:event.target.value})
- }
-
-
- if(identify=='category'){
- 	this.setState({cat:event.target.value})
+ if(identify=='address'){
+ 	this.setState({branch_address:event.target.value})
  }
 
 }
 
-needRefresh(){
 
-	this.setState({processing:true});
-	axios.post(this.context.baseUrl+'/items/list_items/',
-    { 
-    	
-
-
-    },{
-  headers: {
-    Authorization: 'Token ' + sessionStorage.getItem("token"),
-    'Content-Type': 'application/json'
-  }}).then((response)=>{
-      console.log(response.data);
-      this.setState({items:response.data,processing:false})
-      
-      }
-      
-    
-    
-
-    ).catch((error)=>{
-      
-      this.setState({processing:false,alert:true,message:'Can not load data !'})
-    })
-}
-
-addItems(event){
+addBranch(event){
 	event.preventDefault();
-	if(this.state.cat == 'selectcat'){
-		alert('category must be selected');
-		return false
-	}
 	this.setState({addingstatus:true});
-	axios.post(this.context.baseUrl+'/items/add_items/',
+	axios.post(this.context.baseUrl+'/branch/add_branch/',
     { 
-    	name:this.state.item_name,
-    	price:this.state.item_price,
-    	cat:Number(this.state.cat)
+    	name:this.state.branch_name,
+    	address:this.state.branch_address
 
 
     },{
@@ -151,12 +141,9 @@ addItems(event){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      
+      this.state.branch.push({name:this.state.branch_name,address:this.state.branch_address});
       event.target.reset();
-      
-      this.setState({addingstatus:false,cat:'selectcat'});
-      this.needRefresh()
-
+      this.setState({addingstatus:false})
       
       }
       
@@ -181,7 +168,7 @@ preDelete(event,index){
 
 deleteConfirmation(event){
  this.setState({is_modal_open:false});
-	axios.post(this.context.baseUrl+'/items/delete_items/',
+	axios.post(this.context.baseUrl+'/branch/delete_branch/',
     { 
     	
     	identify:Number(this.state.delete_id)
@@ -195,8 +182,9 @@ deleteConfirmation(event){
       
       if(response.data['status'] == 'deleted'){
 
-      	
-      	this.needRefresh()
+      	this.state.branch.splice(Number(this.state.index),1);
+      	let copy=[...this.state.branch];
+      	this.setState({branch:copy})
       }
       
       }
@@ -216,11 +204,12 @@ render(){
 
 return(
 
+
 <div className="card card-custom">
 	<div className="card-header flex-wrap border-0 pt-6 pb-0">
 		<div className="card-title">
-			<h3 className="card-label">Item list 
-											<span className="text-muted pt-2 font-size-sm d-block">Add new Item and delete from list</span></h3> </div>
+			<h3 className="card-label"> Item provider management
+											<span className="text-muted pt-2 font-size-sm d-block">Add new provider,edit and delete from list</span></h3> </div>
 		<div className="card-toolbar">
 			{/*  begin::Dropdown*/ } 
 		
@@ -235,38 +224,20 @@ return(
 		{/*  begin::Search Form*/ } 
 		<div className="mb-7">
 			<div className="row align-items-center">
-				<div className="col-lg-12 col-xl-12 col-md-12">
+				<div className="col-lg-11 col-xl-10">
 					<div className="row align-items-center">
 						
 						<div className="col-md-12 my-2 my-md-0">
 							<div className="d-flex align-items-center">
-							<form action="#" className="from  d-flex" onSubmit={this.addItems.bind(this)}>
+							<form action="#" className="from form-inline" onSubmit={this.addBranch.bind(this)}>
 							<div className="form-group mr-4">
 								
-								<input type="text" className="form-control" name="itemname" placeholder="New Item name" onChange={(event)=>this.add_items_update(event,'name')} required/>
+								<input type="text" className="form-control" name="branchname" placeholder="New branch name" onChange={(event)=>this.add_branch_update(event,'name')} />
 								</div>
 
-								<div className="form-group" >
-				
-								<input type="number" className="form-control"  name="price" placeholder="Price / Unit" onChange={(event)=>this.add_items_update(event,'price')} required/>
-								</div>
 								<div className="form-group">
 				
-								<select  className="form-control ml-2" name="category"  onChange={(event)=>this.add_items_update(event,'category')} required>
-								<option value="selectcat">Select category</option>
-								{this.state.items != null?
-
-									this.state.items.categories.map((data,index)=>{
-
-										return (
-											<option value={data.id} key={index}>{data.name}</option>
-
-											)
-									}):null
-
-
-								}
-								</select>
+								<input type="text" className="form-control" name="branchname" placeholder="Branch address" onChange={(event)=>this.add_branch_update(event,'address')}/>
 								</div>
 								<div className="ml-4"> <button type="submit"  className="btn btn-danger px-6 font-weight-bold">{this.state.addingstatus==false?
 				 <span>Add </span> :
@@ -291,9 +262,8 @@ return(
 					<tr className="datatable-row" style={{left: '0px'}}>
 						
 						
-						<th data-field="Branch name" className="datatable-cell datatable-cell-sort"><span style={{width: '108px'}}>Item Name</span></th>
-						<th data-field="Branch Address" className="datatable-cell datatable-cell-sort"><span style={{width: '150px',textAlign:'center'}}>Price / Unit</span></th>
-						<th data-field="Branch Address" className="datatable-cell datatable-cell-sort"><span style={{width: '150px',textAlign:'center'}}>Category</span></th>
+						<th data-field="Branch name" className="datatable-cell datatable-cell-sort"><span style={{width: '108px'}}>Branch Name</span></th>
+						<th data-field="Branch Address" className="datatable-cell datatable-cell-sort"><span style={{width: '150px',textAlign:'center'}}>Branch Address</span></th>
 						
 						<th data-field="Actions" data-autohide-disabled="false" className="datatable-cell datatable-cell-sort"><span style={{width: '125px'}}>Actions</span></th>
 					</tr>
@@ -304,15 +274,15 @@ return(
 
 
 
-{this.state.proccesing != true && this.state.items != null ?
+{this.state.proccesing != true && this.state.branch != null ?
 
-this.state.items.items.map((data,index)=>{
+this.state.branch.map((data,index)=>{
 	return (
 <tr data-row="0" className="datatable-row datatable-row-even" style={{left: '0px'}} key={data.id}>
 	
 	<td data-field="Full Name"  className="datatable-cell"><span style={{width: '108px'}}>{data.name}</span></td>
-	<td data-field="Email"  className="datatable-cell text-center"><span style={{width: '158px'}}>{data.price}  $</span></td>
-	<td data-field="Email"  className="datatable-cell text-center"><span style={{width: '158px'}}>{data.category}  </span></td>
+	<td data-field="Email"  className="datatable-cell"><span style={{width: '158px'}}>{data.address}</span></td>
+	
 	
 	<td  data-field="Actions" data-autohide-disabled="false" aria-label="null" className="datatable-cell"><span style={{overflow: 'visible', position: 'relative', width: '125px'}}>						
 
@@ -366,7 +336,7 @@ this.state.items.items.map((data,index)=>{
           
         </Modal>
 
-        <EditItems closemodal = {this.closeModal.bind(this)} editingmode={this.state.editingmode} updateid={this.state.updateid}/>
+        <EditBranch closemodal = {this.closeModal.bind(this)} editingmode={this.state.editingmode} updateid={this.state.updateid}/>
 </div>
 
 
@@ -381,4 +351,4 @@ this.state.items.items.map((data,index)=>{
 }
 
 
-export default itemList
+export default ProviderList

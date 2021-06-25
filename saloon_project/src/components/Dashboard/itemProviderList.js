@@ -3,9 +3,9 @@ import axios from 'axios'
 import baseContext from '../shared/baseContext'
 import {Route,Link,Switch} from 'react-router-dom'
 import Modal from 'react-modal'
-import EditItems from './EditItems'
+import EditProviders from './EditProviders'
 
-class itemList extends Component{
+class ProviderList extends Component{
 
 
 
@@ -15,17 +15,20 @@ state = {
 
 	processing:false,
 	addingstatus:false,
-	item_name:null,
-	item_price:null,
-	items:null,
+	
 	alert:false,
 	message:null,
 	is_modal_open:false,
 	delete_id:null,
 	index:null,
-	cat:'selectcat',
+	
 	editingmode:false,
-	updateid:0
+	updateid:0,
+	provider_list:null,
+
+	providername:null,
+	providercompany:null,
+	providercontact:null
 
 }
 
@@ -48,7 +51,7 @@ static contextType=baseContext
 componentDidMount(){
 
 	this.setState({processing:true});
-	axios.post(this.context.baseUrl+'/items/list_items/',
+	axios.post(this.context.baseUrl+'/items/list_providers/',
     { 
     	
 
@@ -59,7 +62,7 @@ componentDidMount(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({items:response.data,processing:false})
+      this.setState({provider_list:response.data,processing:false})
       
       }
       
@@ -75,6 +78,38 @@ componentDidMount(){
 }
 
 
+editClick(event){
+
+	this.setState({updateid:event.currentTarget.id,editingmode:true})
+}
+
+
+needRefresh(){
+	
+	this.setState({processing:true});
+	axios.post(this.context.baseUrl+'/items/list_providers/',
+    { 
+    	
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      this.setState({provider_list:response.data,processing:false})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({processing:false,alert:true,message:'Can not load data !'})
+    })
+}
 
 
 closeModal(){
@@ -82,67 +117,34 @@ closeModal(){
 	this.setState({editingmode:false,updateid:0})
 }
 
-editClick(event){
-
-	this.setState({updateid:event.currentTarget.id,editingmode:true})
-}
-
-add_items_update(event,identify){
+add_providers_update(event,identify){
 	if(identify=='name'){
 	let getValue = event.target.value;
-	this.setState({item_name:getValue})
+	this.setState({providername:getValue})
 }
 
- if(identify=='price'){
- 	this.setState({item_price:event.target.value})
+ if(identify=='company'){
+ 	this.setState({providercompany:event.target.value})
  }
 
-
- if(identify=='category'){
- 	this.setState({cat:event.target.value})
+ if(identify=='contact'){
+ 	this.setState({providercontact:event.target.value})
  }
 
 }
 
-needRefresh(){
-
-	this.setState({processing:true});
-	axios.post(this.context.baseUrl+'/items/list_items/',
-    { 
-    	
 
 
-    },{
-  headers: {
-    Authorization: 'Token ' + sessionStorage.getItem("token"),
-    'Content-Type': 'application/json'
-  }}).then((response)=>{
-      console.log(response.data);
-      this.setState({items:response.data,processing:false})
-      
-      }
-      
-    
-    
 
-    ).catch((error)=>{
-      
-      this.setState({processing:false,alert:true,message:'Can not load data !'})
-    })
-}
 
-addItems(event){
+addProviders(event){
 	event.preventDefault();
-	if(this.state.cat == 'selectcat'){
-		alert('category must be selected');
-		return false
-	}
 	this.setState({addingstatus:true});
-	axios.post(this.context.baseUrl+'/items/add_items/',
+	axios.post(this.context.baseUrl+'/items/add_providers/',
     { 
-    	name:this.state.item_name,
-    	price:this.state.item_price,
-    	cat:Number(this.state.cat)
+    	name:this.state.providername,
+    	company:this.state.providercompany,
+    	contact:this.state.providercontact
 
 
     },{
@@ -153,10 +155,8 @@ addItems(event){
       console.log(response.data);
       
       event.target.reset();
-      
-      this.setState({addingstatus:false,cat:'selectcat'});
+      this.setState({addingstatus:false});
       this.needRefresh()
-
       
       }
       
@@ -181,7 +181,7 @@ preDelete(event,index){
 
 deleteConfirmation(event){
  this.setState({is_modal_open:false});
-	axios.post(this.context.baseUrl+'/items/delete_items/',
+	axios.post(this.context.baseUrl+'/items/del_provider/',
     { 
     	
     	identify:Number(this.state.delete_id)
@@ -195,8 +195,9 @@ deleteConfirmation(event){
       
       if(response.data['status'] == 'deleted'){
 
-      	
-      	this.needRefresh()
+      	this.state.provider_list.splice(Number(this.state.index),1);
+      	let copy=[...this.state.provider_list];
+      	this.setState({provider_list:copy})
       }
       
       }
@@ -219,8 +220,8 @@ return(
 <div className="card card-custom">
 	<div className="card-header flex-wrap border-0 pt-6 pb-0">
 		<div className="card-title">
-			<h3 className="card-label">Item list 
-											<span className="text-muted pt-2 font-size-sm d-block">Add new Item and delete from list</span></h3> </div>
+			<h3 className="card-label">Item Provider management
+											<span className="text-muted pt-2 font-size-sm d-block">Add,edit and delete provider from the list</span></h3> </div>
 		<div className="card-toolbar">
 			{/*  begin::Dropdown*/ } 
 		
@@ -235,38 +236,25 @@ return(
 		{/*  begin::Search Form*/ } 
 		<div className="mb-7">
 			<div className="row align-items-center">
-				<div className="col-lg-12 col-xl-12 col-md-12">
+				<div className="col-lg-11 col-xl-10">
 					<div className="row align-items-center">
 						
 						<div className="col-md-12 my-2 my-md-0">
 							<div className="d-flex align-items-center">
-							<form action="#" className="from  d-flex" onSubmit={this.addItems.bind(this)}>
+							<form action="#" className="form d-flex" onSubmit={this.addProviders.bind(this)}>
 							<div className="form-group mr-4">
 								
-								<input type="text" className="form-control" name="itemname" placeholder="New Item name" onChange={(event)=>this.add_items_update(event,'name')} required/>
+								<input type="text" className="form-control" name="name" placeholder="Provider name" onChange={(event)=>this.add_providers_update(event,'name')} />
 								</div>
 
-								<div className="form-group" >
-				
-								<input type="number" className="form-control"  name="price" placeholder="Price / Unit" onChange={(event)=>this.add_items_update(event,'price')} required/>
-								</div>
 								<div className="form-group">
 				
-								<select  className="form-control ml-2" name="category"  onChange={(event)=>this.add_items_update(event,'category')} required>
-								<option value="selectcat">Select category</option>
-								{this.state.items != null?
+								<input type="text" className="form-control" name="company" placeholder="Company name" onChange={(event)=>this.add_providers_update(event,'company')}/>
+								</div>
 
-									this.state.items.categories.map((data,index)=>{
-
-										return (
-											<option value={data.id} key={index}>{data.name}</option>
-
-											)
-									}):null
-
-
-								}
-								</select>
+								<div className="form-group mr-1">
+				
+								<input type="text" className="form-control ml-3" name="contact" placeholder="contact information" onChange={(event)=>this.add_providers_update(event,'contact')}/>
 								</div>
 								<div className="ml-4"> <button type="submit"  className="btn btn-danger px-6 font-weight-bold">{this.state.addingstatus==false?
 				 <span>Add </span> :
@@ -286,35 +274,37 @@ return(
 		{/*  end: Search Form*/ } 
 		{/*  begin: Datatable*/ } 
 		<div className="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable" >
-			<table className="datatable-table" style={{display: 'block'}}>
+			<table className="datatable-table" style={{display: 'block',width:'60%'}}>
 				<thead className="datatable-head">
-					<tr className="datatable-row" style={{left: '0px'}}>
+					<tr className="datatable-row" >
 						
 						
-						<th data-field="Branch name" className="datatable-cell datatable-cell-sort"><span style={{width: '108px'}}>Item Name</span></th>
-						<th data-field="Branch Address" className="datatable-cell datatable-cell-sort"><span style={{width: '150px',textAlign:'center'}}>Price / Unit</span></th>
-						<th data-field="Branch Address" className="datatable-cell datatable-cell-sort"><span style={{width: '150px',textAlign:'center'}}>Category</span></th>
+						<th data-field="name" className="datatable-cell datatable-cell-sort ">Provider Name</th>
+						<th data-field="company" className="datatable-cell datatable-cell-sort ">Company</th>
+						<th data-field="contact" className="datatable-cell datatable-cell-sort ">Contact</th>
 						
-						<th data-field="Actions" data-autohide-disabled="false" className="datatable-cell datatable-cell-sort"><span style={{width: '125px'}}>Actions</span></th>
+						<th data-field="Actions" data-autohide-disabled="false" className="datatable-cell datatable-cell-sort ">Actions</th>
 					</tr>
 				</thead>
-				<tbody className="datatable-body" >
+				<tbody className="datatable-body">
 			
 
 
 
 
-{this.state.proccesing != true && this.state.items != null ?
+{this.state.proccesing != true && this.state.provider_list != null ?
 
-this.state.items.items.map((data,index)=>{
+this.state.provider_list.map((data,index)=>{
 	return (
-<tr data-row="0" className="datatable-row datatable-row-even" style={{left: '0px'}} key={data.id}>
+<tr data-row="0" className="datatable-row datatable-row-even"  key={data.id}>
 	
-	<td data-field="Full Name"  className="datatable-cell"><span style={{width: '108px'}}>{data.name}</span></td>
-	<td data-field="Email"  className="datatable-cell text-center"><span style={{width: '158px'}}>{data.price}  $</span></td>
-	<td data-field="Email"  className="datatable-cell text-center"><span style={{width: '158px'}}>{data.category}  </span></td>
+	<td data-field="Name"  className="datatable-cell "><span style={{width:'100px',textAlign:'center'}}>{data.name}</span></td>
+	<td data-field="company"  className="datatable-cell "><span style={{width:'100px',textAlign:'right'}}>{data.company}</span></td>
+	<td data-field="contact"  className="datatable-cell "><span style={{width:'100px',textAlign:'center'}}>{data.contact}</span></td>
 	
-	<td  data-field="Actions" data-autohide-disabled="false" aria-label="null" className="datatable-cell"><span style={{overflow: 'visible', position: 'relative', width: '125px'}}>						
+	
+	<td  data-field="Actions" data-autohide-disabled="false" aria-label="null" className="datatable-cell ">
+
 
 		<div id={data.id} className="d-inline" onClick={(event)=>this.preDelete(event,index)}>
 		<a href="#" value={data.id}  className="btn btn-sm btn-clean btn-icon " title="Delete"> 
@@ -337,7 +327,7 @@ this.state.items.items.map((data,index)=>{
 		 	</a></div>
 		
 
-   </span>
+   
 	</td>
 </tr>)}):<h1 className="text-center text-success">Waiting for update.... </h1>
 }
@@ -366,7 +356,7 @@ this.state.items.items.map((data,index)=>{
           
         </Modal>
 
-        <EditItems closemodal = {this.closeModal.bind(this)} editingmode={this.state.editingmode} updateid={this.state.updateid}/>
+        <EditProviders closemodal = {this.closeModal.bind(this)} editingmode={this.state.editingmode} updateid={this.state.updateid}/>
 </div>
 
 
@@ -381,4 +371,4 @@ this.state.items.items.map((data,index)=>{
 }
 
 
-export default itemList
+export default ProviderList

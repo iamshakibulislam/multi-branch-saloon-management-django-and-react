@@ -4,18 +4,20 @@ import baseContext from '../shared/baseContext'
 import Modal from 'react-modal';
 
 
-class EditServices extends Component{
+class EditProviders extends Component{
 
 static contextType = baseContext
 
 
     state = {
-        service_info:null,
+        provider_info:null,
         processing:false,
         alert:false,
         
 
         user_info:0,
+        branch_info:null
+
        
 
 
@@ -40,9 +42,9 @@ customStyles = {
 componentDidUpdate(prevprops,prevstate){
 
     if(prevprops.updateid != this.props.updateid && this.props.updateid != 0){
-axios.post(this.context.baseUrl+'/marketing/get_service_info/',
+axios.post(this.context.baseUrl+'/items/update_provider/',
     { 
-        serviceid:Number(this.props.updateid)
+        identify:Number(this.props.updateid)
 
 
     },{
@@ -52,7 +54,7 @@ axios.post(this.context.baseUrl+'/marketing/get_service_info/',
   }}).then((response)=>{
       console.log(response.data);
       
-      this.setState({service_info:response.data,processing:false,parsed:true,errorMessage:false,alert:false})
+      this.setState({provider_info:response.data,processing:false,parsed:true,errorMessage:false,alert:false})
       
       }
       
@@ -135,40 +137,20 @@ componentDidMount(){
 
 
 setInfo(event,name){
-    let copy = {...this.state.service_info};
-    if(name == 'title'){
-        copy['title'] = event.target.value;
-        this.setState({service_info:copy})
+    let copy = {...this.state.provider_info};
+    if(name == 'name'){
+        copy['name'] = event.target.value;
+        this.setState({provider_info:copy})
     }
 
-    if(name == 'location'){
-        copy['servicelocation'] = event.target.value;
-        this.setState({service_info:copy})
+    if(name == 'company'){
+        copy['company'] = event.target.value;
+        this.setState({provider_info:copy})
     }
 
-    if(name == 'cost'){
-        copy['cost'] = event.target.value;
-        this.setState({service_info:copy})
-    }
-
-    if(name == 'taxes'){
-        copy['taxes'] = event.target.value;
-        this.setState({service_info:copy})
-    }
-
-    if(name == 'duration'){
-        copy['serviceduration'] = event.target.value;
-        this.setState({service_info:copy})
-    }
-
-    if(name == 'commision'){
-        copy['servicecommision'] = event.target.value;
-        this.setState({service_info:copy})
-    }
-
-    if(name == 'target'){
-        copy['monthlytarget'] = event.target.value;
-        this.setState({service_info:copy})
+    if(name == 'contact'){
+        copy['contact'] = event.target.value;
+        this.setState({provider_info:copy})
     }
 
     
@@ -177,24 +159,20 @@ setInfo(event,name){
 }
 
 
-editService(event){
+editProvider(event){
 
  event.preventDefault();
  this.setState({processing:true});
 
 
 
-axios.post(this.context.baseUrl+'/marketing/update_services/',
+axios.post(this.context.baseUrl+'/items/update_providers/',
     {
     
-        identify:Number(this.state.service_info.id),
-        title:this.state.service_info.title,
-        servicelocation:this.state.service_info.servicelocation,
-        cost:Number(this.state.service_info.cost),
-        taxes:Number(this.state.service_info.taxes),
-        serviceduration:Number(this.state.service_info.serviceduration),
-        servicecommision:Number(this.state.service_info.servicecommision),
-        monthlytarget:Number(this.state.service_info.monthlytarget)
+        identify:Number(this.state.provider_info.id),
+        name:this.state.provider_info.name,
+        company:this.state.provider_info.company,
+        contact:this.state.provider_info.contact
 
     
     
@@ -216,7 +194,7 @@ axios.post(this.context.baseUrl+'/marketing/update_services/',
       this.setState({
         processing:false,
         alert:true,
-        errorMessage:'Service has been updated ! ',
+        errorMessage:'Branch has been updated ! ',
 
     
 
@@ -276,14 +254,14 @@ render(){
 <div className="card card-custom" style={{overflow:'scroll',height:'100%'}}>
  <div className="card-header">
   <h3 className="card-title">
-   Edit Service
+   Edit Provider Information
   </h3>
   <div className="card-toolbar">
    <button className="btn btn-danger text-white" onClick={this.props.closemodal}>Close</button>
   </div>
  </div>
  {/*begin::Form*/}
- <form onSubmit={this.editService.bind(this)}>
+ <form onSubmit={this.editProvider.bind(this)}>
   <div className="card-body">
    <div className="form-group mb-8">
   {this.state.alert == true ?
@@ -296,79 +274,38 @@ render(){
     :null}
 
    </div>
-   {this.state.service_info != null?
+   {this.state.provider_info != null?
    <div className="row">
-   <div className="col-md-6">
+   <div className="col-md-10">
      <div className="form-group">
-    <label>Title <span className="text-danger">*</span></label>
-    <input type="text" className="form-control" value={this.state.service_info.title} placeholder="Service title" onChange={(event)=>this.setInfo(event,'title')}  />
+    <label>Name <span className="text-danger">*</span></label>
+    <input type="text" className="form-control" value={this.state.provider_info.name} placeholder="Branch name" onChange={(event)=>this.setInfo(event,'name')}  />
     <span className="form-text text-muted"></span>
    </div>
    </div>
    
 
-   <div className="col-md-6">
+   <div className="col-md-10">
    <div className="form-group">
-    <label for="exampleInputDate">Duration(minute)<span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.service_info.serviceduration} id="exampleInputDate"  onChange={(event)=>this.setInfo(event,'duration')} />
+    <label for="exampleInputDate">Company<span className="text-danger">*</span></label>
+    <input type="text" className="form-control" value={this.state.provider_info.company} id="exampleInputDate"  onChange={(event)=>this.setInfo(event,'company')} />
    </div>
-   </div>
-   </div>:null}
-   {this.state.service_info != null?
-   <div className="row">
-   <div className="col-md-6">
-     <div className="form-group">
-    <label>Cost <span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.service_info.cost}  placeholder="22" onChange={(event)=>this.setInfo(event,'cost')} />
-    <span className="form-text text-muted"></span>
-   </div>
-   </div>
-   <div className="col-md-6">
-   <div className="form-group">
-    <label>Tax <span className="text-danger">*</span></label>
-    <input type="number" value={this.state.service_info.taxes} className="form-control"  placeholder="2" onChange={(event)=>this.setInfo(event,'taxes')} />
-    
-   </div>
-   </div>
-
-   </div>:null}
-
-   {this.state.service_info != null ?
-   <div className="row">
-   <div className="col-md-12">
-   <div className="form-group">
-    <label>Service location <span className="text-danger">*</span></label>
-    <textarea type="text" className="form-control" value={this.state.service_info.servicelocation}  placeholder="Location" onChange={(event)=>this.setInfo(event,'location')} />
-    <span className="form-text text-muted"></span>
-   </div>
-   </div>
-
-  
-   </div>:null}
-
-
-
-
-{this.state.service_info != null?
-   <div className="row">
-   <div className="col-md-6">
-   <div className="form-group">
-    <label for="exampleInputDate">Commision($) <span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.service_info.servicecommision}  id="exampleCommison"  onChange={(event)=>this.setInfo(event,'commision')} />
-   </div>
-   </div>
-
-   <div className="col-md-6">
-   <div className="form-group">
-    <label for="exampleInputDate">Monthly target($) <span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.service_info.monthlytarget}  id="exampleTarget"  onChange={(event)=>this.setInfo(event,'target')} />
-   </div>
-   </div>
-
-
- 
    
+   </div>
+
+   <div className="col-md-10">
+     <div className="form-group">
+    <label for="exampleInputDate">Contact<span className="text-danger">*</span></label>
+    <input type="text" className="form-control" value={this.state.provider_info.contact} id="exampleIddnputDate"  onChange={(event)=>this.setInfo(event,'contact')} />
+   </div>
+   </div>
    </div>:null}
+   
+
+
+
+
+
 
 
    
@@ -376,7 +313,7 @@ render(){
   <div className="card-footer">
   {this.state.processing == true ?
    <button type="submit" className="btn btn-primary mr-2">proccesing data ! Please wait...</button>
-   : <button type="submit" className="btn btn-primary mr-2">Update </button>}
+   : <button type="submit" className="btn btn-primary mr-2">Update</button>}
 
 
 
@@ -404,4 +341,4 @@ render(){
 }
 
 
-export default EditServices
+export default EditProviders
