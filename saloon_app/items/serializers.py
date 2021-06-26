@@ -61,3 +61,9 @@ class update_providers_info(serializers.Serializer):
 	name = serializers.CharField(max_length=200,allow_null=True,required=False)
 	company = serializers.CharField(max_length=200,allow_null=True,required=False)
 	contact = serializers.CharField(max_length=300,allow_null=True,required=False)
+
+
+class add_Stock(serializers.Serializer):
+	itemid = serializers.IntegerField()
+	providerid = serializers.IntegerField()
+	quantity = serializers.IntegerField()

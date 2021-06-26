@@ -6,6 +6,8 @@ import itemList from './Dashboard/itemList'
 import ServiceList from './Dashboard/serviceList'
 import addService from './Dashboard/addService'
 import itemProviderList from './Dashboard/itemProviderList'
+import buyItems from './Dashboard/buyItems'
+import stock from './Dashboard/stock'
 
 import addStaffToBranch from './Dashboard/addStaffToBranch'
 import ItemCategory from './Dashboard/ItemCategory'
@@ -382,11 +384,23 @@ return(
 
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<Link to="/dashboard/add_staff_to_branch" className="menu-link menu-toggle">
+												<Link to="/dashboard/buy_items" className="menu-link menu-toggle">
 													<i className="menu-bullet menu-bullet-dot">
 														<span></span>
 													</i>
-													<span className="menu-text">Assign items to Provider</span>
+													<span className="menu-text">Buy items</span>
+													<i className="menu-arrow"></i>
+												</Link>
+												
+											</li>
+
+
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<Link to="/dashboard/item_stock" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Item Stock</span>
 													<i className="menu-arrow"></i>
 												</Link>
 												
@@ -480,6 +494,8 @@ return(
 									 <Route path="/dashboard/add_service" exact component={addService} />
 									 <Route path="/dashboard/item_category/" exact component={ItemCategory} />
 									 <Route path="/dashboard/provider_list/" exact component={itemProviderList} />
+									 <Route path="/dashboard/buy_items/" exact component={buyItems} />
+									 <Route path="/dashboard/item_stock/" exact component={stock} />
 
 									</div>
 

@@ -2,6 +2,8 @@ from django.db import models
 
 
 
+
+
 class item_category(models.Model):
 	name = models.CharField(max_length=200,null=True,blank=True)
 
@@ -37,3 +39,12 @@ class providers(models.Model):
 
 
 
+class buy_items(models.Model):
+	date = models.DateField(auto_now_add=True)
+	item = models.ForeignKey(product_items,on_delete=models.CASCADE)
+	provider = models.ForeignKey(providers,on_delete=models.CASCADE)
+	quantity = models.IntegerField(null=True,blank=True)
+
+
+	def __str__(self):
+		return str(self.item.name)

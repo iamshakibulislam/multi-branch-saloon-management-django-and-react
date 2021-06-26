@@ -8,7 +8,66 @@ from .serializers import *
 from companybranch.models import Branch,BranchEmployee
 from authentication.models import User
 from .models import *
-from django.db.models import Q
+from django.db.models import Q,Sum
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_stock_data(request):
+
+	info = []
+	items = product_items.objects.all()
+
+	for x in items:
+		get_data = buy_items.objects.filter(item = x)
+		name = x.name
+		quantity = 0
+		if len(get_data) != 0:
+			for q in get_data:
+				quantity = q.quantity + quantity
+			value =float(quantity * x.price)
+			date = get_data.reverse()[0].date
+
+		else:
+			value = 0
+			date = 'N/A'
+
+		info.append({'name':name,'quantity':quantity,'value':value,'date':date})
+
+	return Response(info)
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def add_to_stock(request):
+	info = add_Stock(data=request.data)
+
+	if info.is_valid():
+		sel_item = product_items.objects.get(id=int(info.validated_data['itemid']))
+		sel_provider = providers.objects.get(id=int(info.validated_data['providerid']))
+
+		buy_items.objects.create(item = sel_item , provider = sel_provider , quantity = info.validated_data['quantity'])
+
+		return Response({'status':'created'})
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_items_provider_list(request):
+	info = {'items':[],'providers':[]}
+
+	items=product_items.objects.all()
+
+	for x in items:
+		info['items'].append({'id':x.id,'name':x.name})
+
+	provid = providers.objects.all()
+
+	for x in provid:
+		info['providers'].append({'id':x.id,'name':x.name})
+
+
+	return Response(info)
+
 
 
 @api_view(['POST',])
