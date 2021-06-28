@@ -1,7 +1,7 @@
 import React,{Component,Fragment} from 'react'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
-class StaffRegister extends Component{
+class BuyItems extends Component{
 
 static contextType = baseContext
 
@@ -15,6 +15,7 @@ static contextType = baseContext
         itemid:null,
         providerid:null,
         quantity:null,
+        branch:null,
         
         items_info:null
        
@@ -73,6 +74,10 @@ setInfo(event,name){
         this.setState({quantity:event.target.value})
     }
 
+     if(name == 'branch'){
+        this.setState({branch:event.target.value})
+    }
+
     
 
 
@@ -82,7 +87,7 @@ setInfo(event,name){
 addToStock(event){
 
  event.preventDefault();
- if (this.state.providerid==null || this.state.quantity==null || this.state.providerid==null){
+ if (this.state.providerid==null || this.state.quantity==null || this.state.providerid==null || this.state.branch == null){
     alert('All fields are required !');
     return false
  }
@@ -95,7 +100,8 @@ axios.post(this.context.baseUrl+'/items/add_to_stock/',
 
         itemid:this.state.itemid,
         providerid:this.state.providerid,
-        quantity:this.state.quantity
+        quantity:this.state.quantity,
+        branchid:Number(this.state.branch)
 
 
     
@@ -197,6 +203,27 @@ render(){
    </div>
    </div>
 
+
+
+   <div className="col-md-12">
+   <div className="form-group">
+    <label>Select Branch<span className="text-danger">*</span></label>
+    <select name="provider" className="form-control" id="provider" onChange={(event)=>this.setInfo(event,'branch')} required>
+    <option key="someprovider" value="selectprovider" id="dome">Select Branch</option>
+    {this.state.items_info.branch.map((data,index)=>{
+
+        return (
+
+                <option key={index} value={data.id}>{data.name}</option>
+
+
+            )
+    })}
+    </select>
+    <span className="form-text text-muted"></span>
+   </div>
+   </div>
+
 <div className="col-md-12">
    <div className="form-group">
     <label>Quantity<span className="text-danger">*</span></label>
@@ -249,4 +276,4 @@ render(){
 }
 
 
-export default StaffRegister
+export default BuyItems

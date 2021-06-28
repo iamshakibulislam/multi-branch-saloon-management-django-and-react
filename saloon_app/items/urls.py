@@ -20,6 +20,11 @@ urlpatterns = [
 	path('update_providers/',views.update_providers),
 	path('get_items_provider_list/',views.get_items_provider_list),
 	path('add_to_stock/',views.add_to_stock),
-	path('get_stock_data/',views.get_stock_data)
+	path('get_stock_data/',views.get_stock_data),
+	path('get_staff/',views.get_staff),
+	path('get_services_list/',views.get_services_list),
+	path('place_order/',views.place_order),
+	path('order_details/',views.order_details),
+	path('get_upcomming_appointment/',views.get_upcomming_appointment)
 
 ]

@@ -493,7 +493,7 @@ render(){
    <div className="col-md-6">
    <div className="form-group">
     <label for="exampleInputDate">Date of birth <span className="text-danger">*</span></label>
-    <input type="date" className="form-control" value={this.state.user_info.dob} id="exampleInputDate"  onChange={(event)=>this.setInfo(event,'dob')} required/>
+    <input type="date" className="form-control" value={this.state.user_info.dob} id="exampleInputDate"  onChange={(event)=>this.setInfo(event,'dob')} />
    </div>
    </div>
 
@@ -582,7 +582,7 @@ render(){
    <div className="col-md-6">
    <div className="form-group">
     <label for="exampleInputDate">Mobile no <span className="text-danger">*</span></label>
-    <input type="text" value={this.state.user_info.mobile} placeholder="+913xxxxxxxxx" className="form-control" id="exampleInputmobile"  onChange={(event)=>this.setInfo(event,'mobile')} required/>
+    <input type="text" value={this.state.user_info.mobile} placeholder="+913xxxxxxxxx" className="form-control" id="exampleInputmobile"  onChange={(event)=>this.setInfo(event,'mobile')} />
    </div>
    </div>
 
@@ -638,7 +638,7 @@ render(){
    <div className="col-md-6">
    <div className="form-group">
     <label for="exampleInputDate">Address <span className="text-danger">*</span></label>
-    <textarea className="form-control" value={this.state.user_info.address} id="exampleInputAddress"  onChange={(event)=>this.setInfo(event,'address')} required/>
+    <textarea className="form-control" value={this.state.user_info.address} id="exampleInputAddress"  onChange={(event)=>this.setInfo(event,'address')} />
    </div>
    </div>
 

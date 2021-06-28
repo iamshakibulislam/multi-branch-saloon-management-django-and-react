@@ -8,7 +8,10 @@ import addService from './Dashboard/addService'
 import itemProviderList from './Dashboard/itemProviderList'
 import buyItems from './Dashboard/buyItems'
 import stock from './Dashboard/stock'
-
+import order from './Dashboard/order'
+import orderdetails from './Dashboard/orderdetails'
+import stockItemDetails from './Dashboard/stockItemDetails'
+import axios from 'axios'
 import addStaffToBranch from './Dashboard/addStaffToBranch'
 import ItemCategory from './Dashboard/ItemCategory'
 import orderCalender from './Dashboard/orderCalender'
@@ -20,7 +23,63 @@ import baseContext from './shared/baseContext'
 
 class Dashboard extends Component{
 
+state = {
+	user_info:null
+}
+
 static contextType = baseContext
+
+
+componentWillMount(){
+	if (sessionStorage.getItem('token') == null){
+		window.location = this.context.reactBase+'/authenticate';
+	}
+}
+
+
+
+componentDidMount(){
+
+	
+	
+axios.post(this.context.baseUrl+'/api/authentication/user_info/',
+    { 
+    	
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      
+      this.setState({user_info:response.data})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({alert:true,message:'Can not load data !'})
+    })
+
+
+
+}
+
+
+
+signOut(){
+
+	
+
+	sessionStorage.removeItem('token');
+	window.location=this.context.reactBase+'/authenticate';
+}
+
+
 
 render(){
 
@@ -153,10 +212,30 @@ return(
 										<span className="menu-text">Dashboard</span>
 									</a>
 								</li>
+								{this.state.user_info != null && this.state.user_info.role=='user'?
+								<li className="menu-item menu-item-active" aria-haspopup="true">
+									<Link to="/dashboard/order/" className="menu-link">
+										<span className="svg-icon menu-icon">
+											{/*begin::Svg Icon | path:./assets/media/svg/icons/Design/Layers.svg*/}
+											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<polygon points="0 0 24 0 24 24 0 24" />
+													<path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+													<path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+												</g>
+											</svg>
+											{/*end::Svg Icon*/}
+										</span>
+										<span className="menu-text">Book Appointment</span>
+									</Link>
+								</li>:null}
+								{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager')?
 								<li className="menu-section">
 									<h4 className="menu-text">Management</h4>
 									<i className="menu-icon ki ki-bold-more-hor icon-md"></i>
-								</li>
+								</li>:null}
+
+								{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager')?
 								<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 									<a href="javascript:;" className="menu-link menu-toggle">
 										<span className="svg-icon menu-icon">
@@ -212,9 +291,10 @@ return(
 											
 										</ul>
 									</div>
-								</li>
+								</li>:null}
 
 							{/* service  managemnet here */}
+							{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager')?
 										<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 									<a href="javascript:;" className="menu-link menu-toggle">
 										<span className="svg-icon menu-icon">
@@ -270,9 +350,9 @@ return(
 											
 										</ul>
 									</div>
-								</li>
+								</li>:null}
 							{/* end of service managemnt */}
-
+								{this.state.user_info != null && (this.state.user_info.role=='superuser')?
 								<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 									<a href="javascript:;" className="menu-link menu-toggle">
 										<span className="svg-icon menu-icon">
@@ -318,11 +398,11 @@ return(
 											
 										</ul>
 									</div>
-								</li>
+								</li>:null}
 								
 
 							{/* adding product management */}
-
+							{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager')?
 							<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 									<a href="javascript:;" className="menu-link menu-toggle">
 										<span className="svg-icon menu-icon">
@@ -411,7 +491,7 @@ return(
 											
 										</ul>
 									</div>
-								</li>
+								</li>:null}
 
 
 							</ul>
@@ -457,7 +537,7 @@ return(
 								<div className="topbar-item">
 									<div className="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
 										<span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-										<span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">Sean</span>
+										<span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{this.state.user_info != null? this.state.user_info.first_name:null}</span>
 										<span className="symbol symbol-lg-35 symbol-25 symbol-light-success">
 											<span className="symbol-label font-size-h5 font-weight-bold">S</span>
 										</span>
@@ -482,22 +562,44 @@ return(
 								{/*begin::Dashboard*/}
 								{/*begin::Row*/}
 								<div className="row">
-								
-									<div className="col-lg-10 col-xxl-10" style={{marginLeft:'auto',marginRight:'auto'}}>
-									<Route path="/dashboard/" exact component={orderCalender} />
-									 <Route path="/dashboard/add_staff" exact component={StaffRegister} />
-									 <Route path="/dashboard/staff_list"  component={staffList} />
-									 <Route path="/dashboard/branch_list" exact component={branchList}/>
-									 <Route path="/dashboard/add_staff_to_branch" exact component={addStaffToBranch} />
-									 <Route path="/dashboard/item_list" exact component={itemList} />
-									 <Route path="/dashboard/service_list" exact component={ServiceList} />
-									 <Route path="/dashboard/add_service" exact component={addService} />
-									 <Route path="/dashboard/item_category/" exact component={ItemCategory} />
-									 <Route path="/dashboard/provider_list/" exact component={itemProviderList} />
-									 <Route path="/dashboard/buy_items/" exact component={buyItems} />
-									 <Route path="/dashboard/item_stock/" exact component={stock} />
+								{this.state.user_info != null?
 
-									</div>
+									
+									<div className="col-lg-10 col-xxl-10" style={{marginLeft:'auto',marginRight:'auto'}}>
+									{this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' ?
+									<Route path="/dashboard/" exact component={stockItemDetails} />:null}
+									{this.state.user_info.role == 'user' ?
+									<Route path="/dashboard/" exact component={orderdetails} />:null}
+
+									{this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff'?
+
+									<Route path="/dashboard/" exact component={orderCalender} />:null}
+
+									{this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/add_staff" exact component={StaffRegister} />:null}
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/staff_list"  component={staffList} />:null}
+									 {this.state.user_info.role == 'superuser'  || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/branch_list" exact component={branchList}/>:null}
+									 {this.state.user_info.role == 'superuser' ||  this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/add_staff_to_branch" exact component={addStaffToBranch} />:null}
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/item_list" exact component={itemList} />:null}
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/service_list" exact component={ServiceList} />:null}
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/add_service" exact component={addService} />:null}
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/item_category/" exact component={ItemCategory} />:null}
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/provider_list/" exact component={itemProviderList} />:null}
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/buy_items/" exact component={buyItems} />:null}
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 <Route path="/dashboard/item_stock/" exact component={stock} />:null}
+									 <Route path="/dashboard/order/" exact component={order} />
+
+									</div>:null}
 
 									
 								
@@ -539,8 +641,8 @@ return(
 						<i className="symbol-badge bg-success"></i>
 					</div>
 					<div className="d-flex flex-column">
-						<a href="#" className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
-						<div className="text-muted mt-1">Application Developer</div>
+						<a href="#" className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{this.state.user_info != null? this.state.user_info.first_name +' '+this.state.user_info.last_name:null}</a>
+						<div className="text-muted mt-1">{this.state.user_info != null? this.state.user_info.role:null}</div>
 						<div className="navi mt-2">
 							<a href="#" className="navi-item">
 								<span className="navi-link p-0 pb-2">
@@ -557,10 +659,10 @@ return(
 											{/*end::Svg Icon*/}
 										</span>
 									</span>
-									<span className="navi-text text-muted text-hover-primary">jm@softplus.com</span>
+									<span className="navi-text text-muted text-hover-primary">{this.state.user_info != null? this.state.user_info.email:null}</span>
 								</span>
 							</a>
-							<a href="#" className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Sign Out</a>
+							<a  className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" onClick={()=>this.signOut()}>Sign Out</a>
 						</div>
 					</div>
 				</div>

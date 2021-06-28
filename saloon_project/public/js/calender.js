@@ -38,13 +38,13 @@ var KTCalendarBasic = function() {
                 googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
 
                 // US Holidays
-                events: 'en.usa#holiday@group.v.calendar.google.com',
+               // events: 'en.usa#holiday@group.v.calendar.google.com',
 
-                eventClick: function(event) {
+                //eventClick: function(event) {
                     // opens events in a popup window
-                    window.open(event.url, 'gcalevent', 'width=700,height=600');
-                    return false;
-                },
+                  //  window.open(event.url, 'gcalevent', 'width=700,height=600');
+                   // return false;
+                //},
 
                 loading: function(bool) {
                     return;

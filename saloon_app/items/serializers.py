@@ -67,3 +67,20 @@ class add_Stock(serializers.Serializer):
 	itemid = serializers.IntegerField()
 	providerid = serializers.IntegerField()
 	quantity = serializers.IntegerField()
+	branchid = serializers.IntegerField()
+
+
+
+class get_branch_id(serializers.Serializer):
+	identify=serializers.IntegerField()
+
+class get_staff_id(serializers.Serializer):
+	identify=serializers.IntegerField()
+
+
+class get_order_data(serializers.Serializer):
+	branchid = serializers.IntegerField()
+	staffid = serializers.IntegerField()
+	services = serializers.CharField(max_length=500)
+	date = serializers.CharField(max_length=500)
+	time = serializers.CharField(max_length=500)

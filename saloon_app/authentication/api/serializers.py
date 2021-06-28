@@ -8,15 +8,15 @@ import json
 
 class RegistrationSerializers(serializers.ModelSerializer):
       password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True,required=False)
-      dob = serializers.CharField(max_length=120,required=False)
-      services = serializers.CharField(max_length=100,required=False)
-      workdays = serializers.CharField(max_length=22,required=False)
+      dob = serializers.CharField(max_length=120,required=False,allow_null=True)
+      services = serializers.CharField(max_length=100,required=False,allow_null=True)
+      workdays = serializers.CharField(max_length=22,required=False,allow_null=True)
       
-      time_from = serializers.CharField(max_length=22,required=False)
-      time_to = serializers.CharField(max_length=22,required=False)
-      mobile = serializers.CharField(max_length=22,required=False)
+      time_from = serializers.CharField(max_length=22,required=False,allow_null=True)
+      time_to = serializers.CharField(max_length=22,required=False,allow_null=True)
+      mobile = serializers.CharField(max_length=22,required=False,allow_null=True)
       address = serializers.CharField(max_length=44,required=False)
-      color = serializers.CharField(max_length=33,required=False)
+      color = serializers.CharField(max_length=33,required=False,allow_null=True)
       branch = serializers.IntegerField(required=False)
 
       class Meta:
@@ -90,24 +90,29 @@ class RegistrationSerializers(serializers.ModelSerializer):
 
                               get_services_list = list(json.loads(self.validated_data['services']))
 
-                              for ser in get_services_list:
+                              if len(get_services_list) != 0:
+
+                                    for ser in get_services_list:
 
 
-                                    track_service_providers.objects.create(
-                                          service = Service.objects.get(id=int(ser)),
-                                          provider = user
-                                          )
+                                          track_service_providers.objects.create(
+                                                service = Service.objects.get(id=int(ser)),
+                                                provider = user
+                                                )
+
 
 
                               get_workdays= list(json.loads(self.validated_data['workdays']))
 
-                              for x in get_workdays:
-                                    workdays.objects.create(
+                              if len(get_workdays) != 0:
 
-                                          staff = user,
-                                          day = x
+                                    for x in get_workdays:
+                                          workdays.objects.create(
 
-                                          )
+                                                staff = user,
+                                                day = x
+
+                                                )
 
 
             return user

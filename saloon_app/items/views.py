@@ -6,25 +6,151 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import *
 from companybranch.models import Branch,BranchEmployee
-from authentication.models import User
+from staffall.models import *
+from datetime import datetime,timedelta
 from .models import *
 from django.db.models import Q,Sum
+import json
+from authentication.models import User
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_upcomming_appointment(request):
+	filtr = order.objects.filter(Q(appointment_date__gt=datetime.now()) & Q(staff = request.user))
+
+	info = []
+
+	for x in filtr:
+		if x not in info:
+			info.append(x.appointment_date)
+
+
+	return Response(info)
+
+
+
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def order_details(request):
+	res = []
+	current_services=""
+	find_orders=order.objects.filter(customer=request.user)
+
+	for x in find_orders:
+		get_services = order_services.objects.filter(order_ref=x)
+
+		for ser in get_services:
+			current_services = current_services +' , '+ser.servic_ref.title
+
+		current_services = current_services[2:]
+
+
+		res.append({'id':x.id,'date':x.appointment_date,'time':x.appointment_time,'branch':x.branch.name,'staff':x.staff.first_name+' '+x.staff.last_name,'services':current_services,'status':x.status})
+
+
+	return Response(res)
+
+
+
+
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def place_order(request):
+	info = get_order_data(data=request.data)
+
+	if info.is_valid() :
+		branchid = info.validated_data['branchid']
+		print('your branch ',branchid)
+		staffid = info.validated_data['staffid']
+		servicess = info.validated_data['services']
+		date = info.validated_data['date']
+		time = info.validated_data['time']
+
+		sel_branch = Branch.objects.get(id=int(branchid))
+		sel_staff = User.objects.get(id=int(staffid))
+
+		create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=request.user)
+
+		get_services_list = list(json.loads(servicess))
+
+		for x in get_services_list:
+			sel_ser = Service.objects.get(id=int(x))
+			order_services.objects.create(order_ref = create_order,servic_ref=sel_ser)
+
+
+
+		return Response({'status':'placed'})
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_services_list(request):
+	info = get_staff_id(data=request.data)
+
+	if info.is_valid():
+		sel_user = User.objects.get(id=int(info.validated_data['identify']))
+		sel = track_service_providers.objects.filter(provider = sel_user )
+
+		res = []
+
+		for x in sel:
+			res.append({'id':x.service.id,'name':x.service.title})
+
+		return Response(res)
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_staff(request):
+	info = get_branch_id(data=request.data)
+
+	if info.is_valid():
+		identify = info.validated_data['identify']
+
+		sel_branch = Branch.objects.get(id=int(identify))
+		get_staffs = BranchEmployee.objects.filter(branch_name=sel_branch)
+
+		res = []
+
+		for x in get_staffs:
+			res.append({'id':x.staff.id,'name':x.staff.first_name+' '+x.staff.last_name})
+
+
+		return Response(res)
+
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
 def get_stock_data(request):
 
+	branchid = get_branch_id(data=request.data)
+	if branchid.is_valid():
+		get_id = branchid.validated_data['identify']
+
 	info = []
 	items = product_items.objects.all()
 
 	for x in items:
-		get_data = buy_items.objects.filter(item = x)
+		if int(get_id) == 0:
+			get_data = buy_items.objects.filter(item = x)
+		else:
+			getb = Branch.objects.get(id=int(get_id))
+			get_data = buy_items.objects.filter(item = x,branch=getb)
+
 		name = x.name
 		quantity = 0
 		if len(get_data) != 0:
 			for q in get_data:
 				quantity = q.quantity + quantity
-			value =float(quantity * x.price)
+			value =round(float(quantity * x.price),2)
 			date = get_data.reverse()[0].date
 
 		else:
@@ -45,15 +171,16 @@ def add_to_stock(request):
 	if info.is_valid():
 		sel_item = product_items.objects.get(id=int(info.validated_data['itemid']))
 		sel_provider = providers.objects.get(id=int(info.validated_data['providerid']))
+		sel_branch = Branch.objects.get(id=int(info.validated_data['branchid']))
 
-		buy_items.objects.create(item = sel_item , provider = sel_provider , quantity = info.validated_data['quantity'])
+		buy_items.objects.create(item = sel_item , provider = sel_provider , quantity = info.validated_data['quantity'],branch = sel_branch)
 
 		return Response({'status':'created'})
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
 def get_items_provider_list(request):
-	info = {'items':[],'providers':[]}
+	info = {'items':[],'providers':[],'branch':[]}
 
 	items=product_items.objects.all()
 
@@ -64,6 +191,12 @@ def get_items_provider_list(request):
 
 	for x in provid:
 		info['providers'].append({'id':x.id,'name':x.name})
+
+	branches = Branch.objects.all()
+
+	for x in branches:
+		info['branch'].append({'id':x.id,'name':x.name})
+
 
 
 	return Response(info)
