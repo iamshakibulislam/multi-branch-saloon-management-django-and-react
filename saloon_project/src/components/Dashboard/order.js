@@ -22,7 +22,8 @@ static contextType = baseContext
         staffid:null,
         services:null,
         date:null,
-        time:null
+        time:null,
+        available_services:null
        
 
 
@@ -72,7 +73,7 @@ setInfo(event,name){
         this.setState({processing:true});
 
 
-    axios.post(this.context.baseUrl+'/items/get_staff/',
+    axios.post(this.context.baseUrl+'/items/get_services/',
     { 
         identify:Number(event.target.value)
 
@@ -84,7 +85,7 @@ setInfo(event,name){
   }}).then((response)=>{
       console.log(response.data);
       
-      this.setState({stafflist:response.data,processing:false,parsed:true})
+      this.setState({available_services:response.data,processing:false,parsed:true})
       
       }
       
@@ -98,38 +99,7 @@ setInfo(event,name){
 
     }
 
-    if(name == 'staff'){
-        this.setState({staffid:event.target.value});
-
-
-    axios.post(this.context.baseUrl+'/items/get_services_list/',
-    { 
-        identify:Number(event.target.value)
-
-
-    },{
-  headers: {
-    Authorization: 'Token ' + sessionStorage.getItem("token"),
-    'Content-Type': 'application/json'
-  }}).then((response)=>{
-      console.log(response.data);
-      
-      this.setState({services:response.data,processing:false,parsed:true})
-      
-      }
-      
-    
-    
-
-    ).catch((error)=>{
-      console.log(error.response);
-      this.setState({processing:false,alert:true,message:'Can not load data !'})
-    })
-
-
-
-
-    }
+  
 
      if(name == 'date'){
         this.setState({date:event.target.value})
@@ -260,14 +230,19 @@ render(){
     <span className="form-text text-muted"></span>
    </div>
    </div>
+   
+
+
+
    <div className="col-md-12">
    <div className="form-group">
-    <label>Select staff<span className="text-danger">*</span></label>
-    <select name="staff" className="form-control" id="provider" onChange={(event)=>this.setInfo(event,'staff')} required>
-    <option key="someprovider" value="selectprovider" id="dome">Select Staff</option>
-    {this.state.stafflist != null?
-
-    this.state.stafflist.map((data,index)=>{
+    <label>Services<span className="text-danger">*</span></label>
+    <select multiple name="provider" className="form-control" id="selected_services" onChange={(event)=>this.setInfo(event,'services')} required>
+    {this.state.services == null?
+    <option key="someprovider" value="selectprovider" id="services">Select services</option>
+    :null}
+    {this.state.available_services != null?
+    this.state.available_services.map((data,index)=>{
 
         return (
 
@@ -282,16 +257,14 @@ render(){
    </div>
 
 
-
    <div className="col-md-12">
    <div className="form-group">
-    <label>Services<span className="text-danger">*</span></label>
-    <select multiple name="provider" className="form-control" id="selected_services" onChange={(event)=>this.setInfo(event,'services')} required>
-    {this.state.services == null?
-    <option key="someprovider" value="selectprovider" id="services">Select services</option>
-    :null}
-    {this.state.services != null?
-    this.state.services.map((data,index)=>{
+    <label>Select staff<span className="text-danger">*</span></label>
+    <select name="staff" className="form-control" id="provider" onChange={(event)=>this.setInfo(event,'staff')} required>
+    <option key="someprovider" value="selectprovider" id="dome">Select Staff</option>
+    {this.state.stafflist != null?
+
+    this.state.stafflist.map((data,index)=>{
 
         return (
 

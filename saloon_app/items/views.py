@@ -13,6 +13,46 @@ from django.db.models import Q,Sum
 import json
 from authentication.models import User
 
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_services(request):
+	info = get_branch_id(data=request.data)
+	if info.is_valid():
+		branchid=info.validated_data['identify']
+
+		sel_branch = Branch.objects.get(id=int(branchid))
+
+		filter_employees= BranchEmployee.objects.filter(branch_name=sel_branch)
+
+		service_ids = []
+
+		for user in  filter_employees:
+			get_staff = user.staff
+
+			get_all_services=track_service_providers.objects.filter(provider = get_staff)
+
+			for identify in get_all_services:
+				service_ids.append(identify.service.id)
+
+
+
+		unique_service_id = set(service_ids)
+
+		unique_service_ids = []
+
+		for x in unique_service_id:
+			unique_service_ids.append(x)
+
+		available_services = []
+
+		for x in unique_service_ids:
+			sel = Service.objects.get(id=int(x))
+			available_services.append({'id':sel.id,'name':sel.title})
+
+
+		return Response(available_services)
+
+
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
@@ -301,6 +341,7 @@ def update_item_info(request):
 		identify = info.validated_data['identify']
 		cat = info.validated_data['cat']
 		price = info.validated_data['price']
+		sale_price = info.validated_data['sale_price']
 
 
 		sel_item = product_items.objects.get(id=int(identify))
@@ -317,6 +358,9 @@ def update_item_info(request):
 
 		if sel_item.category != sel_cat:
 			sel_item.category = sel_cat
+
+		if sel_item.sale_price != sale_price:
+			sel_item.sale_price = sale_price
 
 
 		sel_item.save()
@@ -342,6 +386,7 @@ def get_item_info(request):
 		info['item_info']['name'] = sel.name
 		info['item_info']['category'] = sel.category.id
 		info['item_info']['price'] = sel.price
+		info['item_info']['sale_price'] = sel.sale_price
 
 
 		for x in item_category.objects.all():
@@ -462,8 +507,9 @@ def add_items(request):
 		catid = data.validated_data['cat']
 
 		selcat = item_category.objects.get(id=int(catid))
+		sale_price = data.validated_data['sale_price']
 
-		p=product_items.objects.create(name=name,price=price,category=selcat)
+		p=product_items.objects.create(name=name,price=price,category=selcat,sale_price=sale_price)
 
 		return Response({"status":"added","id":p.id})
 

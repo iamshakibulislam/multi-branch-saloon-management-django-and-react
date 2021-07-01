@@ -25,7 +25,8 @@ state = {
 	index:null,
 	cat:'selectcat',
 	editingmode:false,
-	updateid:0
+	updateid:0,
+	sale_price:null
 
 }
 
@@ -97,6 +98,10 @@ add_items_update(event,identify){
  	this.setState({item_price:event.target.value})
  }
 
+ if(identify=='sale_price'){
+ 	this.setState({sale_price:event.target.value})
+ }
+
 
  if(identify=='category'){
  	this.setState({cat:event.target.value})
@@ -142,7 +147,8 @@ addItems(event){
     { 
     	name:this.state.item_name,
     	price:this.state.item_price,
-    	cat:Number(this.state.cat)
+    	cat:Number(this.state.cat),
+    	sale_price:Number(this.state.sale_price)
 
 
     },{
@@ -248,7 +254,11 @@ return(
 
 								<div className="form-group" >
 				
-								<input type="number" className="form-control"  name="price" placeholder="Price / Unit" onChange={(event)=>this.add_items_update(event,'price')} required/>
+								<input type="number" className="form-control"  name="price" placeholder="Buy price" onChange={(event)=>this.add_items_update(event,'price')} required/>
+								</div>
+								<div className="form-group ml-2" >
+				
+								<input type="number" className="form-control"  name="saleprice" placeholder="Selling price" onChange={(event)=>this.add_items_update(event,'sale_price')} required/>
 								</div>
 								<div className="form-group">
 				

@@ -17,7 +17,9 @@ static contextType = baseContext
         tax:null,
         duration:null,
         commision:null,
-        target:null
+        target:null,
+        selected_cat_id:null,
+        cat_data:null
         
        
 
@@ -27,6 +29,35 @@ static contextType = baseContext
 
 
 
+
+componentDidMount(){
+
+
+    axios.post(this.context.baseUrl+'/marketing/all_service_categories/',
+    { 
+        
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      this.setState({cat_data:response.data})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({alert:true,message:'Can not load data !'})
+    })
+
+
+}
 
 
 
@@ -80,7 +111,8 @@ axios.post(this.context.baseUrl+'/marketing/add_service/',
        target:this.state.target,
        tax:this.state.tax,
        duration:this.state.duration,
-       commision:this.state.commision
+       commision:this.state.commision,
+       catid : Number(document.getElementById('cat').value)
 
 
     },{
@@ -89,7 +121,9 @@ axios.post(this.context.baseUrl+'/marketing/add_service/',
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({processing:false,alert:true,errorMessage:'successfully added'})
+      this.setState({processing:false,alert:true,errorMessage:'successfully added'});
+
+      event.target.reset()
       
       }
       
@@ -130,10 +164,11 @@ render(){
   <div className="card-body">
    <div className="form-group mb-8">
   {this.state.alert == true ?
-    <div className="alert alert-custom alert-default" role="alert">
+    <div className="alert alert-custom alert-default alert-dismissible" role="alert">
      
      <div className="alert-text">
       {this.state.errorMessage}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
      </div>
     </div>
     :null}
@@ -149,7 +184,7 @@ render(){
    </div>
    <div className="col-md-6">
    <div className="form-group">
-    <label>Cost <span className="text-danger">*</span></label>
+    <label>Cost <span className="text-danger">* ($)</span></label>
     <input type="number" className="form-control"  placeholder="20" onChange={(event)=>this.setInfo(event,'cost')} required/>
     <span className="form-text text-muted"></span>
    </div>
@@ -159,14 +194,14 @@ render(){
    <div className="row">
    <div className="col-md-6">
      <div className="form-group">
-    <label>Tax <span className="text-danger">*</span></label>
+    <label>Tax <span className="text-danger">* ($)</span></label>
     <input type="number" className="form-control"  placeholder="2" onChange={(event)=>this.setInfo(event,'tax')} required/>
     <span className="form-text text-muted"></span>
    </div>
    </div>
    <div className="col-md-6">
    <div className="form-group">
-    <label>Duration <span className="text-danger">*</span></label>
+    <label>Duration <span className="text-danger">* (minute)</span></label>
     <input type="text" className="form-control"  placeholder="60" onChange={(event)=>this.setInfo(event,'duration')} required/>
     
    </div>
@@ -174,17 +209,30 @@ render(){
 
    </div>
    <div className="row">
-   <div className="col-md-6">
+   <div className="col-md-4">
    <div className="form-group">
-    <label for="exampleInputPassword1">Commision <span className="text-danger">*</span></label>
+    <label for="exampleInputPassword1">Commision<span className="text-danger">* ($)</span></label>
     <input type="number" className="form-control" id="exampleInputPassword1" placeholder="5" onChange={(event)=>this.setInfo(event,'commision')} required/>
    </div>
    </div>
 
-   <div className="col-md-6">
+   <div className="col-md-4">
    <div className="form-group">
-    <label for="exampleSelectRole">Monthly Target<span className="text-danger">*</span></label>
+    <label for="exampleSelectRole">Monthly Target<span className="text-danger">* ($)</span></label>
     <input type="number" className="form-control" placeholder="3000" onChange={(event)=>this.setInfo(event,'target')}/>
+   </div>
+   </div>
+   <div className="col-md-4">
+   <div className="form-group">
+    <label for="exampleSelectRole">Select Category<span className="text-danger">*</span></label>
+    <select name="category" className="form-control" id="cat" >
+    {this.state.cat_data != null?
+    this.state.cat_data.map((data,index)=>{return(
+
+        <option value={data.id} id={data.id}>{data.title}</option>
+
+        )}):null}
+    </select>
    </div>
    </div>
    </div>

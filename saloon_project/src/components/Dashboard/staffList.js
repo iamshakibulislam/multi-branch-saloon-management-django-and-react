@@ -253,22 +253,22 @@ return(
 		{/*  end::Search Form*/ } 
 		{/*  end: Search Form*/ } 
 		{/*  begin: Datatable*/ } 
-		<div className="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded" id="kt_datatable" >
-			<table className="datatable-table" style={{display: 'block'}}>
-				<thead className="datatable-head">
-					<tr className="datatable-row" style={{left: '0px'}}>
+		<div className="card-body" >
+			<table className="table table-bordered table-checkable" id="kt_datatable">
+				<thead>
+					<tr>
 						
 						
-						<th data-field="Full name" className="datatable-cell datatable-cell-sort"><span style={{width: '108px'}}>Full Name</span></th>
-						<th data-field="Email" className="datatable-cell datatable-cell-sort"><span style={{width: '108px'}}>Email</span></th>
-						<th data-field="Role" className="datatable-cell datatable-cell-sort"><span style={{width: '108px'}}>Role</span></th>
-						<th data-field="Username" className="datatable-cell datatable-cell-sort"> <span style={{width:'108px'}}> Username</span></th>
-						<th data-field="Branch Name" className="datatable-cell datatable-cell-sort"><span style={{width:'108px'}}>Branch Name</span></th>
+						<th>Full Name</th>
+						<th >Email</th>
+						<th >Role</th>
+						<th > Username</th>
+						<th >Branch Name</th>
 						
-						<th data-field="Actions" data-autohide-disabled="false" className="datatable-cell datatable-cell-sort"><span style={{width: '125px'}}>Actions</span></th>
+						<th >Actions</th>
 					</tr>
 				</thead>
-				<tbody className="datatable-body" >
+				<tbody>
 			
 
 
@@ -278,16 +278,16 @@ return(
 
 this.state.staff_data['employee'].map((data,index)=>{
 	return (
-<tr data-row="0" className="datatable-row datatable-row-even" style={{left: '0px'}} key={data.id}>
+<tr key={data.id}>
 	
-	<td data-field="Full Name"  className="datatable-cell"><span style={{width: '108px'}}>{data.full_name}</span></td>
-	<td data-field="Email"  className="datatable-cell"><span style={{width: '108px'}}>{data.email}</span></td>
-	<td data-field="Role"  className="datatable-cell"><span style={{width: '108px'}}>{data.role}</span></td>
-	<td data-field="Username"  className="datatable-cell" style={{width: '108px',textAlign:'left'}}><span style={{width: '108px'}}>{data.username}</span></td>
-	<td data-field="Branch Name"  className="datatable-cell" style={{width: '108px'}}><span style={{width: '108px'}}><span style={{width:'100%',height:'100%'}} className="label font-weight-bold label-lg  label-light-danger label-inline">{data.branchname}</span></span>
+	<td>{data.full_name}</td>
+	<td>{data.email}</td>
+	<td>{data.role}</td>
+	<td>{data.username}</td>
+	<td >{data.branchname}
 	</td>
 	
-	<td  data-field="Actions" data-autohide-disabled="false" aria-label="null" className="datatable-cell ml-2" style={{width:'140px',textAlign:'left'}}>
+	<td>
 							
 
 		<div id={data.id} className="d-inline" onClick={(event)=>this.preDelete(event,index)}>

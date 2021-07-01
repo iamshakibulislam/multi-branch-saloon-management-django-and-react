@@ -1,23 +1,22 @@
 import React,{Component,Fragment} from 'react'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
-import Modal from 'react-modal'
+import Modal from 'react-modal';
 
 
-
-class EditItems extends Component{
+class EditServiceCategory extends Component{
 
 static contextType = baseContext
 
 
     state = {
-        service_info:null,
+        cat_info:null,
         processing:false,
         alert:false,
         
 
         user_info:0,
-        items_info:null
+        branch_info:null
 
        
 
@@ -43,7 +42,7 @@ customStyles = {
 componentDidUpdate(prevprops,prevstate){
 
     if(prevprops.updateid != this.props.updateid && this.props.updateid != 0){
-axios.post(this.context.baseUrl+'/items/get_item_info/',
+axios.post(this.context.baseUrl+'/marketing/cat_show/',
     { 
         identify:Number(this.props.updateid)
 
@@ -55,7 +54,7 @@ axios.post(this.context.baseUrl+'/items/get_item_info/',
   }}).then((response)=>{
       console.log(response.data);
       
-      this.setState({items_info:response.data,processing:false,parsed:true,errorMessage:false,alert:false})
+      this.setState({cat_info:response.data,processing:false,parsed:true,errorMessage:false,alert:false})
       
       }
       
@@ -138,53 +137,33 @@ componentDidMount(){
 
 
 setInfo(event,name){
-    let copy = {...this.state.items_info};
-    if(name == 'name'){
-        copy['item_info']['name'] = event.target.value;
-        this.setState({items_info:copy})
-    }
-
-    if(name == 'price'){
-        copy['item_info']['price'] = event.target.value;
-        this.setState({items_info:copy})
-    }
-
-    if(name == 'sale_price'){
-        copy['item_info']['sale_price'] = event.target.value;
-        this.setState({items_info:copy})
-    }
-
-
-    if(name == 'cat'){
-        copy['item_info']['category'] = event.target.value;
-        this.setState({items_info:copy})
+    let copy = {...this.state.cat_info};
+    if(name == 'title'){
+        copy['title'] = event.target.value;
+        this.setState({cat_info:copy})
     }
 
     
 
-    
     
 
 
 }
 
 
-editItems(event){
+editServiceCategory(event){
 
  event.preventDefault();
  this.setState({processing:true});
 
 
 
-axios.post(this.context.baseUrl+'/items/update_item/',
+axios.post(this.context.baseUrl+'/marketing/cat_update/',
     {
     
-        identify:Number(this.state.items_info.item_info.id),
-        name:this.state.items_info.item_info.name,
-        cat:Number(this.state.items_info.item_info.category),
-        price:Number(this.state.items_info.item_info.price),
-        sale_price:Number(this.state.items_info.item_info.sale_price)
-
+        identify:Number(this.state.cat_info.id),
+        title:this.state.cat_info.title
+        
     
     
     
@@ -212,6 +191,8 @@ axios.post(this.context.baseUrl+'/items/update_item/',
 
 
     });
+
+
       
     
 
@@ -237,19 +218,19 @@ render(){
           style={{
     overlay: {
       position: 'fixed',
-      top: 50,
+      top: 0,
       left: 0,
       right: 0,
-      bottom: 50,
+      bottom: 0,
       backgroundColor: 'rgba(255, 255, 255,0.70)'
     },
     content: {
 
       position: 'absolute',
       top: '40px',
-      left: '40%',
+      left: '30%',
       right: 'auto',
-      bottom: '0%',
+      bottom: '40px',
       border: '1px solid #ccc',
       background: '#fff',
       overflow: 'auto',
@@ -265,14 +246,14 @@ render(){
 <div className="card card-custom" style={{overflow:'scroll',height:'100%'}}>
  <div className="card-header">
   <h3 className="card-title">
-   Edit Items
+   Edit Service Category Information
   </h3>
   <div className="card-toolbar">
    <button className="btn btn-danger text-white" onClick={this.props.closemodal}>Close</button>
   </div>
  </div>
  {/*begin::Form*/}
- <form onSubmit={this.editItems.bind(this)}>
+ <form onSubmit={this.editServiceCategory.bind(this)}>
   <div className="card-body">
    <div className="form-group mb-8">
   {this.state.alert == true ?
@@ -285,46 +266,17 @@ render(){
     :null}
 
    </div>
-   {this.state.items_info != null?
+   {this.state.cat_info != null?
    <div className="row">
    <div className="col-md-10">
      <div className="form-group">
-    <label>Name <span className="text-danger">*</span></label>
-    <input type="text" className="form-control" value={this.state.items_info.item_info.name} placeholder="item name" onChange={(event)=>this.setInfo(event,'name')}  />
+    <label>Title <span className="text-danger">*</span></label>
+    <input type="text" className="form-control" value={this.state.cat_info.title} placeholder="Category title" onChange={(event)=>this.setInfo(event,'title')}  />
     <span className="form-text text-muted"></span>
    </div>
-
-   <div className="form-group">
-    <label>Buy Price <span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.items_info.item_info.price} placeholder="item buying price" onChange={(event)=>this.setInfo(event,'price')}  />
-    <span className="form-text text-muted"></span>
    </div>
+   
 
-
-   <div className="form-group">
-    <label>Selling Price <span className="text-danger">*</span></label>
-    <input type="number" className="form-control" value={this.state.items_info.item_info.sale_price} placeholder="item selling price" onChange={(event)=>this.setInfo(event,'sale_price')}  />
-    <span className="form-text text-muted"></span>
-   </div>
-   <div className="form-group">
-   <label>Select Category <span className="text-danger">*</span></label>
-     <select name="categories" onChange={(event)=>this.setInfo(event,'cat')} className="form-control" >
-      {this.state.items_info.categories.map((data,index)=>{
-
-        return (
-
-        this.state.items_info.item_info.category == data.id?
-
-          <option selected key={data.id} value={data.id}>{data.name}</option>
-          :<option  key={data.id} value={data.id}>{data.name}</option>
-
-        )
-      })}
-     
-       
-     </select>
-   </div>
-   </div>
    
 
    
@@ -370,4 +322,4 @@ render(){
 }
 
 
-export default EditItems
+export default EditServiceCategory

@@ -6,6 +6,7 @@ from .models import *
 class itemdata(serializers.Serializer):
 	name = serializers.CharField()
 	price = serializers.CharField()
+	sale_price = serializers.IntegerField()
 	cat = serializers.IntegerField()
 
 
@@ -39,6 +40,7 @@ class item_update(serializers.Serializer):
 	cat = serializers.IntegerField(allow_null=True,required=False)
 	name = serializers.CharField(allow_null=True,required=False)
 	price = serializers.FloatField(allow_null=True,required=False)
+	sale_price = serializers.FloatField(allow_null=True,required=False)
 
 
 class providers_data(serializers.Serializer):

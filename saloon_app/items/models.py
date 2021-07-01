@@ -19,6 +19,7 @@ class item_category(models.Model):
 class product_items(models.Model):
 	name = models.CharField(max_length=200)
 	price = models.FloatField()
+	sale_price = models.FloatField(null=True)
 	category = models.ForeignKey(item_category,on_delete=models.CASCADE,null=True,blank=True)
 
 

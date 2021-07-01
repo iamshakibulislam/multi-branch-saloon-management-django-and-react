@@ -1,6 +1,8 @@
 import react,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import Modal from 'react-modal'
+import EditServiceCategory from './EditServiceCategory'
 import baseContext from '../shared/baseContext'
 
 class serviceCategory extends Component{
@@ -10,13 +12,29 @@ state = {
 	'branch':'all',
 	branchid:0,
 	pending:false,
-
-	category_name:null
+	index:null,
+	category_name:null,
+	updateid:0,
+	editingmode:false,
+	delete_id:null,
+	is_modal_open:false
 }
 
 
 static contextType=baseContext
 
+
+
+customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 componentDidMount(){
 
@@ -84,6 +102,61 @@ needRefresh(){
 
 }
 
+
+
+
+editClick(event){
+
+	this.setState({updateid:event.currentTarget.id,editingmode:true})
+}
+
+
+
+closeModal(){
+	this.needRefresh();
+	this.setState({editingmode:false,updateid:0})
+}
+
+
+preDelete(event,index){
+	let getid = event.currentTarget.id;
+
+	this.setState({is_modal_open:true,delete_id:getid,index:index})
+}
+
+
+deleteConfirmation(event){
+ this.setState({is_modal_open:false});
+	axios.post(this.context.baseUrl+'/marketing/delete_category/',
+    { 
+    	
+    	identify:Number(this.state.delete_id)
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      
+      if(response.data['status'] == 'deleted'){
+
+      	this.state.category_info.splice(Number(this.state.index),1);
+      	let copy=[...this.state.category_info];
+      	this.setState({category_info:copy})
+      }
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      console.log(error.response);
+      this.setState({processing:false,alert:true,message:'Can not load data !',is_modal_open:false})
+    })
+
+}
 
 addCat(event){
 
@@ -180,7 +253,27 @@ return(
 													<tr>
 													<td>{data.title}</td>
 													<td>{data.total_services}</td>
-													<td>{data.title}</td>
+													<td>
+														<div id={data.id} className="d-inline" onClick={(event)=>this.preDelete(event,index)}>
+														<a href="#" value={data.id}  className="btn btn-sm btn-clean btn-icon " title="Delete"> 
+														
+
+														 <i class="fas fa-trash-alt"></i>                               
+														 
+														 	
+														 	</a>
+														</div>
+
+
+
+
+						
+
+														<div id={data.id} className="d-inline" onClick={(event)=>this.editClick(event)}>
+														<a href="#" value={data.id}   className="btn btn-sm btn-clean btn-icon" title="edit"> 
+														<i class="fas fa-edit"></i>
+														 	</a></div>
+														</td>
 													
 													
 													
@@ -194,6 +287,26 @@ return(
 											</tbody>
 										</table>
 										{/*end: Datatable*/ }
+										<Modal
+          isOpen={this.state.is_modal_open}
+          
+          style={this.customStyles}
+          contentLabel="Example Modal"
+        >
+
+        <div className="row">
+        	<div className="col-sm-12">
+          <h2 className="text-dark font-weight-bold mb-4">Are you sure ?</h2>
+          <button className="btn btn-success mr-3" onClick={(event)=>this.deleteConfirmation(event)}>Yes, I am sure</button>
+          <button className="btn btn-danger" onClick={()=>this.setState({is_modal_open:false})}>No, Take me back</button>
+
+          </div>
+
+          </div>
+          
+        </Modal>
+
+        <EditServiceCategory closemodal = {this.closeModal.bind(this)} editingmode={this.state.editingmode} updateid={this.state.updateid}/>
 									</div>
 								</div>
 

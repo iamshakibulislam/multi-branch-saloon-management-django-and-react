@@ -9,8 +9,8 @@ import json
 class RegistrationSerializers(serializers.ModelSerializer):
       password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True,required=False)
       dob = serializers.CharField(max_length=120,required=False,allow_null=True)
-      services = serializers.CharField(max_length=100,required=False,allow_null=True)
-      workdays = serializers.CharField(max_length=22,required=False,allow_null=True)
+      services = serializers.CharField(max_length=200,required=False,allow_null=True)
+      workdays = serializers.CharField(max_length=220,required=False,allow_null=True)
       
       time_from = serializers.CharField(max_length=22,required=False,allow_null=True)
       time_to = serializers.CharField(max_length=22,required=False,allow_null=True)

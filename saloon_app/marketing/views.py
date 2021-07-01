@@ -12,6 +12,61 @@ from django.db.models import Q
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
+def all_service_categories(request):
+	sel = ServiceCategorey.objects.all()
+
+	res = []
+
+	for x in sel:
+		res.append({'id':x.id,'title':x.title})
+
+	return Response(res)
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def cat_showing(request):
+	info = cat_show(data=request.data)
+
+	if info.is_valid():
+		identify = info.validated_data['identify']
+
+		sel = ServiceCategorey.objects.get(id=int(identify))
+
+		return Response({'id':sel.id,'title':sel.title})
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_cat_update(request):
+	info = cat_information(data=request.data)
+
+	if info.is_valid():
+		identify = info.validated_data['identify']
+		title = info.validated_data['title']
+
+		sel = ServiceCategorey.objects.get(id=int(identify))
+
+		if sel.title != title:
+			sel.title = title
+			sel.save()
+
+		return Response({'status':'updated'})
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def delete_category(request):
+	info = get_cat_delete_id(data=request.data)
+
+	if info.is_valid():
+		identify = info.validated_data['identify']
+
+		ServiceCategorey.objects.get(id=int(identify)).delete()
+
+		return Response({"status":"deleted"})
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
 def show_service_category(request):
 	res = []
 
@@ -99,6 +154,9 @@ def add_service(request):
 		duration = ser.validated_data['duration']
 		target = ser.validated_data['target']
 		commision = ser.validated_data['commision']
+		catid = ser.validated_data['catid']
+
+		sel_cat = ServiceCategorey.objects.get(id=int(catid))
 
 		Service.objects.create(
 
@@ -107,7 +165,8 @@ def add_service(request):
 			taxes = tax,
 			serviceduration = duration,
 			servicecommision = commision,
-			monthlytarget = target
+			monthlytarget = target,
+			category = sel_cat
 
 
 			)

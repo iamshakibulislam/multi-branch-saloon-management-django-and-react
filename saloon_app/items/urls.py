@@ -25,6 +25,7 @@ urlpatterns = [
 	path('get_services_list/',views.get_services_list),
 	path('place_order/',views.place_order),
 	path('order_details/',views.order_details),
-	path('get_upcomming_appointment/',views.get_upcomming_appointment)
+	path('get_upcomming_appointment/',views.get_upcomming_appointment),
+	path('get_services/',views.get_services)
 
 ]
