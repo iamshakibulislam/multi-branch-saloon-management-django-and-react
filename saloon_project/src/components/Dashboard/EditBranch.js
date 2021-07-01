@@ -148,6 +148,17 @@ setInfo(event,name){
         this.setState({branch_info:copy})
     }
 
+    if(name == 'email'){
+        copy['email'] = event.target.value;
+        this.setState({branch_info:copy})
+    }
+
+
+    if(name == 'phone'){
+        copy['phone'] = event.target.value;
+        this.setState({branch_info:copy})
+    }
+
     
 
 
@@ -166,7 +177,9 @@ axios.post(this.context.baseUrl+'/branch/update_branch/',
     
         identify:Number(this.state.branch_info.id),
         name:this.state.branch_info.name,
-        address:this.state.branch_info.address
+        address:this.state.branch_info.address,
+        branch_email:this.state.branch_info.email,
+        branch_phone:this.state.branch_info.phone
 
     
     
@@ -282,12 +295,30 @@ render(){
    <div className="col-md-6">
    <div className="form-group">
     <label for="exampleInputDate">Address<span className="text-danger">*</span></label>
-    <input type="text" className="form-control" value={this.state.branch_info.address} id="exampleInputDate"  onChange={(event)=>this.setInfo(event,'address')} />
+    <input type="text" className="form-control" value={this.state.branch_info.address} id="branchaddr"  onChange={(event)=>this.setInfo(event,'address')} />
    </div>
    </div>
    </div>:null}
    
+{this.state.branch_info != null?
+   <div className="row">
+   <div className="col-md-6">
+     <div className="form-group">
+    <label>Branch email <span className="text-danger">*</span></label>
+    <input type="text" className="form-control" value={this.state.branch_info.email} placeholder="Branch email" onChange={(event)=>this.setInfo(event,'email')}  />
+    <span className="form-text text-muted"></span>
+   </div>
+   </div>
+   
 
+   <div className="col-md-6">
+   <div className="form-group">
+    <label for="exampleInputDate">Phone<span className="text-danger">*</span></label>
+    <input type="text" className="form-control" value={this.state.branch_info.phone} id="branchphone" placeholder="branch phone" onChange={(event)=>this.setInfo(event,'phone')} />
+   </div>
+   </div>
+   </div>:null}
+   
 
 
 

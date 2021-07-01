@@ -30,3 +30,9 @@ class updateservice(serializers.Serializer):
 	serviceduration = serializers.IntegerField(required=False,allow_null=True)
 	servicecommision = serializers.IntegerField(required=False,allow_null=True)
 	monthlytarget = serializers.IntegerField(required=False,allow_null=True)
+
+
+
+
+class cat_name(serializers.Serializer):
+	title = serializers.CharField(max_length=200,allow_null=True,required=False)

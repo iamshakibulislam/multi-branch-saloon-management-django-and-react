@@ -17,6 +17,8 @@ state = {
 	addingstatus:false,
 	branch_name:null,
 	branch_address:null,
+	branch_email:null,
+	branch_phone:null,
 	branch:null,
 	alert:false,
 	message:null,
@@ -123,6 +125,14 @@ add_branch_update(event,identify){
  	this.setState({branch_address:event.target.value})
  }
 
+ if(identify=='email'){
+ 	this.setState({branch_email:event.target.value})
+ }
+
+ if(identify=='phone'){
+ 	this.setState({branch_phone:event.target.value})
+ }
+
 }
 
 
@@ -132,7 +142,9 @@ addBranch(event){
 	axios.post(this.context.baseUrl+'/branch/add_branch/',
     { 
     	name:this.state.branch_name,
-    	address:this.state.branch_address
+    	address:this.state.branch_address,
+    	branch_email:this.state.branch_email,
+    	branch_phone:this.state.branch_phone
 
 
     },{
@@ -228,7 +240,7 @@ return(
 						
 						<div className="col-md-12 my-2 my-md-0">
 							<div className="d-flex align-items-center">
-							<form action="#" className="from form-inline" onSubmit={this.addBranch.bind(this)}>
+							<form action="#" className="from d-flex" onSubmit={this.addBranch.bind(this)}>
 							<div className="form-group mr-4">
 								
 								<input type="text" className="form-control" name="branchname" placeholder="New branch name" onChange={(event)=>this.add_branch_update(event,'name')} />
@@ -237,6 +249,14 @@ return(
 								<div className="form-group">
 				
 								<input type="text" className="form-control" name="branchname" placeholder="Branch address" onChange={(event)=>this.add_branch_update(event,'address')}/>
+								</div>
+								<div className="form-group">
+				
+								<input type="text" className="form-control ml-2" name="branchname" placeholder="phone no" onChange={(event)=>this.add_branch_update(event,'phone')}/>
+								</div>
+								<div className="form-group ml-2">
+				
+								<input type="text" className="form-control ml-2" name="branchname" placeholder="email" onChange={(event)=>this.add_branch_update(event,'email')}/>
 								</div>
 								<div className="ml-4"> <button type="submit"  className="btn btn-danger px-6 font-weight-bold">{this.state.addingstatus==false?
 				 <span>Add </span> :

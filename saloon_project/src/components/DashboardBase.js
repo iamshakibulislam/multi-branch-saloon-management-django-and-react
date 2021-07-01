@@ -11,6 +11,8 @@ import stock from './Dashboard/stock'
 import order from './Dashboard/order'
 import orderdetails from './Dashboard/orderdetails'
 import stockItemDetails from './Dashboard/stockItemDetails'
+import serviceCategory from './Dashboard/serviceCategory'
+
 import axios from 'axios'
 import addStaffToBranch from './Dashboard/addStaffToBranch'
 import ItemCategory from './Dashboard/ItemCategory'
@@ -320,6 +322,16 @@ return(
 												</span>
 											</li>
 											
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<Link to="/dashboard/service_category/" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Add category</span>
+													<i className="menu-arrow"></i>
+												</Link>
+												
+											</li>
 
 											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 												<Link to="/dashboard/add_service" className="menu-link menu-toggle">
@@ -598,6 +610,8 @@ return(
 									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
 									 <Route path="/dashboard/item_stock/" exact component={stock} />:null}
 									 <Route path="/dashboard/order/" exact component={order} />
+
+									 <Route path="/dashboard/service_category/" exact component={serviceCategory} />
 
 									</div>:null}
 

@@ -17,6 +17,8 @@ def update_branch(request):
 		getid = info.validated_data['identify']
 		name = info.validated_data['name']
 		address =  info.validated_data['address']
+		branch_email = info.validated_data['branch_email']
+		branch_phone = info.validated_data['branch_phone']
 
 		sel=Branch.objects.get(id=int(getid))
 
@@ -25,6 +27,13 @@ def update_branch(request):
 
 		if sel.address != address:
 			sel.address = address
+
+		if sel.email != branch_email:
+			sel.email = branch_email
+
+		if sel.phone != branch_phone:
+			sel.phone = branch_phone
+
 
 		sel.save()
 
@@ -52,6 +61,8 @@ def get_branch(request):
 		result['id'] = sel.id
 		result['name'] = sel.name
 		result['address'] = sel.address
+		result['phone'] = sel.phone
+		result['email'] = sel.email
 
 		return Response(result)
 
@@ -80,7 +91,9 @@ def add_branch(request):
 	if info.is_valid():
 		name=info.validated_data['name']
 		address=info.validated_data['address']
-		Branch.objects.create(name=name,address=address)
+		branch_phone = info.validated_data['branch_phone']
+		branch_email = info.validated_data['branch_email']
+		Branch.objects.create(name=name,address=address,email=branch_email,phone=branch_phone)
 		return Response({'status':'created'})
 
 

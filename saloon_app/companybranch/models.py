@@ -24,6 +24,8 @@ class Branch(models.Model):
       name = models.CharField(max_length=330,null=True,blank=True)
       
       address = models.TextField(max_length=320,null=True,blank=True)
+      phone = models.CharField(max_length=250,null=True)
+      email = models.CharField(max_length=250,null=True)
       created_date = models.DateTimeField(auto_now_add=True)
       updated_date = models.DateTimeField(auto_now=True)
 

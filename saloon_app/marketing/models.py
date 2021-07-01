@@ -53,5 +53,6 @@ class Service(models.Model):
       #provider = models.ForeignKey(to='staffall.Employe',on_delete=models.CASCADE)
       servicecommision = models.IntegerField(null=True,blank=True)
       monthlytarget = models.IntegerField(null=True,blank=True)
+      category = models.ForeignKey(ServiceCategorey,on_delete=models.CASCADE,null=True)
       def __str__(self):
           return self.title

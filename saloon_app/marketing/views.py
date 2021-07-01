@@ -3,13 +3,37 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import getId,adding_services,service_id,updateservice
+from .serializers import *
 from companybranch.models import Branch,BranchEmployee
 from .models import *
 
 from authentication.models import User
 from django.db.models import Q
 
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def show_service_category(request):
+	res = []
+
+	all_serv = ServiceCategorey.objects.all()
+
+	for x in all_serv:
+		tservice= len(Service.objects.filter(category=x))
+		res.append({'id':x.id,'title':x.title,'total_services':tservice})
+
+	return Response(res)
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def add_service_category(request):
+	info = cat_name(data=request.data)
+
+	if info.is_valid():
+		title= info.validated_data['title']
+		ServiceCategorey.objects.create(title=title)
+
+	return Response({'status':'added'})
 
 
 @api_view(['POST',])
