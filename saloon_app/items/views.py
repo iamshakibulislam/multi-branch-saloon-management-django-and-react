@@ -14,6 +14,10 @@ import json
 from .models import *
 from authentication.models import User
 
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_balance(request):
+	return Response({'balance':request.user.balance})
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])

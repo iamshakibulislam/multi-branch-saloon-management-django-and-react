@@ -7,6 +7,7 @@ class orderdetails extends Component{
 
 state = {
 	orderdetails:null,
+	balance:null
 
 }
 
@@ -41,6 +42,40 @@ componentDidMount(){
     })
 
 
+
+
+	axios.post(this.context.baseUrl+'/items/get_balance/',
+    { 
+    	
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      this.setState({balance:response.data})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({alert:true,message:'Can not load data !'})
+    })
+
+
+
+
+
+
+
+
+
+
 }
 
 
@@ -50,8 +85,8 @@ return(
 
 
 								<div className="card card-custom gutter-b">
-								{this.state.orderdetails != null?
-								<h3 className="ml-4 mt-3">Your Balance : <span className="text-success">{this.state.orderdetails[0]['balance']} $</span>
+								{this.state.balance != null?
+								<h3 className="ml-4 mt-3">Your Balance : <span className="text-success">{this.state.balance.balance} $</span>
 											</h3>:null}<br/>
 									<div className="card-header flex-wrap py-3">
 

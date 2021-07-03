@@ -30,6 +30,7 @@ urlpatterns = [
 	path('get_items_list/',views.get_items_list),
 	path('get_order_details/',views.get_order_details),
 	path('update_order/',views.update_order),
-	path('sales_report/',views.sales_report)
+	path('sales_report/',views.sales_report),
+	path('get_balance/',views.get_balance)
 
 ]
