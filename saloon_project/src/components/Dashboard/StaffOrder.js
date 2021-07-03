@@ -3,7 +3,7 @@ import axios from 'axios'
 import baseContext from '../shared/baseContext'
 
 
-class order extends Component{
+class StaffOrder extends Component{
 
 static contextType = baseContext
 
@@ -26,7 +26,9 @@ static contextType = baseContext
         available_services:null,
         available_staff:null,
         items:null,
-        items_info:null
+        items_info:null,
+
+        useremail:null
        
 
 
@@ -72,6 +74,10 @@ this.setState({processing:true});
 
 
 setInfo(event,name){
+
+    if(name=='email'){
+        this.setState({useremail:event.target.value})
+    }
 
     if(name == 'branch'){
        this.setState({branchid:event.target.value});
@@ -234,7 +240,7 @@ setInfo(event,name){
 order(event){
 
  event.preventDefault();
- if (this.state.staffid==null || this.state.branchid==null || this.state.service_data==null || this.state.date == null || this.state.time == null){
+ if (this.state.staffid==null || this.state.branchid==null || this.state.service_data==null  || this.state.time == null){
     alert('All fields are required !');
     return false
  }
@@ -244,11 +250,11 @@ order(event){
 
 axios.post(this.context.baseUrl+'/items/place_order/',
     {
-
+        email:this.props.email,
         branchid:Number(this.state.branchid),
         staffid:Number(this.state.staffid),
         services:JSON.stringify(this.state.service_data),
-        date:this.state.date,
+        date:document.getElementById('bookdate').value,
         time:this.state.time,
         items:JSON.stringify(this.state.items_info)
 
@@ -269,7 +275,8 @@ axios.post(this.context.baseUrl+'/items/place_order/',
       
       
     
-      this.setState({processing:false,alert:true,errorMessage:'Order has been placed ! '});
+      this.setState({processing:false,alert:true,errorMessage:'Order has been placed ! ',branchid:null,staffid:null,services:null,items_info:null,date:null,time:null,items:null});
+
       event.target.reset()
     
 
@@ -315,6 +322,13 @@ render(){
    </div>
    {this.state.branchlist != null?
    <div className="row" style={{width:'60%'}}>
+   <div className="col-md-12">
+   <div className="form-group">
+    <label>User Email<span className="text-danger">*</span></label>
+    <input type="email" className="form-control" value={this.props.email}   onChange={(event)=>this.setInfo(event,'email')} disabled required/>
+    <span className="form-text text-muted"></span>
+   </div>
+   </div>
    <div className="col-md-12">
      <div className="form-group">
     <label>Select Branch <span className="text-danger">*</span></label>
@@ -410,7 +424,7 @@ render(){
 <div className="col-md-12">
    <div className="form-group">
     <label>Date<span className="text-danger">*</span></label>
-    <input type="date" className="form-control"   onChange={(event)=>this.setInfo(event,'date')} required/>
+    <input type="date" className="form-control" id="bookdate" value={this.props.date}  onChange={(event)=>this.setInfo(event,'date')} required/>
     <span className="form-text text-muted"></span>
    </div>
    </div>
@@ -467,4 +481,4 @@ render(){
 }
 
 
-export default order
+export default StaffOrder

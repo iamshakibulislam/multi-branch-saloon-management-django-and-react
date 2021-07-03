@@ -3,13 +3,104 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import staff_list as staffs , add_to_branch,user_data,updateUser
+from .serializers import *
 from companybranch.models import Branch,BranchEmployee
 from .models import *
+from items.models import *
 from marketing.models import *
 from authentication.models import User
 from django.db.models import Q
 import json
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def my_orders(request):
+	info = orders_from_date(data=request.data)
+	if info.is_valid():
+		get_date = info.validated_data['date']
+
+		filtering = order.objects.filter(appointment_date=get_date,staff=request.user)
+
+		res = []
+
+		tmp_services = ''
+		tmp_items = ''
+
+		for x in filtering:
+			sel_ser = order_services.objects.filter(order_ref=x)
+			for ser in sel_ser:
+				tmp_services=tmp_services+' , '+ser.servic_ref.title
+
+			sel_items = order_items.objects.filter(order_ref=x)
+
+			if len(sel_items) == 0:
+				tmp_items = 'No Items'
+
+			else:
+				for i in sel_items:
+					tmp_items = tmp_items+' , '+i.item_ref.name
+			tmp_services = tmp_services[2:]
+			tmp_items = tmp_items[2:]
+
+			res.append({'id':x.id,'user':x.customer.first_name + x.customer.last_name,'date':x.date,'time':x.appointment_time,'services':tmp_services,'items':tmp_items,'status':x.status})
+			tmp_services = ''
+			tmp_items = ''
+
+
+	return Response(res)
+
+
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_services_staff(request):
+	info = service_staff(data=request.data)
+
+	if info.is_valid():
+		get_service_list = list(json.loads(info.validated_data['service_ids']))
+
+		branchid = info.validated_data['branch']
+		sel_branch = Branch.objects.get(id=int(branchid))
+
+		filter_emp = BranchEmployee.objects.filter(branch_name=sel_branch)
+
+		emp_list = []
+
+		for x in filter_emp:
+			emp_list.append(x.staff)
+
+
+		res = []
+
+		for em in emp_list:
+			filter_employee_services=track_service_providers.objects.filter(provider=em).filter(service__id__in=get_service_list)
+
+			if len(filter_employee_services) == len(get_service_list):
+				res.append({'id':em.id,'name':em.first_name+' '+em.last_name})
+
+			else :
+				pass
+
+
+		return Response(res)
+
+
+
+
+			
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -310,7 +401,7 @@ def deleteemp(request):
 @permission_classes([IsAuthenticated])
 def staff_list(request):
 
-	serializer = staffs(data=request.data)
+	serializer = staff_lists(data=request.data)
 
 	if serializer.is_valid():
 		branch = serializer.validated_data['branch']

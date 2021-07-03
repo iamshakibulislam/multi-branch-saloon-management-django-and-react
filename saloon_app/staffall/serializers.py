@@ -9,7 +9,7 @@ import json
 
 
 
-class staff_list(serializers.Serializer):
+class staff_lists(serializers.Serializer):
 
 	branch = serializers.CharField(max_length=40)
 
@@ -51,3 +51,14 @@ class updateUser(serializers.Serializer):
 	color = serializers.CharField(max_length=33,required=False,allow_null=True)
 	branchid = serializers.IntegerField(required=False,allow_null=True)
 	
+
+
+
+
+class service_staff(serializers.Serializer):
+	service_ids = serializers.CharField(max_length=300,allow_null=True,required=False)
+	branch = serializers.IntegerField(allow_null=True,required=False)
+
+
+class orders_from_date(serializers.Serializer):
+	date = serializers.CharField(max_length=200,required=False,allow_null=True)

@@ -12,6 +12,117 @@ from django.db.models import Q
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
+def buy_vouchers(request):
+	info = get_voucher_id(data=request.data)
+
+	if info.is_valid():
+		identify = info.validated_data['identify']
+
+		sel = vouchers.objects.get(id=int(identify))
+
+		buy_voucher.objects.create(user=request.user,voucher = sel)
+
+		sel_user = User.objects.get(email = request.user.email)
+
+		sel_user.balance = float(sel_user.balance + sel.value)
+
+		sel_user.save()
+
+		return Response({'status':'bought'})
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def update_voucher(request):
+	info = update_voucher_data(data=request.data)
+
+	if info.is_valid():
+		identify = info.validated_data['identify']
+		name = info.validated_data['name']
+		price = info.validated_data['price']
+		value = info.validated_data['value']
+
+		sel = vouchers.objects.get(id=int(identify))
+
+		if sel.name != name:
+			sel.name = name
+
+		if sel.price != price:
+			sel.price = price
+
+		if sel.value != value:
+			sel.value = value
+
+		sel.save()
+
+
+		return Response({'status':'updated'})
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_voucher_info(request):
+	info = voucher_id(data=request.data)
+
+	if info.is_valid():
+		identify = info.validated_data['identify']
+
+		sel = vouchers.objects.get(id=int(identify))
+
+		res = {}
+
+		res['id'] = sel.id
+		res['name'] = sel.name
+		res['price'] = sel.price
+		res['value'] = sel.value
+
+
+		return Response(res)
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def delete_voucher(request):
+	info = voucher_id(data=request.data)
+
+	if info.is_valid():
+		identify = info.validated_data['identify']
+
+		vouchers.objects.get(id=int(identify)).delete()
+
+
+		return Response({'status':'deleted'})
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def voucher_list(request):
+	get_vouchers = vouchers.objects.all()
+
+	res = []
+
+	for x in get_vouchers:
+		res.append({'id':x.id,'name':x.name,'price':x.price,'value':x.value})
+
+	return Response(res)
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def add_voucher(request):
+	info = voucher_data(data=request.data)
+
+	if info.is_valid():
+		voucher_name = info.validated_data['voucher_name']
+		voucher_price = info.validated_data['voucher_price']
+		voucher_value = info.validated_data['voucher_value']
+
+		vouchers.objects.create(name=voucher_name,price=voucher_price,value=voucher_value)
+
+		return Response({'status':'added'})
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
 def all_service_categories(request):
 	sel = ServiceCategorey.objects.all()
 

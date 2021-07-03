@@ -1,14 +1,17 @@
 import React,{Component,Fragment} from 'react';
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
-
+import CalenderOrders from './CalenderOrders'
+import Modal from 'react-modal'
 class orderCalender extends Component{
 
 state = {
   
   is_modal_open:false,
   date:null,
-  date_info:null
+  date_info:null,
+  editingmode:false
+
 }
 
 static contextType = baseContext
@@ -73,6 +76,8 @@ componentDidMount(){
       document.querySelector(dt).parentElement.parentElement.parentElement.children[1].children[0].children[childno].setAttribute('class','bg-success text-white');
 
       evnt.parentElement.parentElement.parentElement.children[1].children[0].children[childno].textContent='New order';
+       const rm = document.querySelectorAll('.fc-button-group');
+        rm.forEach(ele => ele.remove())
 
       
 
@@ -103,9 +108,16 @@ componentDidMount(){
 
       divs.forEach(el =>{ el.addEventListener('click', event => {
         //click event handling starts here
-        //alert(event.target.getAttribute("data-date"));
+        
+        this.setState({date:event.target.getAttribute('data-date'),editingmode:true});
+       
 
-        alert('Order list and modifying form will be added after clicking ');
+       
+
+
+
+
+        
 
         //click event handling ends here
       });el.innerHTML=el.firstElementChild.innerHTML;
@@ -129,6 +141,10 @@ componentDidMount(){
 }
 
 
+closeModal(){
+  this.setState({editingmode:false})
+}
+
 render(){
 
 return(
@@ -151,7 +167,7 @@ return(
  </div>
 </div>
 
-
+<CalenderOrders closingmodal={this.closeModal.bind(this)} editingmode={this.state.editingmode} date={this.state.date}/>
 
 </Fragment>
 

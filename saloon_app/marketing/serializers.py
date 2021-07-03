@@ -50,3 +50,24 @@ class cat_information(serializers.Serializer):
 
 class cat_show(serializers.Serializer):
 	identify = serializers.IntegerField()
+
+
+
+class voucher_data(serializers.Serializer):
+	voucher_name = serializers.CharField(max_length=200,allow_null=True,required=False)
+	voucher_price = serializers.FloatField()
+	voucher_value = serializers.FloatField()
+
+
+class voucher_id(serializers.Serializer):
+	identify = serializers.IntegerField()
+
+
+class update_voucher_data(serializers.Serializer):
+	identify = serializers.IntegerField()
+	name = serializers.CharField(max_length=200,allow_null=True,required=False)
+	price = serializers.FloatField(allow_null=True,required=False)
+	value = serializers.FloatField(allow_null=True,required=False)
+
+class get_voucher_id(serializers.Serializer):
+	identify = serializers.IntegerField()

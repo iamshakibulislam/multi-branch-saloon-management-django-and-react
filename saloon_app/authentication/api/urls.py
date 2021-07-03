@@ -11,6 +11,8 @@ urlpatterns = [
 
 
     path('login', obtain_auth_token, name="login"),
-    path('user_info/',views.user_info)
+    path('user_info/',views.user_info),
+    path('user_info_by_email/',views.user_info_by_email)
+
 
 ]

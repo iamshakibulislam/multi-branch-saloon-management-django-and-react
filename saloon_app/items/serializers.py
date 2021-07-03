@@ -8,6 +8,8 @@ class itemdata(serializers.Serializer):
 	price = serializers.CharField()
 	sale_price = serializers.IntegerField()
 	cat = serializers.IntegerField()
+	target = serializers.FloatField()
+	commision = serializers.FloatField()
 
 
 class delete_item(serializers.Serializer):
@@ -41,6 +43,8 @@ class item_update(serializers.Serializer):
 	name = serializers.CharField(allow_null=True,required=False)
 	price = serializers.FloatField(allow_null=True,required=False)
 	sale_price = serializers.FloatField(allow_null=True,required=False)
+	commision = serializers.FloatField(allow_null=True,required=False)
+	target = serializers.FloatField(allow_null=True,required=False)
 
 
 class providers_data(serializers.Serializer):
@@ -83,6 +87,28 @@ class get_staff_id(serializers.Serializer):
 class get_order_data(serializers.Serializer):
 	branchid = serializers.IntegerField()
 	staffid = serializers.IntegerField()
+	email = serializers.CharField(max_length=300,allow_null=True,required=False)
 	services = serializers.CharField(max_length=500)
+	items = serializers.CharField(max_length=500,allow_null=True,required=False)
 	date = serializers.CharField(max_length=500)
 	time = serializers.CharField(max_length=500)
+
+
+
+class order_id(serializers.Serializer):
+	orderid = serializers.IntegerField()
+
+
+
+class update_order_id(serializers.Serializer):
+	orderid = serializers.IntegerField()
+	modified_services = serializers.CharField(max_length=400,required=False,allow_null=True)
+	modified_items = serializers.CharField(max_length=400,allow_null=True,required=False)
+	modified_status = serializers.CharField(max_length=300,allow_null=True,required=False)
+	modified_time = serializers.CharField(max_length=200,allow_null=True,required=False)
+
+
+class salesreport(serializers.Serializer):
+	branchid = serializers.IntegerField()
+	fromdate = serializers.CharField(max_length=200,allow_null=True)
+	todate = serializers.CharField(max_length=200,allow_null=True)

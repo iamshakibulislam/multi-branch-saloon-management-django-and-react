@@ -50,9 +50,14 @@ return(
 
 
 								<div className="card card-custom gutter-b">
+								{this.state.orderdetails != null?
+								<h3 className="ml-4 mt-3">Your Balance : <span className="text-success">{this.state.orderdetails[0]['balance']} $</span>
+											</h3>:null}<br/>
 									<div className="card-header flex-wrap py-3">
+
 										<div className="card-title">
-											<h3 className="card-label">Your order details
+										
+											<h3 className="card-label d-block">Your order details
 											<span className="d-block text-muted pt-2 font-size-sm"></span></h3>
 										</div>
 										<div className="card-toolbar">
@@ -86,6 +91,7 @@ return(
 													<th>Branch</th>
 													<th>Staff</th>
 													<th>Services</th>
+													<th>ordered items</th>
 													<th>Status</th>
 													
 												</tr>
@@ -103,6 +109,10 @@ return(
 													<td>{data.branch}</td>
 													<td>{data.staff}</td>
 													<td>{data.services}</td>
+													{data.ordered_items==''?
+													<td>No items </td>:
+												
+													<td>{data.ordered_items}</td>}
 													<td>{data.status}</td>
 													
 													

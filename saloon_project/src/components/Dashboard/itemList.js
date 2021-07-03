@@ -26,7 +26,9 @@ state = {
 	cat:'selectcat',
 	editingmode:false,
 	updateid:0,
-	sale_price:null
+	sale_price:null,
+	commision:0,
+	target:0
 
 }
 
@@ -107,6 +109,14 @@ add_items_update(event,identify){
  	this.setState({cat:event.target.value})
  }
 
+ if(identify=='commision'){
+ 	this.setState({commision:event.target.value})
+ }
+
+ if(identify=='target'){
+ 	this.setState({target:event.target.value})
+ }
+
 }
 
 needRefresh(){
@@ -148,7 +158,10 @@ addItems(event){
     	name:this.state.item_name,
     	price:this.state.item_price,
     	cat:Number(this.state.cat),
-    	sale_price:Number(this.state.sale_price)
+    	sale_price:Number(this.state.sale_price),
+    	commision:Number(this.state.commision),
+    	target:Number(this.state.target)
+
 
 
     },{
@@ -260,6 +273,18 @@ return(
 				
 								<input type="number" className="form-control"  name="saleprice" placeholder="Selling price" onChange={(event)=>this.add_items_update(event,'sale_price')} required/>
 								</div>
+
+								<div className="form-group ml-2" >
+				
+								<input type="number" className="form-control"  name="commision" placeholder="commision($)" onChange={(event)=>this.add_items_update(event,'commision')} required/>
+								</div>
+
+								<div className="form-group ml-2" >
+				
+								<input type="number" className="form-control"  name="target" placeholder="target" onChange={(event)=>this.add_items_update(event,'target')} required/>
+								</div>
+
+
 								<div className="form-group">
 				
 								<select  className="form-control ml-2" name="category"  onChange={(event)=>this.add_items_update(event,'category')} required>

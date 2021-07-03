@@ -6,6 +6,9 @@ from staffall.models import *
 from authentication.models import User
 import json
 
+class get_user_email(serializers.Serializer):
+      email = serializers.CharField(max_length=200,allow_null=True,required=False)
+
 class RegistrationSerializers(serializers.ModelSerializer):
       password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True,required=False)
       dob = serializers.CharField(max_length=120,required=False,allow_null=True)

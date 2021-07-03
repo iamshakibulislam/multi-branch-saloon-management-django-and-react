@@ -20,6 +20,8 @@ class product_items(models.Model):
 	name = models.CharField(max_length=200)
 	price = models.FloatField()
 	sale_price = models.FloatField(null=True)
+	commision = models.FloatField(null=True)
+	target = models.FloatField(null=True)
 	category = models.ForeignKey(item_category,on_delete=models.CASCADE,null=True,blank=True)
 
 
@@ -54,7 +56,7 @@ class buy_items(models.Model):
 
 class order(models.Model):
 	customer = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,related_name='customer')
-	status_choise = [('pending','pending'),('approved','approved'),('canceled','canceled')]
+	status_choise = [('pending','pending'),('approved','approved'),('canceled','canceled'),('completed','completed')]
 	date= models.DateField(auto_now_add=True)
 	branch = models.ForeignKey(Branch,on_delete=models.SET_NULL,null=True)
 	staff = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
@@ -75,3 +77,7 @@ class order_services(models.Model):
 
 
 	
+
+class order_items(models.Model):
+	order_ref = models.ForeignKey(order,on_delete=models.SET_NULL,null=True)
+	item_ref = models.ForeignKey(product_items,on_delete=models.SET_NULL,null=True)

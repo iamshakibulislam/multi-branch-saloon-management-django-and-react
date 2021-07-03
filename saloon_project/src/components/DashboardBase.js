@@ -10,14 +10,14 @@ import buyItems from './Dashboard/buyItems'
 import stock from './Dashboard/stock'
 import order from './Dashboard/order'
 import orderdetails from './Dashboard/orderdetails'
-import stockItemDetails from './Dashboard/stockItemDetails'
+import allStatistics from './Dashboard/allStatistics'
 import serviceCategory from './Dashboard/serviceCategory'
-
+import voucherList from './Dashboard/voucherList'
 import axios from 'axios'
 import addStaffToBranch from './Dashboard/addStaffToBranch'
 import ItemCategory from './Dashboard/ItemCategory'
 import orderCalender from './Dashboard/orderCalender'
-import {Route,Switch,Link} from 'react-router-dom'
+import {Route,Switch,Link,Render} from 'react-router-dom'
 import baseContext from './shared/baseContext'
 
 
@@ -296,7 +296,7 @@ return(
 								</li>:null}
 
 							{/* service  managemnet here */}
-							{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager')?
+							{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff')?
 										<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 									<a href="javascript:;" className="menu-link menu-toggle">
 										<span className="svg-icon menu-icon">
@@ -414,7 +414,7 @@ return(
 								
 
 							{/* adding product management */}
-							{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager')?
+							{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff')?
 							<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 									<a href="javascript:;" className="menu-link menu-toggle">
 										<span className="svg-icon menu-icon">
@@ -506,6 +506,66 @@ return(
 								</li>:null}
 
 
+
+
+
+								{this.state.user_info != null && (this.state.user_info.role=='superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'user' )?
+							<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+									<a href="javascript:;" className="menu-link menu-toggle">
+										<span className="svg-icon menu-icon">
+											{/*begin::Svg Icon | path:./assets/media/svg/icons/Shopping/Barcode-read.svg*/}
+											<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24" />
+													<rect fill="#000000" opacity="0.3" x="4" y="4" width="8" height="16" />
+													<path d="M6,18 L9,18 C9.66666667,18.1143819 10,18.4477153 10,19 C10,19.5522847 9.66666667,19.8856181 9,20 L4,20 L4,15 C4,14.3333333 4.33333333,14 5,14 C5.66666667,14 6,14.3333333 6,15 L6,18 Z M18,18 L18,15 C18.1143819,14.3333333 18.4477153,14 19,14 C19.5522847,14 19.8856181,14.3333333 20,15 L20,20 L15,20 C14.3333333,20 14,19.6666667 14,19 C14,18.3333333 14.3333333,18 15,18 L18,18 Z M18,6 L15,6 C14.3333333,5.88561808 14,5.55228475 14,5 C14,4.44771525 14.3333333,4.11438192 15,4 L20,4 L20,9 C20,9.66666667 19.6666667,10 19,10 C18.3333333,10 18,9.66666667 18,9 L18,6 Z M6,6 L6,9 C5.88561808,9.66666667 5.55228475,10 5,10 C4.44771525,10 4.11438192,9.66666667 4,9 L4,4 L9,4 C9.66666667,4 10,4.33333333 10,5 C10,5.66666667 9.66666667,6 9,6 L6,6 Z" fill="#000000" fill-rule="nonzero" />
+												</g>
+											</svg>
+											{/*end::Svg Icon*/}
+										</span>
+										<span className="menu-text">Voucher Management</span>
+										<i className="menu-arrow"></i>
+									</a>
+									<div className="menu-submenu">
+										<i className="menu-arrow"></i>
+										<ul className="menu-subnav">
+											<li className="menu-item menu-item-parent" aria-haspopup="true">
+												<span className="menu-link">
+													<span className="menu-text">Voucher Management</span>
+												</span>
+											</li>
+											
+											<li className="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<Link to="/dashboard/voucher/" className="menu-link menu-toggle">
+													<i className="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span className="menu-text">Voucher</span>
+													<i className="menu-arrow"></i>
+												</Link>
+												
+											</li>
+
+											
+
+
+											
+
+
+											
+
+
+											
+
+
+											
+											
+										</ul>
+									</div>
+								</li>:null}
+
+
+
 							</ul>
 							{/*end::Menu Nav*/}
 						</div>
@@ -579,7 +639,7 @@ return(
 									
 									<div className="col-lg-10 col-xxl-10" style={{marginLeft:'auto',marginRight:'auto'}}>
 									{this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' ?
-									<Route path="/dashboard/" exact component={stockItemDetails} />:null}
+									<Route path="/dashboard/" exact component={allStatistics} />:null}
 									{this.state.user_info.role == 'user' ?
 									<Route path="/dashboard/" exact component={orderdetails} />:null}
 
@@ -595,20 +655,22 @@ return(
 									 <Route path="/dashboard/branch_list" exact component={branchList}/>:null}
 									 {this.state.user_info.role == 'superuser' ||  this.state.user_info.role == 'manager'?
 									 <Route path="/dashboard/add_staff_to_branch" exact component={addStaffToBranch} />:null}
-									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff'?
 									 <Route path="/dashboard/item_list" exact component={itemList} />:null}
-									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff'?
 									 <Route path="/dashboard/service_list" exact component={ServiceList} />:null}
-									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff'?
 									 <Route path="/dashboard/add_service" exact component={addService} />:null}
-									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff'?
 									 <Route path="/dashboard/item_category/" exact component={ItemCategory} />:null}
-									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff'?
 									 <Route path="/dashboard/provider_list/" exact component={itemProviderList} />:null}
-									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
+									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff'?
 									 <Route path="/dashboard/buy_items/" exact component={buyItems} />:null}
 									 {this.state.user_info.role == 'superuser' || this.state.user_info.role == 'admin' || this.state.user_info.role == 'manager'?
 									 <Route path="/dashboard/item_stock/" exact component={stock} />:null}
+									 
+									 <Route path="/dashboard/voucher/" exact component={voucherList} />
 									 <Route path="/dashboard/order/" exact component={order} />
 
 									 <Route path="/dashboard/service_category/" exact component={serviceCategory} />
@@ -650,10 +712,11 @@ return(
 			<div className="offcanvas-content pr-5 mr-n5">
 				{/*begin::Header*/}
 				<div className="d-flex align-items-center mt-5">
-					<div className="symbol symbol-100 mr-5">
-						<div className="symbol-label" style={{backgroundImage:'url(./assets/media/users/300_21.jpg)'}}></div>
-						<i className="symbol-badge bg-success"></i>
-					</div>
+				{/*
+					<div className="symbol symbol-100 mr-5"> */}
+						{/*<div className="symbol-label" style={{backgroundImage:'url(./assets/media/users/300_21.jpg)'}}></div> */}
+						{/*<i className="symbol-badge bg-success"></i>
+					</div> */}
 					<div className="d-flex flex-column">
 						<a href="#" className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{this.state.user_info != null? this.state.user_info.first_name +' '+this.state.user_info.last_name:null}</a>
 						<div className="text-muted mt-1">{this.state.user_info != null? this.state.user_info.role:null}</div>
@@ -685,14 +748,17 @@ return(
 				<div className="separator separator-dashed mt-8 mb-5"></div>
 				{/*end::Separator*/}
 				{/*begin::Nav*/}
-				<div className="navi navi-spacer-x-0 p-0">
+				{/*
+				<div className="navi navi-spacer-x-0 p-0"> */}
+
 					{/*begin::Item*/}
+					{/*}
 					<a href="custom/apps/user/profile-1/personal-information.html" className="navi-item">
 						<div className="navi-link">
 							<div className="symbol symbol-40 bg-light mr-3">
 								<div className="symbol-label">
 									<span className="svg-icon svg-icon-md svg-icon-success">
-										{/*begin::Svg Icon | path:./assets/media/svg/icons/General/Notification2.svg*/}
+										
 										<svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 											<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 												<rect x="0" y="0" width="24" height="24" />
@@ -700,21 +766,22 @@ return(
 												<circle fill="#000000" opacity="0.3" cx="18.5" cy="5.5" r="2.5" />
 											</g>
 										</svg>
-										{/*end::Svg Icon*/}
+										
 									</span>
 								</div>
 							</div>
+							
 							<div className="navi-text">
 								<div className="font-weight-bold">My Profile</div>
 								<div className="text-muted">Account settings and more
 								<span className="label label-light-danger label-inline font-weight-bold">update</span></div>
-							</div>
+							</div> 
 						</div>
 					</a>
 					
 					
-				</div>
-				{/*end::Nav*/}
+				</div>*/}
+				
 				{/*begin::Separator*/}
 				<div className="separator separator-dashed my-7"></div>
 				{/*end::Separator*/}

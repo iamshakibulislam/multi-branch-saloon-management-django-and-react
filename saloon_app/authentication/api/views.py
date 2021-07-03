@@ -3,10 +3,26 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
-from authentication.api.serializers import RegistrationSerializers
+from authentication.api.serializers import RegistrationSerializers,get_user_email
 from authentication.models import User
 
 from rest_framework.authtoken.models import Token
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def user_info_by_email(request):
+      info = get_user_email(data=request.data)
+
+      if info.is_valid():
+            email = info.validated_data['email']
+
+            try:
+                  User.objects.get(email=email)
+                  return Response({'status':'found'})
+
+            except User.DoesNotExist:
+                  return Response({'status':'not found'})
+
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])

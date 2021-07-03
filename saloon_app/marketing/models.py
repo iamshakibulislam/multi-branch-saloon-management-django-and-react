@@ -1,6 +1,11 @@
 #from staffall.models import Employe
 from django.db import models
 from django.db.models.fields import TimeField
+from django.conf import settings
+
+
+User = settings.AUTH_USER_MODEL
+
 
 # Create your models here.
 
@@ -56,3 +61,24 @@ class Service(models.Model):
       category = models.ForeignKey(ServiceCategorey,on_delete=models.CASCADE,null=True)
       def __str__(self):
           return self.title
+
+
+
+
+class vouchers(models.Model):
+    name = models.CharField(max_length=200)
+    price = models.IntegerField()
+    value = models.IntegerField()
+
+
+    def __str__(self):
+        return str(self.name)
+
+
+
+
+class buy_voucher(models.Model):
+    date = models.DateField(auto_now_add=True,auto_now=False)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    voucher = models.ForeignKey(vouchers,on_delete=models.CASCADE)
+
