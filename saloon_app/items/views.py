@@ -445,7 +445,12 @@ def place_order(request):
 	if info.is_valid() :
 		branchid = info.validated_data['branchid']
 
-		get_email = info.validated_data['email']
+
+		try:
+			get_email = info.validated_data['email']
+
+		except:
+			pass
 
 		cus = ''
 
