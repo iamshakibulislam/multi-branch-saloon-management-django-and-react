@@ -10,7 +10,8 @@ state = {
   is_modal_open:false,
   date:null,
   date_info:null,
-  editingmode:false
+  editingmode:false,
+  weekly_selected_date:null
 
 }
 
@@ -76,8 +77,8 @@ componentDidMount(){
       document.querySelector(dt).parentElement.parentElement.parentElement.children[1].children[0].children[childno].setAttribute('class','bg-success text-white');
 
       evnt.parentElement.parentElement.parentElement.children[1].children[0].children[childno].textContent='New order';
-       const rm = document.querySelectorAll('.fc-button-group');
-        rm.forEach(ele => ele.remove())
+       //const rm = document.querySelectorAll('.fc-button-group');
+       // rm.forEach(ele => ele.remove())
 
       
 
@@ -125,9 +126,75 @@ componentDidMount(){
 
 
 
+
+
+    //add weekly click events and handling to topbar
+
+
+    let weeklyselbtn = document.querySelectorAll('.fc-timeGridWeek-button');
+
+    weeklyselbtn.forEach(el => {el.addEventListener('click',event => {
+
+
+
+     let get_date_range=document.querySelector('.fc-header-toolbar > .fc-center').textContent;
+
+    // this.setState({weekly_selected_date:get_date_range});
+
+
+    //sending request to server for date range 
+
+
+    
+  axios.post(this.context.baseUrl+'/items/order_details/',
+    { 
+      
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      this.setState({orderdetails:response.data})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({alert:true,message:'Can not load data !'})
+    })
+
+
+
+    //end of sending request to server for date range
+
+
+
+
+
+
+
+
+    })})
+    
+
+    //end of adding weekly click events
+
+
+
       
       
     }
+
+
+
+
+
 
 
 

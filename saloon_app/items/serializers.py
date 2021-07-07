@@ -112,3 +112,7 @@ class salesreport(serializers.Serializer):
 	branchid = serializers.IntegerField()
 	fromdate = serializers.CharField(max_length=200,allow_null=True)
 	todate = serializers.CharField(max_length=200,allow_null=True)
+
+
+class get_daterange(serializers.Serializer):
+	date = serializers.CharField(max_length=300)
