@@ -331,7 +331,7 @@ def get_items_list(request):
 			filter_this_item = sel.filter(item=x)
 
 			if len(filter_this_item) > 0 and int(sel.filter(item=x).aggregate(plus = Sum('quantity'))['plus'])>0:
-				res.append({'id':x.id,'name':x.name})
+				res.append({'id':x.id,'name':x.name,'price':x.sale_price})
 
 			else:
 				pass
@@ -352,6 +352,7 @@ def get_services(request):
 		filter_employees= BranchEmployee.objects.filter(branch_name=sel_branch)
 
 		service_ids = []
+		res = []
 
 		for user in  filter_employees:
 			get_staff = user.staff
@@ -360,6 +361,8 @@ def get_services(request):
 
 			for identify in get_all_services:
 				service_ids.append(identify.service.id)
+				res.append({'id':identify.service.id,'name':identify.service.title,'cost':identify.service.cost,'staffid':identify.provider.id,'staffname':identify.provider.first_name+' '+identify.provider.last_name})
+
 
 
 
@@ -374,26 +377,302 @@ def get_services(request):
 
 		for x in unique_service_ids:
 			sel = Service.objects.get(id=int(x))
-			available_services.append({'id':sel.id,'name':sel.title})
+			available_services.append({'id':sel.id,'name':sel.title,'cost':sel.cost})
 
 
-		return Response(available_services)
+		return Response(res)
 
 
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
 def get_upcomming_appointment(request):
+	try:
+		info = get_daterange(data=request.data)
+		if info.is_valid():
+
+			print(info.validated_data['date'])
+
+		else :
+			print('not valid')
+	except:
+		filtr = order.objects.filter(Q(appointment_date__gte=datetime.now()) & Q(staff = request.user))
+		info = []
+
+		for x in filtr:
+			if x not in info:
+				info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+
+
+		return Response(info)
+
 	filtr = order.objects.filter(Q(appointment_date__gte=datetime.now()) & Q(staff = request.user))
 
-	info = []
 
-	for x in filtr:
-		if x not in info:
-			info.append(x.appointment_date)
+	try:
+		date = info.validated_data['date']
+		formatted = date.replace(' ','').split(',')
+		year = ''
+		month = ''
+		day = ''
+
+		
 
 
-	return Response(info)
+		
+
+		if date != None:
+
+			year = formatted[1][-4:]
+
+			for x in formatted[0]:
+				if x.isdigit() == True:
+					day = day+str(x)
+
+			print('selected day is ',day)
+
+			
+			
+
+
+
+			if  'JANUARY' in (formatted[0]).upper():
+				month = 1
+			if 'FEBRUARY' in (formatted[0]).upper():
+				month = 2
+
+			if 'MARCH' in (formatted[0]).upper():
+				month = 3
+
+			if 'APRIL' in (formatted[0]).upper():
+				month = 4
+
+			if 'MAY' in (formatted[0]).upper():
+				month = 5
+
+			if 'JUNE' in (formatted[0]).upper():
+				month = 6
+
+			if 'JULY' in (formatted[0]).upper():
+				month = 7
+
+			if 'AUGUST' in (formatted[0]).upper():
+				month = 8
+
+			if 'SEPTEMBER' in (formatted[0]).upper():
+				month = 9
+
+			if 'OCTOBER' in (formatted[0]).upper():
+				month = 10
+
+			if 'NOVEMBER' in (formatted[0]).upper():
+				month = 11
+
+			if 'DECEMBER' in (formatted[0]).upper():
+				month = 12
+
+
+			print('your date is ',str(year)+'-'+str(month)+'-'+str(day))
+			
+
+			
+
+			filtr = order.objects.filter(Q(appointment_date=str(year)+'-'+str(month)+'-'+str(day)) & Q(staff = request.user))
+			info = []
+
+			for x in filtr:
+				if x not in info:
+					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+
+
+			return Response(info)
+
+	except:
+		pass
+
+
+
+	try:
+		date = info.validated_data['date']
+		formatted = date.replace(' ','').split('–')
+		year = ''
+		month = ''
+		day = ''
+
+		nextmonth=''
+
+
+		nextday = ''
+
+		if len(formatted[1]) <= 7:
+
+			year = formatted[1][-4:]
+			day = formatted[0][3:]
+			nextday = formatted[1].split(',')[0]
+
+
+
+			if (formatted[0][:3]).upper() == 'JAN':
+				month = 1
+			if (formatted[0][:3]).upper() == 'FEB':
+				month = 2
+
+			if (formatted[0][:3]).upper() == 'MAR':
+				month = 3
+
+			if (formatted[0][:3]).upper() == 'APR':
+				month = 4
+
+			if (formatted[0][:3]).upper() == 'MAY':
+				month = 5
+
+			if (formatted[0][:3]).upper() == 'JUN':
+				month = 6
+
+			if (formatted[0][:3]).upper() == 'JUL':
+				month = 7
+
+			if (formatted[0][:3]).upper() == 'AUG':
+				month = 8
+
+			if (formatted[0][:3]).upper() == 'SEP':
+				month = 9
+
+			if (formatted[0][:3]).upper() == 'OCT':
+				month = 10
+
+			if (formatted[0][:3]).upper() == 'NOV':
+				month = 11
+
+			if (formatted[0][:3]).upper() == 'DEC':
+				month = 12
+
+
+			print('your date is ',str(year)+'-'+str(month)+'-'+str(day))
+			print('your next date is ',str(year)+'-'+str(month)+'-'+str(nextday))
+
+			minimumrange=str(year)+'-'+str(month)+'-'+str(day)
+			maximumrange = str(year)+'-'+str(month)+'-'+str(nextday)
+
+			filtr = order.objects.filter(Q(appointment_date__gte=minimumrange) & Q(staff = request.user) & Q(appointment_date__lte=maximumrange))
+			info = []
+
+			for x in filtr:
+				if x not in info:
+					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+
+
+			return Response(info)
+
+
+		if len(formatted[1]) > 7:
+
+			year = formatted[1][-4:]
+			day = formatted[0][3:]
+			nextday = formatted[1].split(',')[0][3:]
+			
+
+			if (formatted[0][:3]).upper() == 'JAN':
+				month = 1
+			if (formatted[0][:3]).upper() == 'FEB':
+				month = 2
+
+			if (formatted[0][:3]).upper() == 'MAR':
+				month = 3
+
+			if (formatted[0][:3]).upper() == 'APR':
+				month = 4
+
+			if (formatted[0][:3]).upper() == 'MAY':
+				month = 5
+
+			if (formatted[0][:3]).upper() == 'JUN':
+				month = 6
+
+			if (formatted[0][:3]).upper() == 'JUL':
+				month = 7
+
+			if (formatted[0][:3]).upper() == 'AUG':
+				month = 8
+
+			if (formatted[0][:3]).upper() == 'SEP':
+				month = 9
+
+			if (formatted[0][:3]).upper() == 'OCT':
+				month = 10
+
+			if (formatted[0][:3]).upper() == 'NOV':
+				month = 11
+
+			if (formatted[0][:3]).upper() == 'DEC':
+				month = 12
+
+
+			#setting for next month selection
+			if (formatted[1].split(',')[0][:3]).upper() == 'JAN':
+				nextmonth = 1
+			if (formatted[1].split(',')[0][:3]).upper() == 'FEB':
+				nextmonth = 2
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'MAR':
+				nextmonth = 3
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'APR':
+				nextmonth = 4
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'MAY':
+				nextmonth = 5
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'JUN':
+				nextmonth = 6
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'JUL':
+				nextmonth = 7
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'AUG':
+				nextmonth = 8
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'SEP':
+				nextmonth = 9
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'OCT':
+				nextmonth = 10
+
+			if (formatted[1].split(',')[0][:3]).upper() == 'NOV':
+				nextmonth = 11
+
+			if (formatted[0][:3]).upper() == 'DEC':
+				nextmonth = 12
+
+			minimumrange=str(year)+'-'+str(month)+'-'+str(day)
+			maximumrange = str(year)+'-'+str(nextmonth)+'-'+str(nextday)
+			print('from',str(year)+'-'+str(month)+'-'+str(day))
+			print('to',str(year)+'-'+str(nextmonth)+'-'+str(nextday))
+			print('formatted data ',formatted)
+			filtr = order.objects.filter(Q(appointment_date__gte=minimumrange) & Q(staff = request.user) & Q(appointment_date__lte=maximumrange))
+			info =[]
+			for x in filtr:
+				if x not in info:
+
+					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+
+
+			return Response(info)
+
+	except:
+		
+		for x in filtr:
+
+			if x not in info:
+				info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+
+
+		return Response(info)
+
+
+
+
+	
 
 
 

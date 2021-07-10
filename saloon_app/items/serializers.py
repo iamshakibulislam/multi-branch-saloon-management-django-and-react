@@ -92,6 +92,7 @@ class get_order_data(serializers.Serializer):
 	items = serializers.CharField(max_length=500,allow_null=True,required=False)
 	date = serializers.CharField(max_length=500)
 	time = serializers.CharField(max_length=500)
+	itemforservice = serializers.CharField(max_length=500,allow_null=True,required=False)
 
 
 
@@ -115,4 +116,4 @@ class salesreport(serializers.Serializer):
 
 
 class get_daterange(serializers.Serializer):
-	date = serializers.CharField(max_length=300)
+	date = serializers.CharField(max_length=300,allow_null=True,required=False)
