@@ -138,7 +138,7 @@ localStorage.setItem('baseUrl',this.context.baseUrl);
 
     setInterval(function(){
 
-
+try{
     let refreshMonthButton = document.querySelector('.fc-dayGridMonth-button');
 
     if(refreshMonthButton.id == ''){
@@ -150,7 +150,15 @@ localStorage.setItem('baseUrl',this.context.baseUrl);
 
     refreshMonthButton.id = "monthlyreload";
 
+
+
+
+
+
+
     let identify = document.querySelector('.fc-next-button').id;
+
+    
 
 
 
@@ -364,7 +372,9 @@ localStorage.setItem('baseUrl',this.context.baseUrl);
 
     })}})
     
-
+}catch{
+    console.log('not found the id')
+  }
     //end of adding weekly click events
 
 },1000)

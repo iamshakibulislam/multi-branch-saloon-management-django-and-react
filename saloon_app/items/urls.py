@@ -31,6 +31,7 @@ urlpatterns = [
 	path('get_order_details/',views.get_order_details),
 	path('update_order/',views.update_order),
 	path('sales_report/',views.sales_report),
-	path('get_balance/',views.get_balance)
+	path('get_balance/',views.get_balance),
+	path('get_my_orders/',views.get_my_orders)
 
 ]

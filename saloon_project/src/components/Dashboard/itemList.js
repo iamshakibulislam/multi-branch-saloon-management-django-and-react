@@ -28,7 +28,8 @@ state = {
 	updateid:0,
 	sale_price:null,
 	commision:0,
-	target:0
+	target:0,
+	tax:0
 
 }
 
@@ -117,6 +118,10 @@ add_items_update(event,identify){
  	this.setState({target:event.target.value})
  }
 
+ if(identify=='tax'){
+ 	this.setState({tax:event.target.value})
+ }
+
 }
 
 needRefresh(){
@@ -160,7 +165,8 @@ addItems(event){
     	cat:Number(this.state.cat),
     	sale_price:Number(this.state.sale_price),
     	commision:Number(this.state.commision),
-    	target:Number(this.state.target)
+    	target:Number(this.state.target),
+    	taxes:Number(this.state.tax)
 
 
 
@@ -260,7 +266,7 @@ return(
 						<div className="col-md-12 my-2 my-md-0">
 							<div className="d-flex align-items-center">
 							<form action="#" className="from  d-flex" onSubmit={this.addItems.bind(this)}>
-							<div className="form-group mr-4">
+							<div className="form-group mr-0">
 								
 								<input type="text" className="form-control" name="itemname" placeholder="New Item name" onChange={(event)=>this.add_items_update(event,'name')} required/>
 								</div>
@@ -269,25 +275,31 @@ return(
 				
 								<input type="number" className="form-control"  name="price" placeholder="Buy price" onChange={(event)=>this.add_items_update(event,'price')} required/>
 								</div>
-								<div className="form-group ml-2" >
+								<div className="form-group ml-0" >
 				
 								<input type="number" className="form-control"  name="saleprice" placeholder="Selling price" onChange={(event)=>this.add_items_update(event,'sale_price')} required/>
 								</div>
 
-								<div className="form-group ml-2" >
+								<div className="form-group ml-0" >
 				
 								<input type="number" className="form-control"  name="commision" placeholder="commision($)" onChange={(event)=>this.add_items_update(event,'commision')} required/>
 								</div>
 
-								<div className="form-group ml-2" >
+								<div className="form-group ml-0" >
 				
 								<input type="number" className="form-control"  name="target" placeholder="target" onChange={(event)=>this.add_items_update(event,'target')} required/>
 								</div>
 
 
+								<div className="form-group ml-0" >
+				
+								<input type="number" className="form-control"  name="tax" placeholder="tax(%)" onChange={(event)=>this.add_items_update(event,'tax')} required/>
+								</div>
+
+
 								<div className="form-group">
 				
-								<select  className="form-control ml-2" name="category"  onChange={(event)=>this.add_items_update(event,'category')} required>
+								<select  className="form-control ml-0 pl-0" name="category"  onChange={(event)=>this.add_items_update(event,'category')} required>
 								<option value="selectcat">Select category</option>
 								{this.state.items != null?
 
@@ -303,7 +315,7 @@ return(
 								}
 								</select>
 								</div>
-								<div className="ml-4"> <button type="submit"  className="btn btn-danger px-6 font-weight-bold">{this.state.addingstatus==false?
+								<div className="ml-1"> <button type="submit"  className="btn btn-danger px-6 font-weight-bold">{this.state.addingstatus==false?
 				 <span>Add </span> :
 					 this.state.addingstatus==true? <span>wait...</span>:null }</button> </div>
 								</form>

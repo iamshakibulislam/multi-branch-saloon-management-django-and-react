@@ -22,6 +22,7 @@ class product_items(models.Model):
 	sale_price = models.FloatField(null=True)
 	commision = models.FloatField(null=True)
 	target = models.FloatField(null=True)
+	taxes = models.IntegerField(null=True)
 	category = models.ForeignKey(item_category,on_delete=models.CASCADE,null=True,blank=True)
 
 
@@ -56,17 +57,20 @@ class buy_items(models.Model):
 
 class order(models.Model):
 	customer = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,related_name='customer')
-	status_choise = [('pending','pending'),('approved','approved'),('canceled','canceled'),('completed','completed')]
+	status_choise = [('pending','pending'),('arrived','arrived'),('canceled','canceled'),('completed','completed'),('working','working')]
+	payment_status_choise = [('paid','paid'),('partial','partial'),('due','due')]
 	date= models.DateField(auto_now_add=True)
 	branch = models.ForeignKey(Branch,on_delete=models.SET_NULL,null=True)
 	staff = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-	appointment_date = models.DateField(null=False,blank=False,auto_now_add=False,auto_now=False)
-	appointment_time = models.TimeField(null=False,blank=False)
+	appointment_date = models.DateField(null=True,blank=True,auto_now_add=False,auto_now=False)
+	appointment_time = models.TimeField(null=True,blank=True)
 	status = models.CharField(choices=status_choise,max_length=200,default='pending')
-
+	payment_status = models.CharField(choices=payment_status_choise,max_length=200,blank=True,null=True,default='paid')
+	payment_method_choise = [('voucher','voucher'),('cash','cash')]
+	payment_method = models.CharField(choices=payment_method_choise,max_length=200,blank=True,null=True)
 
 	def __str__(self):
-		return str(self.date)
+		return str(self.date)+' '+str(self.customer.first_name)+' '+str(self.staff.first_name)
 
 
 

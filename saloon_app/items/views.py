@@ -16,6 +16,52 @@ from authentication.models import User
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
+def get_my_orders(request):
+	res = []
+	current_services=""
+	current_items = ""
+	find_orders=order.objects.filter(staff=request.user)
+
+	print('your orders',find_orders)
+
+	for x in find_orders:
+		get_services = order_services.objects.filter(order_ref=x)
+
+		for ser in get_services:
+			current_services = current_services +' , '+ser.servic_ref.title
+
+		current_services = current_services[2:]
+
+		get_items = order_items.objects.filter(order_ref=x)
+		if len(get_items)!=0:
+			for i in get_items:
+				current_items = current_items+' , '+i.item_ref.name
+
+			current_items = current_items[2:]
+
+
+
+
+		res.append({'id':x.id,'date':x.appointment_date,'time':x.appointment_time,'branch':x.branch.name,'staff':x.staff.first_name+' '+x.staff.last_name,'services':current_services,'payment_status':x.payment_status,'status':x.status,'ordered_items':current_items,'balance':request.user.balance,'user':x.customer.first_name,'payment_method':x.payment_method})
+
+		current_services = ""
+		current_items = ""
+
+
+	res.reverse()
+
+	res = res[:30]
+
+
+	return Response(res)
+
+
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
 def get_balance(request):
 	return Response({'balance':request.user.balance})
 
@@ -119,6 +165,8 @@ def update_order(request):
 		modified_items = list(json.loads(info.validated_data['modified_items']))
 		modified_status = info.validated_data['modified_status']
 		modified_time = info.validated_data['modified_time']
+		modified_payment_method = info.validated_data['modified_payment_method']
+		modified_payment_status = info.validated_data['modified_payment_status']
 
 
 		sel = order.objects.get(id=int(orderid))
@@ -133,9 +181,20 @@ def update_order(request):
 			
 		if modified_status != None:
 			if sel.status != modified_status:
-				if modified_status != 'approved':
+				if modified_status != 'completed':
 
 					sel.status = modified_status
+
+		if modified_payment_method != None:
+			if sel.payment_method != modified_payment_method:
+
+				sel.payment_method = modified_payment_method
+
+
+		if modified_payment_status != None:
+			if sel.payment_status != modified_payment_status:
+				sel.payment_status = modified_payment_status
+
 
 		sel.save()
 
@@ -175,7 +234,7 @@ def update_order(request):
 
 		
 
-		if modified_status == 'approved':
+		if modified_status == 'completed':
 
 			
 
@@ -185,13 +244,13 @@ def update_order(request):
 			filter_itemss = order_items.objects.filter(order_ref=sel)
 
 			for x in filter_itemss:
-				item_cost = item_cost+(x.item_ref.sale_price)
+				item_cost = item_cost+(x.item_ref.sale_price)+(x.item_ref.sale_price*0.01*x.item_ref.taxes)
 
 
 			filter_servicess = order_services.objects.filter(order_ref=sel)
 
 			for x in filter_servicess:
-				service_cost = service_cost + (x.servic_ref.cost)
+				service_cost = service_cost + (x.servic_ref.cost)+(x.servic_ref.cost*0.01*x.servic_ref.taxes)
 
 
 
@@ -201,18 +260,33 @@ def update_order(request):
 
 			balance = orderedUser.balance
 
-			if(int(balance)<int((service_cost+item_cost))):
-				return Response({'status':'failed'})
+			if(int(balance)<int((service_cost+item_cost)) and sel.payment_method == 'voucher'):
+				if sel.payment_method == 'voucher':
+					return Response({'status':'failed'})
+
+				else:
+					pass
+
+			elif sel.payment_method == 'voucher' and int(balance)>int(service_cost+item_cost):
+				sel = order.objects.get(id=int(orderid))
+				sel.status = 'completed'
+				sel.save()
+				sel_user_for_updating = User.objects.get(id=int(sel_user_id))
+				sel_user_for_updating.balance = sel_user_for_updating.balance - (service_cost+item_cost)
+				sel_user_for_updating.save()
+
+
 
 			else:
 				sel = order.objects.get(id=int(orderid))
-				sel.status = 'approved'
+				sel.status = 'completed'
 				sel.save()
 
 
 
 
-			sel_user_for_updating = User.objects.get(id=int(sel_user_id))
+
+			
 
 			try:
 				send_mail(
@@ -226,8 +300,7 @@ def update_order(request):
 			except:
 				pass
 
-			sel_user_for_updating.balance = sel_user_for_updating.balance - (service_cost+item_cost)
-			sel_user_for_updating.save()
+			
 
 
 
@@ -259,13 +332,15 @@ def get_order_details(request):
 	if info.is_valid():
 		sel = order.objects.get(id=int(info.validated_data['orderid']))
 
-		res = {'id':'','services':[],'items':[],'time':'','status':'','available_items':[],'available_services':[]}
+		res = {'id':'','services':[],'items':[],'time':'','status':'','available_items':[],'available_services':[],'payment_method':'','payment_status':''}
 
 		get_branch = sel.branch
 
 		res['id'] = sel.id
 		res['status']=sel.status
 		res['time']=sel.appointment_time
+		res['payment_method'] = sel.payment_method,
+		res['payment_status'] = sel.payment_status
 
 		filter_services = order_services.objects.filter(order_ref=sel)
 
@@ -331,7 +406,7 @@ def get_items_list(request):
 			filter_this_item = sel.filter(item=x)
 
 			if len(filter_this_item) > 0 and int(sel.filter(item=x).aggregate(plus = Sum('quantity'))['plus'])>0:
-				res.append({'id':x.id,'name':x.name,'price':x.sale_price})
+				res.append({'id':x.id,'name':x.name,'price':x.sale_price,'taxes':x.taxes})
 
 			else:
 				pass
@@ -361,7 +436,7 @@ def get_services(request):
 
 			for identify in get_all_services:
 				service_ids.append(identify.service.id)
-				res.append({'id':identify.service.id,'name':identify.service.title,'cost':identify.service.cost,'staffid':identify.provider.id,'staffname':identify.provider.first_name+' '+identify.provider.last_name})
+				res.append({'id':identify.service.id,'name':identify.service.title,'cost':identify.service.cost,'staffid':identify.provider.id,'staffname':identify.provider.first_name+' '+identify.provider.last_name,'taxes':identify.service.taxes})
 
 
 
@@ -688,6 +763,8 @@ def order_details(request):
 	current_items = ""
 	find_orders=order.objects.filter(customer=request.user)
 
+	print('your orders',find_orders)
+
 	for x in find_orders:
 		get_services = order_services.objects.filter(order_ref=x)
 
@@ -704,7 +781,12 @@ def order_details(request):
 			current_items = current_items[2:]
 
 
-		res.append({'id':x.id,'date':x.appointment_date,'time':x.appointment_time,'branch':x.branch.name,'staff':x.staff.first_name+' '+x.staff.last_name,'services':current_services,'status':x.status,'ordered_items':current_items,'balance':request.user.balance})
+
+
+		res.append({'id':x.id,'date':x.appointment_date,'time':x.appointment_time,'branch':x.branch.name,'staff':x.staff.first_name+' '+x.staff.last_name,'services':current_services,'payment_status':x.payment_status,'status':x.status,'ordered_items':current_items,'balance':request.user.balance})
+
+		current_services = ""
+		current_items = ""
 
 
 	return Response(res)
@@ -720,6 +802,8 @@ def order_details(request):
 @permission_classes([IsAuthenticated,])
 def place_order(request):
 	info = get_order_data(data=request.data)
+
+	print(info)
 
 	if info.is_valid() :
 		branchid = info.validated_data['branchid']
@@ -744,13 +828,165 @@ def place_order(request):
 
 
 		
-		staffid = info.validated_data['staffid']
-		servicess = info.validated_data['services']
-		items = info.validated_data['items']
-		date = info.validated_data['date']
-		time = info.validated_data['time']
+		staffid = list(json.loads(info.validated_data['staffid']))
+		servicess = list(json.loads(info.validated_data['services']))
+		items = list(json.loads(info.validated_data['items']))
+		try:
+			date = info.validated_data['date']
+			time = info.validated_data['time']
+		except:
+			pass
+
+		try:
+			itemforservice = list(json.loads(info.validated_data['itemforservice']))
+		except:
+			pass
+
+		try:
+			paymentsystem = ''
+			payment_type = info.validated_data['payment_type']
+			if payment_type != 'voucher':
+				paymentsystem = 'cash'
+
+			if payment_type == 'zero':
+				payment_type = 'due'
+				paymentsystem = 'cash'
+			if payment_type == 'voucher':
+				paymentsystem='voucher'
+
+		except:
+			pass
+
+
+		try:
+			payment_stats = ''
+
+			if payment_type == 'voucher':
+				payment_stats = 'paid'
+
+			if payment_type == 'partial':
+				payment_stats = 'partial'
+
+			if payment_type == 'cash':
+				payment_stats = 'paid'
+
+			if payment_type == 'due':
+				payment_stats='due'
+
+
+		except:
+			pass
 
 		sel_branch = Branch.objects.get(id=int(branchid))
+
+
+
+		unique_staffs = list(set(staffid))
+
+
+		if request.user.is_staff == True:
+
+			for x in unique_staffs:
+
+				print('payment stats is ',payment_stats,'order_type ',payment_type)
+				sel_staff = User.objects.get(id=int(x))
+				create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method=paymentsystem,payment_status=payment_stats)
+
+				find_index_of_service = []
+
+				for index,staff in enumerate(staffid):
+					if int(staff) == int(x):
+						find_index_of_service.append(index)
+
+
+				my_ordered_services = []
+
+				for ind in find_index_of_service:
+					my_ordered_services.append(servicess[ind])
+
+
+
+				for orde in my_ordered_services:
+					sel_serv = Service.objects.get(id=int(orde))
+					order_services.objects.create(order_ref = create_order,servic_ref=sel_serv)
+
+
+
+
+			if len(items) != 0:
+				create_order=order.objects.create(branch=sel_branch,staff=request.user,appointment_date=date,appointment_time=time,customer=cus,payment_method = paymentsystem,payment_status=payment_stats)
+
+				for x in items:
+					sel_item = product_items.objects.get(id=int(x))
+					order_items.objects.create(order_ref=create_order,item_ref=sel_item)
+
+
+			return Response({'status':'placed'})
+
+
+
+
+
+
+
+
+		print('your unique_staffs are ',unique_staffs)
+
+		for x in unique_staffs:
+			print('looping')
+			sel_staff = User.objects.get(id=int(x))
+			create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method='voucher',payment_status='due')
+
+			find_index_of_service = []
+
+			for index,staff in enumerate(staffid):
+				if int(staff) == int(x):
+					find_index_of_service.append(index)
+
+
+			my_ordered_services = []
+
+			for ind in find_index_of_service:
+				my_ordered_services.append(servicess[ind])
+
+
+
+			for orde in my_ordered_services:
+				sel_serv = Service.objects.get(id=int(orde))
+				order_services.objects.create(order_ref = create_order,servic_ref=sel_serv)
+
+
+			if len(items) != 0:
+
+				for index,itemid in enumerate(items):
+
+					if itemforservice[index] in my_ordered_services:
+						sel_item = product_items.objects.get(id=int(itemid))
+						order_items.objects.create(order_ref=create_order,item_ref=sel_item)
+
+
+
+			find_index_of_service = []
+			my_ordered_services = []
+
+
+
+		return Response({'status':'placed'})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		'''
 		sel_staff = User.objects.get(id=int(staffid))
 
 		create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus)
@@ -769,7 +1005,12 @@ def place_order(request):
 				sel_item = product_items.objects.get(id=int(x))
 				order_items.objects.create(order_ref=create_order,item_ref=sel_item)
 
+		
+
 		return Response({'status':'placed'})
+
+
+		'''
 
 
 @api_view(['POST',])
@@ -985,6 +1226,7 @@ def update_item_info(request):
 		sale_price = info.validated_data['sale_price']
 		commision = info.validated_data['commision']
 		target = info.validated_data['target']
+		taxes = info.validated_data['taxes']
 
 
 		sel_item = product_items.objects.get(id=int(identify))
@@ -994,6 +1236,8 @@ def update_item_info(request):
 		if sel_item.name != name:
 			sel_item.name = name
 
+		if sel_item.taxes != taxes:
+			sel_item.taxes = int(taxes)
 
 		if sel_item.price != price:
 			sel_item.price = price
@@ -1026,6 +1270,7 @@ def update_item_info(request):
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
 def get_item_info(request):
+
 	ser = item_info(data=request.data)
 
 	if ser.is_valid():
@@ -1039,6 +1284,7 @@ def get_item_info(request):
 		info['item_info']['sale_price'] = sel.sale_price
 		info['item_info']['commision'] = sel.commision
 		info['item_info']['target'] = sel.target
+		info['item_info']['taxes'] = sel.taxes
 
 
 		for x in item_category.objects.all():
@@ -1156,6 +1402,8 @@ def add_items(request):
 		name = data.validated_data['name']
 		price = float(data.validated_data['price'])
 
+		taxes = data.validated_data['taxes']
+
 		catid = data.validated_data['cat']
 
 		target = float(data.validated_data['target'])
@@ -1164,7 +1412,7 @@ def add_items(request):
 		selcat = item_category.objects.get(id=int(catid))
 		sale_price = data.validated_data['sale_price']
 
-		p=product_items.objects.create(name=name,price=price,category=selcat,sale_price=sale_price,commision=commision,target=target)
+		p=product_items.objects.create(name=name,price=price,category=selcat,sale_price=sale_price,commision=commision,target=target,taxes=taxes)
 
 		return Response({"status":"added","id":p.id})
 

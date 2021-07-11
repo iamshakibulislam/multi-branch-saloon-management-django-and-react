@@ -32,7 +32,8 @@ static contextType = baseContext
 
         itemforservice:[],
 
-        total_cost:0
+        total_cost:0,
+        tax_cost:0
        
 
 
@@ -167,6 +168,7 @@ setInfo(event,name){
     let get_selected_row = event.target.parentElement;
 
     let cost = get_selected_row.previousSibling.getAttribute('value');
+    let tax = get_selected_row.previousSibling.getAttribute('tax');
     let staffid = get_selected_row.previousSibling.previousSibling.getAttribute('value');
     let serviceid = get_selected_row.previousSibling.previousSibling.previousSibling.getAttribute('value');
 
@@ -194,7 +196,7 @@ setInfo(event,name){
 
 
 
-        this.setState({service_names:servname,service_data:get_serv_data,total_cost:Number(this.state.total_cost)+Number(cost),staffid:get_staffs});
+        this.setState({tax_cost:Number(this.state.tax_cost)+Number(cost*tax*0.01),service_names:servname,service_data:get_serv_data,total_cost:Number(this.state.total_cost)+Number(cost)+Number(cost*0.01*tax),staffid:get_staffs});
 
 
     }else if(event.target.textContent == 'Deselect'){
@@ -216,7 +218,7 @@ setInfo(event,name){
         let get_service_names = [...this.state.service_names];
         get_service_names.splice(findoutindex,1);
 
-        this.setState({service_names:get_service_names,service_data:filteredarr,staffid:get_staff_data,total_cost:Number(this.state.total_cost - cost)});
+        this.setState({tax_cost:Number(this.state.tax_cost)-Number(cost*0.01*tax),service_names:get_service_names,service_data:filteredarr,staffid:get_staff_data,total_cost:Number(this.state.total_cost) - (Number(cost)+Number(cost*0.01*tax))});
 
 
 
@@ -253,6 +255,8 @@ setInfo(event,name){
     let get_selected_row = event.target.parentElement;
 
     let price = get_selected_row.previousSibling.previousSibling.getAttribute('value');
+    let tax = get_selected_row.previousSibling.previousSibling.getAttribute('tax');
+
     let itemid = get_selected_row.previousSibling.previousSibling.previousSibling.getAttribute('value');
     
     let itemforservicex = get_selected_row.previousSibling.children[0].value;
@@ -274,7 +278,7 @@ setInfo(event,name){
         
 
 
-        this.setState({itemforservice:itemforservices,items_info:get_item_data,total_cost:Number(this.state.total_cost)+Number(price)});
+        this.setState({tax_cost:Number(this.state.tax_cost)+Number(price*0.01*tax),itemforservice:itemforservices,items_info:get_item_data,total_cost:Number(this.state.total_cost)+Number(price)+Number(price*0.01*tax)});
 
 
     }else if(event.target.textContent == 'Deselect'){
@@ -294,7 +298,7 @@ setInfo(event,name){
 
         itemforser.splice(findoutindexno,1);
 
-        this.setState({itemforservice:itemforser,items_info:filteredarr,total_cost:Number(this.state.total_cost - price)});
+        this.setState({tax_cost:Number(this.state.tax_cost)-Number(price*0.01*tax),itemforservice:itemforser,items_info:filteredarr,total_cost:Number(this.state.total_cost) - (Number(price)+Number(price*0.01*tax))});
 
 
 
@@ -456,7 +460,7 @@ render(){
 
                 <td value={data.id}>{data.name}</td>
                 <td value={data.staffid}>{data.staffname}</td>
-                <td value={data.cost}>{data.cost}</td>
+                <td tax={data.taxes} value={data.cost}>{data.cost}</td>
                 <td className="text-center"><a className="btn btn-primary text-center" 
                 onClick={(event)=>this.setInfo(event,'services')}>Select</a></td>
 
@@ -501,7 +505,7 @@ render(){
         return (<tr>
 
                 <td value={data.id}>{data.name}</td>
-                <td value={data.price}>{data.price}</td>
+                <td tax={data.taxes} value={data.price}>{data.price}</td>
                 <td>
                 <select className="form-control">
                 {this.state.service_data.length !=0?
@@ -550,7 +554,10 @@ render(){
 
    <div className="col-md-12">
    <div className="form-group">
-    <h4 style={{height:'4rem'}}>Total Cost : {this.state.total_cost} $</h4>
+    <h4 style={{height:'4rem'}}>Total Cost : {this.state.total_cost.toFixed(2)} $</h4><br/>
+    <h4 style={{height:'4rem'}}>Total Tax(included) : {this.state.tax_cost.toFixed(2)} $</h4>
+
+
     
     
    </div>

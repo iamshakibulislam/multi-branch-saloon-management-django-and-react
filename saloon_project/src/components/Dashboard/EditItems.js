@@ -174,6 +174,12 @@ setInfo(event,name){
     }
 
 
+     if(name == 'taxes'){
+        copy['item_info']['taxes'] = event.target.value;
+        this.setState({items_info:copy})
+    }
+
+
     
 
     
@@ -199,7 +205,8 @@ axios.post(this.context.baseUrl+'/items/update_item/',
         price:Number(this.state.items_info.item_info.price),
         sale_price:Number(this.state.items_info.item_info.sale_price),
         commision:Number(this.state.items_info.item_info.commision),
-        target:Number(this.state.items_info.item_info.target)
+        target:Number(this.state.items_info.item_info.target),
+        taxes:Number(this.state.items_info.item_info.taxes)
 
     
     
@@ -221,7 +228,7 @@ axios.post(this.context.baseUrl+'/items/update_item/',
       this.setState({
         processing:false,
         alert:true,
-        errorMessage:'Category has been updated ! ',
+        errorMessage:'Item has been updated ! ',
 
     
 
@@ -337,6 +344,13 @@ render(){
    <div className="form-group">
     <label>Monthly target <span className="text-danger">*</span></label>
     <input type="number" className="form-control" value={this.state.items_info.item_info.target} placeholder="target" onChange={(event)=>this.setInfo(event,'target')}  />
+    <span className="form-text text-muted"></span>
+   </div>
+
+
+   <div className="form-group">
+    <label> Taxes <span className="text-danger">*</span></label>
+    <input type="number" className="form-control" value={this.state.items_info.item_info.taxes} placeholder="target" onChange={(event)=>this.setInfo(event,'taxes')}  />
     <span className="form-text text-muted"></span>
    </div>
 

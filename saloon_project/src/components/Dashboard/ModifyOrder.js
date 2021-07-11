@@ -26,7 +26,9 @@ static contextType = baseContext
         modified_services:[],
         modified_items:[],
         modified_time:null,
-        modified_status:null
+        modified_status:null,
+        modified_payment_method:null,
+        modified_payment_status:null
 
        
 
@@ -255,7 +257,9 @@ updateOrder(event){
         modified_services:JSON.stringify(this.state.modified_services),
         modified_items:JSON.stringify(this.state.modified_items),
         modified_status:this.state.modified_status,
-        modified_time:this.state.modified_time
+        modified_time:this.state.modified_time,
+        modified_payment_method:this.state.modified_payment_method,
+        modified_payment_status:this.state.modified_payment_status
 
 
 
@@ -304,7 +308,7 @@ render(){
 
       position: 'absolute',
       top: '40px',
-      left: '40%',
+      left: '30%',
       right: 'auto',
       bottom: '5%',
       border: '1px solid #ccc',
@@ -399,40 +403,121 @@ render(){
                       <select className="form-control" onChange={(event)=>this.setUpdate(event,'status')}>
                       
                         <option selected value="pending">pending</option>
-                        <option value="approved">approved</option>
+                        <option value="arrived">arrived</option>
                         <option value="canceled">canceled</option>
                         <option value="completed">completed</option>
+                        <option value="working">working</option>
 
-                      </select>:this.state.orders_info.status == 'approved'?
+                      </select>:this.state.orders_info.status == 'arrived'?
                       <select className="form-control" onChange={(event)=>this.setUpdate(event,'status')}>
                       
                         <option value="pending">pending</option>
-                        <option selected value="approved">approved</option>
+                        <option selected value="arrived">approved</option>
                         <option value="canceled">canceled</option>
                         <option value="completed">completed</option>
+                        <option value="working">working</option>
 
                       </select>:this.state.orders_info.status=='canceled'?
 
                       <select className="form-control" onChange={(event)=>this.setUpdate(event,'status')}>
                       
                         <option value="pending">pending</option>
-                        <option value="approved">approved</option>
+                        <option value="arrived">arrived</option>
                         <option selected value="canceled">canceled</option>
                         <option value="completed">completed</option>
+                        <option value="working">working</option>
 
                       </select>:this.state.orders_info.status=='completed'?
                       <select className="form-control" onChange={(event)=>this.setUpdate(event,'status')}>
                       
                         <option value="pending">pending</option>
-                        <option  value="approved">approved</option>
+                        <option  value="arrived">arrived</option>
                         <option value="canceled">canceled</option>
                         <option selected value="completed">completed</option>
+                        <option value="working">working</option>
 
-                      </select>:null
+                      </select>:this.state.orders_info.status=='working'?
+                      <select className="form-control" onChange={(event)=>this.setUpdate(event,'status')}>
+                      
+                        <option value="pending">pending</option>
+                        <option  value="arrived">arrived</option>
+                        <option value="canceled">canceled</option>
+                        <option  value="completed">completed</option>
+                        <option value="working" selected>working</option>
+
+                      </select>:null}
 
 
 
-                    }
+                    
+                    </div>
+                    </div>
+
+
+
+                  {/* change payment status from here */}
+
+                  <div className="col-md-6">
+
+                    <div className="form-group">
+                      <label>Payment method</label>
+                      {this.state.orders_info.payment_method=='cash'?
+                      <select className="form-control" onChange={(event)=>this.setState({modified_payment_method:event.target.value})}>
+                      
+                        <option selected value="cash">Cash</option>
+                        <option value="voucher">Voucher</option>
+                        
+
+                      </select>:this.state.orders_info.payment_method == 'voucher'?
+                      <select className="form-control" onChange={(event)=>this.setState({modified_payment_method:event.target.value})}>
+                      
+                        <option value="cash">Cash</option>
+                        <option selected value="Voucher">Voucher</option>
+                        
+
+                      </select>:null}
+
+
+
+                    
+                    </div>
+                    </div>
+
+
+
+                    <div className="col-md-6">
+
+                    <div className="form-group">
+                      <label>Payment Status</label>
+                      {this.state.orders_info.payment_status=='paid'?
+                      <select className="form-control" onChange={(event)=>this.setState({modified_payment_status:event.target.value})}>
+                      
+                        <option selected value="paid">Paid</option>
+                        <option value="partial">Partial payment</option>
+                        <option value="due">Due</option>
+                        
+
+                      </select>:this.state.orders_info.payment_status == 'partial'?
+                      <select className="form-control" onChange={(event)=>this.setState({modified_payment_status:event.target.value})}>
+                      
+                        <option value="paid">Paid</option>
+                        <option selected value="partial">Partial payment</option>
+                        <option value="due">Due</option>
+                        
+
+                      </select>:this.state.orders_info.payment_status == 'due'?
+                      <select className="form-control" onChange={(event)=>this.setState({modified_payment_status:event.target.value})}>
+                      
+                        <option value="paid">Paid</option>
+                        <option  value="partial">Partial payment</option>
+                        <option selected value="due">Due</option>
+                        
+
+                      </select>:null}
+
+
+
+                    
                     </div>
                     </div>
 

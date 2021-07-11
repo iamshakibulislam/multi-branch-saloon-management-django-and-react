@@ -9,7 +9,7 @@ static contextType = baseContext
 
 
     state = {
-        service_data:null,
+        service_data:[],
         processing:false,
         alert:false,
         staff_data:null,
@@ -19,16 +19,27 @@ static contextType = baseContext
 
         branchid:null,
         stafflist:null,
-        staffid:null,
+        staffid:[],
         services:null,
         date:null,
         time:null,
+
         available_services:null,
         available_staff:null,
         items:null,
-        items_info:null,
 
-        useremail:null
+        items_info:[],
+
+        service_names:[],
+
+        itemforservice:[],
+
+        total_cost:0,
+        tax_cost:0,
+
+        useremail:null,
+        showExpress:false,
+        payment_type:'zero'
        
 
 
@@ -162,40 +173,70 @@ setInfo(event,name){
 
     if(name=='services'){
 
-        this.setState({service_data:[]});
-        let opt =[];
-        let selectElement = document.getElementById('selected_services');
-        Array.from(selectElement.selectedOptions).map(option => opt.push(option.value));
+        //starting setting services
 
-        this.setState({service_data:opt});
+    let get_selected_row = event.target.parentElement;
 
-        //request will be from here to get staff list
+    let cost = get_selected_row.previousSibling.getAttribute('value');
+    let tax = get_selected_row.previousSibling.getAttribute('tax');
+    let staffid = get_selected_row.previousSibling.previousSibling.getAttribute('value');
+    let serviceid = get_selected_row.previousSibling.previousSibling.previousSibling.getAttribute('value');
 
-
-    axios.post(this.context.baseUrl+'/staff/get_services_staff/',
-    { 
-        service_ids:JSON.stringify(opt),
-        branch : Number(this.state.branchid)
+    let servicename = get_selected_row.previousSibling.previousSibling.previousSibling.textContent;
 
 
-    },{
-  headers: {
-    Authorization: 'Token ' + sessionStorage.getItem("token"),
-    'Content-Type': 'application/json'
-  }}).then((response)=>{
-      console.log(response.data);
-      
-      this.setState({available_staff:response.data,processing:false,parsed:true})
-      
-      }
-      
-    
     
 
-    ).catch((error)=>{
-      console.log(error.response);
-      this.setState({processing:false,alert:true,message:'Can not load data !'})
-    })
+    if(this.state.service_data.includes(serviceid) == false){
+    event.target.parentElement.parentElement.classList.add('bg-success','text-white');
+    event.target.textContent = 'Deselect';
+       let get_serv_data = [...this.state.service_data];
+
+        get_serv_data.push(serviceid);
+
+        let get_staffs = [...this.state.staffid];
+
+        get_staffs.push(staffid);
+
+
+
+        let servname = [...this.state.service_names];
+
+        servname.push(servicename)
+
+
+
+        this.setState({tax_cost:Number(this.state.tax_cost)+Number(cost*tax*0.01),service_names:servname,service_data:get_serv_data,total_cost:Number(this.state.total_cost)+Number(cost)+Number(cost*0.01*tax),staffid:get_staffs});
+
+
+    }else if(event.target.textContent == 'Deselect'){
+
+        event.target.parentElement.parentElement.classList.remove('bg-success','text-white');
+        event.target.textContent = 'Select';
+
+        let get_serv_data = [...this.state.service_data];
+
+        let findoutindex = get_serv_data.indexOf(serviceid);
+
+       
+        let filteredarr = get_serv_data.filter(el=> el != serviceid);
+
+        let get_staff_data = [...this.state.staffid];
+
+        get_staff_data.splice(findoutindex,1);
+
+        let get_service_names = [...this.state.service_names];
+        get_service_names.splice(findoutindex,1);
+
+        this.setState({tax_cost:Number(this.state.tax_cost)-Number(cost*0.01*tax),service_names:get_service_names,service_data:filteredarr,staffid:get_staff_data,total_cost:Number(this.state.total_cost) - (Number(cost)+Number(cost*0.01*tax))});
+
+
+
+
+
+
+    }
+
 
 
 
@@ -211,21 +252,66 @@ setInfo(event,name){
 
     if(name=='items'){
 
-        this.setState({items_info:[]});
-        let opt =[];
-        let selectElement = document.getElementById('items_info');
-        Array.from(selectElement.selectedOptions).map(option => opt.push(option.value));
-
-        this.setState({items_info:opt});
-
         
+         //items setting starting here
 
+    let get_selected_row = event.target.parentElement;
+
+    let price = get_selected_row.previousSibling.getAttribute('value');
+    let tax = get_selected_row.previousSibling.getAttribute('tax');
+    let itemid = get_selected_row.previousSibling.previousSibling.getAttribute('value');
+    
+   // let itemforservicex = get_selected_row.previousSibling.children[0].value;
 
     
 
+    if(this.state.items_info.includes(itemid) == false){
+    event.target.parentElement.parentElement.classList.add('bg-success','text-white');
+    event.target.textContent = 'Deselect';
+       let get_item_data = [...this.state.items_info];
+
+        get_item_data.push(itemid);
+
+
+        //let itemforservices = [...this.state.itemforservice];
+
+        //itemforservices.push(itemforservicex);
 
         
 
+
+        this.setState({tax_cost:Number(this.state.tax_cost)+Number(price*0.01*tax),items_info:get_item_data,total_cost:Number(this.state.total_cost)+Number(price)+Number(price*0.01*tax)});
+
+
+    }else if(event.target.textContent == 'Deselect'){
+
+        event.target.parentElement.parentElement.classList.remove('bg-success','text-white');
+        event.target.textContent = 'Select';
+
+        let get_items_data = [...this.state.items_info];
+
+        let findoutindexno = get_items_data.indexOf(itemid);
+
+       
+        let filteredarr = get_items_data.filter(el=> el != itemid);
+
+        
+        //let itemforser = [...this.state.itemforservice];
+
+        //itemforser.splice(findoutindexno,1);
+
+        this.setState({tax_cost:Number(this.state.tax_cost)-Number(price*0.01*tax),items_info:filteredarr,total_cost:Number(this.state.total_cost) - (Number(price)+Number(price*0.01*tax))});
+
+
+
+
+
+
+    }
+
+
+
+        //end fo setting items
 
     }
 
@@ -250,13 +336,15 @@ order(event){
 
 axios.post(this.context.baseUrl+'/items/place_order/',
     {
-        email:this.props.email,
+        email:document.getElementById('useremail').value,
         branchid:Number(this.state.branchid),
-        staffid:Number(this.state.staffid),
+        staffid:JSON.stringify(this.state.staffid),
         services:JSON.stringify(this.state.service_data),
         date:document.getElementById('bookdate').value,
         time:this.state.time,
-        items:JSON.stringify(this.state.items_info)
+        items:JSON.stringify(this.state.items_info),
+        payment_type:this.state.payment_type
+        //itemforservice:JSON.stringify(this.state.itemforservice)
 
 
     
@@ -300,7 +388,7 @@ render(){
 <div className="card card-custom">
  <div className="card-header">
   <h3 className="card-title">
-   Book an appointment
+   Book an appointment 
   </h3>
   <div className="card-toolbar">
    Select branch and services and date
@@ -325,7 +413,16 @@ render(){
    <div className="col-md-12">
    <div className="form-group">
     <label>User Email<span className="text-danger">*</span></label>
-    <input type="email" className="form-control" value={this.props.email}   onChange={(event)=>this.setInfo(event,'email')} disabled required/>
+
+    {window.location.pathname=='/dashboard/book_appointment/'?
+    <input id="useremail" type="email" className="form-control" placeholder="customeremail@gmail.com"   onChange={(event)=>this.setInfo(event,'email')}  required/>
+    :
+
+
+
+    <input type="email" className="form-control" value={this.props.email}   onChange={(event)=>this.setInfo(event,'email')} disabled required/>}
+
+
     <span className="form-text text-muted"></span>
    </div>
    </div>
@@ -351,72 +448,94 @@ render(){
 
 
 
+   
    <div className="col-md-12">
    <div className="form-group">
-    <label>Services<span className="text-danger">*</span></label>
-    <select multiple name="provider" className="form-control" id="selected_services" onChange={(event)=>this.setInfo(event,'services')} required>
-    {this.state.services == null?
-    <option key="someprovider" value="selectprovider" id="services">Select services</option>
+    <label>Select Services and staffs<span className="text-danger">*</span></label>
+    
+    {this.state.available_services == null?
+    <h3>No branch is Selected</h3>
     :null}
     {this.state.available_services != null?
-    this.state.available_services.map((data,index)=>{
+    <table className="table table-bordered table-checkable" id="kt_datatable">
+    <thead>
+         <tr>
+            <th>Service Name</th>
+            <th>Provider</th>
+            <th>Cost</th>
+            <th>Select/Deselect</th>
+            
+                                                    
+            </tr>
+    </thead>
 
-        return (
+    <tbody>
 
-                <option key={index} value={data.id}>{data.name}</option>
+    {this.state.available_services.map((data,index)=>{
+
+        return (<tr>
+
+                <td value={data.id}>{data.name}</td>
+                <td value={data.staffid}>{data.staffname}</td>
+                <td tax={data.taxes} value={data.cost}>{data.cost}</td>
+                <td className="text-center"><a className="btn btn-primary text-center" 
+                onClick={(event)=>this.setInfo(event,'services')}>Select</a></td>
+
+                </tr>
 
 
             )
-    }):null}
-    </select>
+    })}</tbody></table>:null}
+    
     <span className="form-text text-muted"></span>
    </div>
    </div>
 
 
-   <div className="col-md-12">
-   <div className="form-group">
-    <label>Select staff<span className="text-danger">*</span></label>
-    <select name="staff" className="form-control" id="provider" onChange={(event)=>this.setInfo(event,'staff')} required>
-    <option key="someprovider" value="selectprovider" id="dome">Select Staff</option>
-    {this.state.available_staff != null?
-
-    this.state.available_staff.map((data,index)=>{
-
-        return (
-
-                <option key={index} value={data.id}>{data.name}</option>
-
-
-            )
-    }):null}
-    </select>
-    <span className="form-text text-muted"></span>
-   </div>
-   </div>
-
-
+   
 
 <div className="col-md-12">
    <div className="form-group">
-    <label>Additional Items</label>
-    <select multiple name="items" className="form-control" id="items_info" onChange={(event)=>this.setInfo(event,'items')}>
-    <option key="demoitems" value="selectitems" id="demoitem">Select Additional items if needed</option>
+    <label>Select Items<span className="text-danger">*</span></label>
+    
+    {this.state.items == null?
+    <h3>No Item is Selected</h3>
+    :null}
     {this.state.items != null?
+    <table className="table table-bordered table-checkable" id="kt_datatable">
+    <thead>
+         <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+           
+            <th className="text-center">Select/Deselect</th>
+            
+                                                    
+            </tr>
+    </thead>
 
-    this.state.items.map((data,index)=>{
+    <tbody>
 
-        return (
+    {this.state.items.map((data,index)=>{
 
-                <option key={index} value={data.id}>{data.name}</option>
+        return (<tr>
+
+                <td value={data.id}>{data.name}</td>
+                <td tax={data.taxes} value={data.price}>{data.price}</td>
+               
+                <td className="text-center"><a className="btn btn-primary text-center" 
+                onClick={(event)=>this.setInfo(event,'items')}>Select</a></td>
+
+                </tr>
 
 
             )
-    }):null}
-    </select>
+    })}</tbody></table>:null}
+    
     <span className="form-text text-muted"></span>
    </div>
    </div>
+
 
 
 
@@ -424,7 +543,7 @@ render(){
 <div className="col-md-12">
    <div className="form-group">
     <label>Date<span className="text-danger">*</span></label>
-    <input type="date" className="form-control" id="bookdate" value={this.props.date}  onChange={(event)=>this.setInfo(event,'date')} required/>
+    <input type="date" className="form-control" id="bookdate" value={this.props.date}  onChange={(event)=>this.setInfo(event,'date')} />
     <span className="form-text text-muted"></span>
    </div>
    </div>
@@ -432,7 +551,7 @@ render(){
    <div className="col-md-12">
    <div className="form-group">
     <label>Time<span className="text-danger">*</span></label>
-    <input type="time" className="form-control"  placeholder="1" onChange={(event)=>this.setInfo(event,'time')} required/>
+    <input type="time" className="form-control"  placeholder="1" onChange={(event)=>this.setInfo(event,'time')} />
     <span className="form-text text-muted"></span>
    </div>
    </div>
@@ -442,7 +561,49 @@ render(){
    
 
 
+    <div className="col-md-12">
+   <div className="form-group">
+    <h4 style={{height:'4rem'}}>Total Cost : {this.state.total_cost.toFixed(2)} $</h4><br/>
+    <h4 style={{height:'4rem'}}>Total Tax(included) : {this.state.tax_cost.toFixed(2)} $</h4>
 
+
+    
+    
+   </div>
+   </div>
+
+
+{this.state.showExpress == true?
+    <div className="col-md-12">
+   <form className="form form-inline">
+    <div className="form-group mr-4">
+    
+    <input name="payment" id="voucher" onClick={()=>this.setState({payment_type:'voucher'})} className="form-control ml-2" value="voucher" type="radio"/>
+    <label className="ml-2" for="voucher">VOUCHER</label>
+    </div>
+    
+    
+   
+   
+    <div className="form-group mr-4">
+    
+    <input id="cash" name="payment" onClick={()=>this.setState({payment_type:'cash'})} className="form-control ml-2" value="paid" type="radio"/>
+    <label className="ml-2" for="cash">CASH </label>
+    </div>
+    
+    
+   
+
+   
+    <div className="form-group">
+    
+    <input name="payment" id="partial" onClick={()=>this.setState({payment_type:'partial'})} className="form-control ml-2" value="partial" type="radio"/>
+    <label className="ml-2" for="partial">PARTIAL CASH PAYMENT </label>
+    </div>
+    
+    
+   </form>
+   </div>:null}
 
 
 
@@ -454,7 +615,10 @@ render(){
   <div className="card-footer">
   {this.state.processing == true ?
    <button type="submit" className="btn btn-primary mr-2">proccesing data ! Please wait...</button>
-   : <button type="submit" className="btn btn-primary mr-2">Place order</button>}
+   : <button type="submit" className="btn btn-primary mr-2">Save Order</button>}
+
+{this.state.showExpress == false?
+   <a onClick={()=>this.setState({showExpress:true})} className="btn btn-danger">Express Checkout </a>:null}
 
 
 
