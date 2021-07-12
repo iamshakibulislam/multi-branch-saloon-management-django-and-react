@@ -211,7 +211,7 @@ def sales_report(request):
 
 		if branchid != 0:
 			sel_branch = Branch.objects.get(id=int(branchid))
-			filter_orders = order.objects.filter(Q(date__gte=fromdate) & Q(date__lte=todate) & Q(status='approved') & Q(branch=sel_branch))
+			filter_orders = order.objects.filter(Q(date__gte=fromdate) & Q(date__lte=todate) & Q(status='completed') & Q(branch=sel_branch))
 
 			for x in filter_orders:
 				f=order_services.objects.filter(order_ref=x)
