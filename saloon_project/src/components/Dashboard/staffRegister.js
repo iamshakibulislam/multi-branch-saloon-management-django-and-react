@@ -237,7 +237,7 @@ axios.post(this.context.baseUrl+'/api/authentication/register',
     
     time_from:this.state.time_from,
     time_to:this.state.time_to,
-    mobile:this.state.mobile,
+    phone:this.state.mobile,
     address:this.state.address,
     color:this.state.color,
     branch:Number(this.state.branch),

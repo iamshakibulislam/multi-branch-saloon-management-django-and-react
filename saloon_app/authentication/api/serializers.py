@@ -8,7 +8,7 @@ import json
 
 class get_user_email(serializers.Serializer):
       email = serializers.CharField(max_length=200,allow_null=True,required=False)
-      
+
 
 class RegistrationSerializers(serializers.ModelSerializer):
       password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True,required=False)
@@ -18,7 +18,7 @@ class RegistrationSerializers(serializers.ModelSerializer):
       
       time_from = serializers.CharField(max_length=22,required=False,allow_null=True)
       time_to = serializers.CharField(max_length=22,required=False,allow_null=True)
-      mobile = serializers.CharField(max_length=22,required=False,allow_null=True)
+      phone = serializers.CharField(max_length=22,required=False,allow_null=True)
       address = serializers.CharField(max_length=44,required=False)
       color = serializers.CharField(max_length=33,required=False,allow_null=True)
       branch = serializers.IntegerField(required=False)
@@ -69,7 +69,7 @@ class RegistrationSerializers(serializers.ModelSerializer):
 
                                     user_staff = getuser,
                                     address = self.validated_data['address'],
-                                    mobile = self.validated_data['mobile'],
+                                    mobile = self.validated_data['phone'],
                                     dob = self.validated_data['dob'],
                                     color =  self.validated_data['color'],
                                     
