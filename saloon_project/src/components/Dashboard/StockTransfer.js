@@ -21,9 +21,15 @@ state = {
 	voucher_info:null,
 	user_info:null,
 	branch_info:null,
-	frombranchid:null,
+
+	frombranch:null,
+	tobranch:null,
+	selected_item:null,
+	quantity:0,
+
 	tobranchid:null,
-	items:null
+	items:null,
+	stock_data:null
 }
 
 
@@ -74,6 +80,29 @@ componentDidMount(){
 
 
 
+	axios.post(this.context.baseUrl+'/items/get_stock_transfer_data/',
+    { 
+    	
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      this.setState({stock_data:response.data})
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({alert:true,message:'Can not load data !'})
+    })
+
 
 
 
@@ -122,6 +151,21 @@ if(name == 'frombranch'){
 
 }
 
+
+if(name == 'tobranch'){
+	this.setState({tobranch:event.target.value})
+}
+
+
+if(name == 'quantity'){
+	this.setState({quantity:event.target.value})
+}
+
+
+if(name=='item'){
+	this.setState({selected_item:event.target.value})
+}
+
 }
 
 
@@ -130,7 +174,7 @@ needRefresh(){
 
 
 
-	axios.post(this.context.baseUrl+'/branch/show_branch/',
+	axios.post(this.context.baseUrl+'/items/get_stock_transfer_data/',
     { 
     	
 
@@ -141,7 +185,7 @@ needRefresh(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({branch_info:response.data})
+      this.setState({stock_data:response.data})
       
       }
       
@@ -213,44 +257,6 @@ deleteConfirmation(event){
 
 }
 
-addVoucher(event){
-
-	event.preventDefault();
-
- this.setState({pending:true})
-	
-	axios.post(this.context.baseUrl+'/marketing/add_voucher/',
-    { 
-    	
-    	voucher_name:this.state.voucher_name,
-    	voucher_price:this.state.voucher_price,
-    	voucher_value:this.state.voucher_value
-
-
-    },{
-  headers: {
-    Authorization: 'Token ' + sessionStorage.getItem("token"),
-    'Content-Type': 'application/json'
-  }}).then((response)=>{
-      console.log(response.data);
-      this.setState({category_name:null,pending:false});
-      this.needRefresh();
-      event.target.reset()
-      
-      }
-      
-    
-    
-
-    ).catch((error)=>{
-      
-      this.setState({pending:false,message:'Can not load data !'})
-    })
-
-
-
-}
-
 
 setBranch(event){
 
@@ -260,18 +266,21 @@ setBranch(event){
 }
 
 
-buyVoucher(event){
+transferItem(event){
 	
 
 
 	event.preventDefault();
 
- this.setState({pending:false})
+ this.setState({pending:true})
 	
-	axios.post(this.context.baseUrl+'/marketing/buy_voucher/',
+	axios.post(this.context.baseUrl+'/items/item_stock_transfer/',
     { 
     	
-    	identify:Number(event.target.id)
+    	frombranch:Number(this.state.frombranch),
+    	tobranch:Number(this.state.tobranch),
+    	selected_item:Number(this.state.selected_item),
+    	quantity:Number(this.state.quantity)
 
 
     },{
@@ -280,10 +289,12 @@ buyVoucher(event){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      alert('voucher credit has been added to your balance !');
       
-      this.needRefresh();
+      
+     // this.needRefresh();
       event.target.reset();
+      this.setState({pending:false});
+      this.needRefresh()
       
       
       }
@@ -301,6 +312,58 @@ buyVoucher(event){
 
 
 }
+
+
+
+changeStatus(event){
+	event.preventDefault();
+
+	let transfer_id = event.target.getAttribute('transfer_id');
+	let status = event.target.parentElement.previousSibling.children[0].value;
+
+//begining changing status to the server
+
+
+	
+	axios.post(this.context.baseUrl+'/items/change_stock_status/',
+    { 
+    	
+    	transfer_id:Number(transfer_id),
+    	status:status
+
+
+    },{
+  headers: {
+    Authorization: 'Token ' + sessionStorage.getItem("token"),
+    'Content-Type': 'application/json'
+  }}).then((response)=>{
+      console.log(response.data);
+      
+      
+     // this.needRefresh();
+     
+      this.setState({pending:false});
+      this.needRefresh()
+      
+      
+      }
+      
+    
+    
+
+    ).catch((error)=>{
+      
+      this.setState({pending:false,message:'Can not load data !'})
+    })
+
+
+
+
+	//end of sending change status request
+
+	
+}
+
 
 render(){
 return(
@@ -312,7 +375,7 @@ return(
 										<div className="card-toolbar">
 											{/*begin::Dropdown*/ }
 											{this.state.branch_info != null?
-											<form className="form" onSubmit={(event)=>this.addVoucher(event)}>
+											<form className="form" onSubmit={(event)=>this.transferItem(event)}>
 											<div className="row">
 											<div className="col-md-3">
 												<div className="form-group">
@@ -360,7 +423,7 @@ return(
 
 												<div className="col-md-3">
 												<div className="form-group">
-													<select name="branch2" className="form-control" onChange={(event)=>this.updateInfo(event,'tobranch')}>
+													<select name="branch2" className="form-control" onChange={(event)=>this.updateInfo(event,'item')}>
 													<option value="selectitem">Select Item</option>
 													{this.state.items != null?
 
@@ -381,7 +444,7 @@ return(
 
 												<div className="form-group" >
 
-													<input type="number" className="form-control" placeholder="Quantity" onChange={(event)=>this.updateInfo(event,'quantity')}/>
+													<input type="number" className="form-control" placeholder="Quantity" onChange={(event)=>this.updateInfo(event,'quantity')} required/>
 
 												</div>
 												</div>
@@ -389,7 +452,7 @@ return(
 												<div className="form-group">
 												{this.state.pending == false?
 													<input type="submit" className="btn btn-primary " value="Transfer Now" placeholder="scategory name"/>
-													:<input type="submit" className="btn btn-danger" value="Loading please wait" placeholder="scategory name"/>
+													:<input type="submit" className="btn btn-danger" value="Loading.." placeholder="scategory name"/>
 												}
 												</div>
 												</div>
@@ -406,53 +469,70 @@ return(
 										<table className="table table-bordered table-checkable" id="kt_datatable">
 											<thead>
 												<tr>
-													<th>Item Name</th>
 													<th>Transfer Date</th>
+													<th>Item Name</th>
 													<th>Quantity</th>
+													<th>Branch </th>
 													<th>Status</th>
+													<th>Change Status</th>
+													<th>Action</th>
 													
 													
 												</tr>
 											</thead>
 											<tbody>
-											{this.state.voucher_info != null?
+											{this.state.stock_data != null?
 
-												this.state.voucher_info.map((data,index)=>{
+												this.state.stock_data.map((data,index)=>{
 
 													return(
 
 
 
 													<tr>
-													<td>{data.name}</td>
-													<td>{data.price}</td>
-													<td>{data.value}</td>
-													{this.state.user_info != null && this.state.user_info.role == 'user'?
-														
-														<td><button id={data.id} value={data.id} class="btn btn-primary" onClick={this.buyVoucher.bind(this)}>Buy Now</button></td>:
-													<td>
-
-														<div id={data.id} className="d-inline" onClick={(event)=>this.preDelete(event,index)}>
-														<a href="#" value={data.id}  className="btn btn-sm btn-clean btn-icon " title="Delete"> 
-														
-
-														 <i class="fas fa-trash-alt"></i>                               
-														 
-														 	
-														 	</a>
-														</div>
+													<td>{data.date}</td>
+													<td value={data.item_id}>{data.itemname}</td>
+													<td value={data.quantity}>{data.quantity}</td>
+													<td value={data.branch_id}>{data.branchname}</td>
+													{data.status == 'pending'?
+													<td className="bg-warning text-white">{data.status}</td>
+													: data.status == 'sent'?
+													<td className="bg-primary text-white">Item Sent</td>
+													:data.status == 'recieved'?
+													<td className="bg-info text-white">Item Recieved</td>
+													:data.status == 'confirmed'?
+													<td className="bg-success text-white">Confirmed</td>:null
 
 
 
 
-						
+												}
+													<td> {data.status != 'confirmed'?
+															<select name="status" className="form-control d-inline">
+															{data.sender == true?
+																<option value="pending">Pending Transfer</option>:null}
+																{data.sender == true?
+																<option value="sent">Item sent</option>:null}
+																{data.sender == false?
+																<option value="recieved">Item recieved</option>:null}
+																{data.sender == false?
+																<option value="confirmed">Confirmed</option>:null}
 
-														<div id={data.id} className="d-inline" onClick={(event)=>this.editClick(event)}>
-														<a href="#" value={data.id}   className="btn btn-sm btn-clean btn-icon" title="edit"> 
-														<i class="fas fa-edit"></i>
-														 	</a></div>
-														</td>}
+															</select>:
+															
+															<h6 className="text-center mt-1"> Transfered</h6>}
+															
+															
 													
+
+													</td>
+
+													
+													<td>
+													{data.status !='confirmed'?
+													<a className="btn btn-danger mt-1 ml-1" transfer_id={data.transfer_id} onClick={(event)=>this.changeStatus(event)}>Change</a>
+													:<a className="btn btn-dark mt-1" disabled>Unavailable</a>}
+													</td>
 													
 													
 												</tr>   )

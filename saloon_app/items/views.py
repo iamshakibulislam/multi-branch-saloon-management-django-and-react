@@ -16,6 +16,106 @@ from authentication.models import User
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
+def change_stock_status(request):
+	info = stock_status(data=request.data)
+
+	if info.is_valid():
+		transfer_id = info.validated_data['transfer_id']
+		status = info.validated_data['status']
+
+		sel_stock = stock_transfer.objects.get(id=int(transfer_id))
+
+
+		if status != 'confirmed':
+			sel_stock.status = status
+
+			sel_stock.save()
+
+
+		else:
+
+			buy_items.objects.create(item=sel_stock.item,branch=sel_stock.frombranch,quantity=-(int(sel_stock.quantity)))
+			buy_items.objects.create(item=sel_stock.item,branch=sel_stock.tobranch,quantity=(int(sel_stock.quantity)))
+			sel_stock = stock_transfer.objects.get(id=int(transfer_id))
+			sel_stock.status = status
+			sel_stock.save()
+
+
+
+		return Response({'status':'transfered'})
+
+
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def get_stock_transfer_data(request):
+	res = []
+	getBranchid = BranchEmployee.objects.get(staff=request.user).branch_name.id
+
+	sel_branch = Branch.objects.get(id=int(getBranchid))
+
+	sel = stock_transfer.objects.filter(Q(frombranch=sel_branch) | Q(tobranch=sel_branch))[:30]
+
+	for x in sel:
+		branchname = ''
+		branchid = ''
+		sender = True
+
+		if x.frombranch == sel_branch:
+			branchid=x.tobranch.id
+			branchname = x.tobranch.name
+			sender = True
+
+		else:
+			branchid = x.frombranch.id
+			branchname = x.frombranch.name
+			sender = False
+
+		res.append({'transfer_id':x.id,'branch_id':branchid,'branchname':branchname,'item_id':x.item.id,'itemname':x.item.name,'quantity':x.quantity,'date':x.date,'status':x.status,'sender':sender})
+
+
+	return Response(res)
+
+
+
+
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def item_stock_transfer(request):
+	info = stock_transfer_data(data=request.data)
+
+	if info.is_valid():
+		frombranch = info.validated_data['frombranch']
+		tobranch = info.validated_data['tobranch']
+		quantity = info.validated_data['quantity']
+		selected_item = info.validated_data['selected_item']
+
+
+		stock_transfer.objects.create(
+
+
+			frombranch = Branch.objects.get(id=int(frombranch)),
+			tobranch = Branch.objects.get(id=int(tobranch)),
+			quantity = int(quantity),
+			item = product_items.objects.get(id=int(selected_item))
+
+
+
+
+			)
+
+
+		return Response({'status':'created'})
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
 def get_my_orders(request):
 	res = []
 	current_services=""

@@ -122,3 +122,19 @@ class salesreport(serializers.Serializer):
 
 class get_daterange(serializers.Serializer):
 	date = serializers.CharField(max_length=300,allow_null=True,required=False)
+
+
+
+
+class stock_transfer_data(serializers.Serializer):
+	frombranch = serializers.IntegerField()
+	tobranch = serializers.IntegerField()
+	quantity = serializers.IntegerField()
+	selected_item = serializers.IntegerField()
+
+
+
+
+class stock_status(serializers.Serializer):
+	transfer_id = serializers.IntegerField()
+	status = serializers.CharField(max_length=200)

@@ -44,9 +44,9 @@ class providers(models.Model):
 
 
 class buy_items(models.Model):
-	date = models.DateField(auto_now_add=True)
+	date = models.DateField(auto_now_add=True,auto_now=False)
 	item = models.ForeignKey(product_items,on_delete=models.CASCADE)
-	provider = models.ForeignKey(providers,on_delete=models.CASCADE)
+	provider = models.ForeignKey(providers,on_delete=models.CASCADE,null=True)
 	branch = models.ForeignKey(Branch,on_delete=models.SET_NULL,null=True)
 	quantity = models.IntegerField(null=True,blank=True)
 
@@ -85,3 +85,20 @@ class order_services(models.Model):
 class order_items(models.Model):
 	order_ref = models.ForeignKey(order,on_delete=models.SET_NULL,null=True)
 	item_ref = models.ForeignKey(product_items,on_delete=models.SET_NULL,null=True)
+
+
+
+
+
+class stock_transfer(models.Model):
+	status_choise = [('sent','sent'),('pending','pending'),('recieved','recieved'),('confirmed','confirmed')]
+	date = models.DateField(auto_now_add=True,auto_now=False)
+	frombranch = models.ForeignKey(Branch,on_delete=models.CASCADE,related_name='from_branch')
+	tobranch = models.ForeignKey(Branch,on_delete=models.CASCADE,related_name='to_branch')
+	quantity = models.IntegerField(default=0)
+	item = models.ForeignKey(product_items,on_delete=models.CASCADE)
+	status = models.CharField(choices = status_choise,max_length=200,default='pending')
+
+
+	def __str__(self):
+		return str(self.date)
