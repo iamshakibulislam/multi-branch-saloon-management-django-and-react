@@ -486,7 +486,7 @@ render(){
 
 
 
-    <input type="email" className="form-control" value={this.state.useremail}   onChange={(event)=>this.setInfo(event,'email')}  required/>}
+    <input type="email" id="useremail" className="form-control" value={this.state.useremail}   onChange={(event)=>this.setInfo(event,'email')}  required/>}
 
 
     <span className="form-text text-muted"></span>
