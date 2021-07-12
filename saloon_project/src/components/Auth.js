@@ -11,7 +11,7 @@ class LoginPage extends Component {
 
 state = {
   mode:'signup',
-  signup:{firstName:null,lastName:'null',email:null,passWord1:null,passWord2:null,userName:null},
+  signup:{firstName:null,lastName:'null',email:null,passWord1:null,passWord2:null,userName:null,phone:null},
   login:{email:null,passWord:null},
   process:false,
   alert:false,
@@ -64,7 +64,8 @@ signUp(event){
     email:this.state.signup.email,
     password:this.state.signup.passWord1,
     password2:this.state.signup.passWord2,
-    username:this.state.signup.userName
+    username:this.state.signup.userName,
+    phone:this.state.signup.phone
 
     }).then((response)=>{
       console.log(response.data);
@@ -107,6 +108,20 @@ signupInfoUpdate(event,inputId){
     });
 
     }
+
+
+
+  if (inputId == 'phone'){
+    let State = {...this.state.signup};
+    State.phone = event.target.value;
+
+    this.setState((state,props)=>{
+      
+      return {signup:State}
+    });
+
+    }
+
 
 
 
@@ -301,6 +316,13 @@ render(){
             
             <input className={styles.input} type="email"required placeholder="Email" onChange={(event)=>this.signupInfoUpdate(event,'email')}/>
           </div>
+
+
+          <div className={styles.field_wrap}>
+            
+            <input className={styles.input} type="text"required placeholder="phone number" onChange={(event)=>this.signupInfoUpdate(event,'phone')}/>
+          </div>
+          
           
           <div className={styles.field_wrap}>
             

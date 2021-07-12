@@ -38,7 +38,11 @@ static contextType = baseContext
         last_name:null,
         user_email:null,
         username:null,
-        password:null
+        password:null,
+        phone:null,
+
+        createAccount:false,
+        useremail:null
 
 
        
@@ -271,8 +275,8 @@ checkUser(event){
   this.setState({foundstatus:null});
     axios.post(this.context.baseUrl+'/api/authentication/user_info_by_email/',
     { 
-       email:this.state.searchemail
-
+       email:this.state.searchemail,
+       
 
 
     },{
@@ -283,7 +287,7 @@ checkUser(event){
       console.log(response.data);
 
       if(response.data['status']=='found'){
-        this.setState({foundstatus:true});
+        this.setState({foundstatus:true,searchemail:response.data['email'],useremail:response.data['email']});
         this.setState({alert:true,alertMessage:'User found ! please make order',processing:false,parsed:true})
       }
 
@@ -322,7 +326,8 @@ createUser(event){
     email:this.state.user_email,
     password:this.state.password,
     password2:this.state.password,
-    username:this.state.username
+    username:this.state.username,
+    phone:this.state.phone
 
     }).then((response)=>{
       console.log(response.data);
@@ -404,7 +409,8 @@ render(){
                     </div>
                     <div className="card-toolbar">
                       {/*begin::Dropdown*/ }
-                      
+                      <a className="btn btn-info mr-3" onClick={()=>this.setState({createAccount:false})}>New Order</a>
+                      <a className="btn btn-success mr-4" onClick={()=>this.setState({createAccount:true})}>Create New Account</a>
                       <a className="btn btn-danger" onClick={this.closingUpdate.bind(this)}>Close </a>
                       
                       {/*end::Button*/ }
@@ -421,17 +427,17 @@ render(){
                  <div className="row">
                    <div className="col-md-12">
 
-                   {this.state.foundstatus == null?
+                   
 
                    <form className="form form-inline" onSubmit={this.checkUser.bind(this)}>
                      <div className="form-group mr-2">
                        
-                       <input type="email" placeholder="demouser@domain.com" onChange={(event)=>this.setState({searchemail:event.target.value})} className="form-control" required/>
+                       <input type="text" placeholder="EMAIL OR PHONE" onChange={(event)=>this.setState({searchemail:event.target.value})} className="form-control" required/>
                      </div>
                      <div className="form-group">
                        <input type="submit" className="btn btn-success ml-2" value="search"/>
                      </div>
-                   </form>:null}
+                   </form>
                    
                    </div>
                  </div>
@@ -439,16 +445,18 @@ render(){
                  
                  <div className="row justify-content-center">
                    
-                   {this.state.foundstatus == true || this.state.account_created==true?
-                   <StaffOrder date={this.props.date} email={this.state.searchemail}/>
-                   :this.state.foundstatus==false?
+                   {this.state.createAccount == false?
+                   <StaffOrder date={this.props.date} email={this.state.useremail}/>
 
+                   :null}
                    
 
-                    <div className="col-md-6">
+                   {this.state.createAccount == true?
 
-                    <form className="form" onSubmit={this.createUser.bind(this)}>
-                    <div className="row">
+                    <div className="col-md-6 mt-4">
+
+                    <form className="form mt-4" onSubmit={this.createUser.bind(this)}>
+                    <div className="row mt-4">
                       <div className="col-md-5">
                       <div className="form-group">
 
@@ -489,6 +497,13 @@ render(){
                       <div className="form-group">
 
                       <input type="password" placeholder="Enter User password" onChange={(event)=>this.setState({password:event.target.value})} className="form-control"/>
+
+                      </div>
+                      </div>
+                      <div className="col-md-5">
+                      <div className="form-group">
+
+                      <input type="text" placeholder="Phone number" onChange={(event)=>this.setState({phone:event.target.value})} className="form-control"/>
 
                       </div>
                       </div>

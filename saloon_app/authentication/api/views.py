@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from authentication.api.serializers import RegistrationSerializers,get_user_email
 from authentication.models import User
+from django.db.models import Q
 
 from rest_framework.authtoken.models import Token
 
@@ -15,13 +16,15 @@ def user_info_by_email(request):
 
       if info.is_valid():
             email = info.validated_data['email']
-
+            
             try:
-                  User.objects.get(email=email)
-                  return Response({'status':'found'})
+                  check=User.objects.get(Q(email=email) | Q(phone=email))
+                  return Response({'status':'found','email':check.email})
 
             except User.DoesNotExist:
                   return Response({'status':'not found'})
+
+
 
 
 @api_view(['POST',])

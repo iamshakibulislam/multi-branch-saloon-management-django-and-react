@@ -54,6 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
       is_active=models.BooleanField(default=True)
       is_staff=models.BooleanField(default=False)
       balance = models.FloatField(default=0,null=True)
+      phone = models.CharField(max_length=22,null=True)
       created_at = models.DateTimeField(auto_now_add=True)
       updated_at=models.DateTimeField(auto_now=True)
 

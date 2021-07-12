@@ -270,7 +270,11 @@ updateOrder(event){
   }}).then((response)=>{
       console.log(response.data);
       
-      this.setState({alert:true,alertMessage:'successfully updated order',processing:false,parsed:true})
+      if(response.data['status'] == 'failed'){
+        this.setState({alert:true,alertMessage:'Not Sufficient balance available',processing:false,parsed:true})
+      }
+      else{
+      this.setState({alert:true,alertMessage:'successfully updated order',processing:false,parsed:true})}
       
       }
       
