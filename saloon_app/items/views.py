@@ -193,7 +193,7 @@ def sales_report(request):
 
 
 		if branchid == 0:
-			filter_orders = order.objects.filter(Q(date__gte=fromdate) & Q(date__lte=todate) & Q(status='completed'))
+			filter_orders = order.objects.filter(Q(appointment_date__gte=fromdate) & Q(appointment_date__lte=todate) & Q(status='completed'))
 
 			for x in filter_orders:
 				f=order_services.objects.filter(order_ref=x)
@@ -231,7 +231,7 @@ def sales_report(request):
 			get_staffs = BranchEmployee.objects.filter(branch_name=sel_branch)
 
 			if staffid ==0:
-				filter_orders = order.objects.filter(Q(date__gte=fromdate) & Q(date__lte=todate) & Q(status='completed') & Q(branch=sel_branch))
+				filter_orders = order.objects.filter(Q(appointment_date__gte=fromdate) & Q(appointment_date__lte=todate) & Q(status='completed') & Q(branch=sel_branch))
 
 			else:
 
@@ -1038,6 +1038,8 @@ def place_order(request):
 	if info.is_valid() :
 		branchid = info.validated_data['branchid']
 
+		partial_amount = info.validated_data['partial_amount']
+
 
 		try:
 			get_email = info.validated_data['email']
@@ -1120,7 +1122,7 @@ def place_order(request):
 
 				print('payment stats is ',payment_stats,'order_type ',payment_type)
 				sel_staff = User.objects.get(id=int(x))
-				create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method=paymentsystem,payment_status=payment_stats)
+				create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method=paymentsystem,payment_status=payment_stats,partial_amount=partial_amount)
 
 				find_index_of_service = []
 
@@ -1144,7 +1146,7 @@ def place_order(request):
 
 
 			if len(items) != 0:
-				create_order=order.objects.create(branch=sel_branch,staff=request.user,appointment_date=date,appointment_time=time,customer=cus,payment_method = paymentsystem,payment_status=payment_stats)
+				create_order=order.objects.create(branch=sel_branch,staff=request.user,appointment_date=date,appointment_time=time,customer=cus,payment_method = paymentsystem,payment_status=payment_stats,partial_amount=partial_amount)
 
 				for x in items:
 					sel_item = product_items.objects.get(id=int(x))

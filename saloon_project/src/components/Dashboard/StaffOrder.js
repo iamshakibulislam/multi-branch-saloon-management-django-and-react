@@ -51,7 +51,8 @@ static contextType = baseContext
 
         eiditingmode:false,
 
-        userMail:null
+        userMail:null,
+        partial_amount:0
        
 
 
@@ -398,7 +399,8 @@ axios.post(this.context.baseUrl+'/items/place_order/',
         date:document.getElementById('bookdate').value,
         time:this.state.time,
         items:JSON.stringify(this.state.items_info),
-        payment_type:this.state.payment_type
+        payment_type:this.state.payment_type,
+        partial_amount:Number(this.state.partial_amount)
         //itemforservice:JSON.stringify(this.state.itemforservice)
 
 
@@ -654,12 +656,27 @@ render(){
    
     <div className="form-group">
     
-    <input name="payment" id="partial" onClick={()=>this.setState({editingmode:true,payment_type:'partial'})} className="form-control ml-2" value="partial" type="radio"/>
+    <input name="payment" id="partial" onClick={()=>this.setState({payment_type:'partial'})} className="form-control ml-2" value="partial" type="radio"/>
+    
     <label className="ml-2" for="partial">PARTIAL CASH PAYMENT </label>
     </div>
     
     
    </form>
+   {this.state.payment_type == 'partial'?
+
+    <form className="form form-inline">
+    <div className="form-group">
+    <input type="number" className="form-control" onChange={(event)=>this.setState({partial_amount:event.target.value})} placeholder="Partial paid amount" />
+
+    </div>
+    <div className="form-group">
+    <button type="button" className="btn btn-success" onClick={()=>this.setState({editingmode:true})}>Continue</button>
+    </div>
+
+    </form>
+
+    :null}
    </div>:null}
 
 
