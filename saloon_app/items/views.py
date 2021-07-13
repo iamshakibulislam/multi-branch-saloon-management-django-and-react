@@ -188,6 +188,7 @@ def sales_report(request):
 		this_services =''
 		this_items =''
 		total_cost=0
+
 		commision_data = []
 
 
@@ -202,6 +203,8 @@ def sales_report(request):
 					total_cost = total_cost + y.servic_ref.cost
 
 
+
+
 				filteritems = order_items.objects.filter(order_ref=x)
 
 				for z in filteritems:
@@ -213,6 +216,11 @@ def sales_report(request):
 
 
 				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':[],'commision_data':commision_data})
+
+				this_services = ''
+				this_items = ''
+
+				total_cost = 0
 
 			return Response(res)
 
@@ -247,7 +255,7 @@ def sales_report(request):
 					for ser in all_services:
 
 						cost = ser.cost
-						total_cost=0
+						total_costing=0
 						title = ser.title
 						total_provided = 0
 						commision = ser.servicecommision
@@ -261,14 +269,14 @@ def sales_report(request):
 
 						if total_ordered != 0:
 							total_provided = total_ordered
-							total_cost = cost*total_provided
+							total_costing = cost*total_provided
 
-							if total_cost > monthlytarget or total_cost == monthlytarget:
+							if total_costing > monthlytarget or total_costing == monthlytarget:
 								target_status = 'Reached'
 								commision_value = cost * 0.01 * commision
 
 
-						commision_data.append({'staff_name':staff_name,'service_name':title,'total_sale':total_cost,'commision_rate':commision,'commision_value':commision_value,'target_status':target_status})
+						commision_data.append({'staff_name':staff_name,'service_name':title,'total_sale':total_costing,'commision_rate':commision,'commision_value':commision_value,'target_status':target_status})
 
 
 
@@ -279,7 +287,7 @@ def sales_report(request):
 					for it in all_items:
 
 						cost = it.sale_price
-						total_cost=0
+						total_costing=0
 						title = it.name
 						total_provided = 0
 						commision = it.commision
@@ -293,14 +301,14 @@ def sales_report(request):
 
 						if total_ordered != 0:
 							total_provided = total_ordered
-							total_cost = cost*total_provided
+							total_costing = cost*total_provided
 
-							if total_cost > monthlytarget or total_cost == monthlytarget:
+							if total_costing > monthlytarget or total_costing == monthlytarget:
 								target_status = 'Reached'
 								commision_value = cost * 0.01 * commision
 
 
-						commision_data.append({'staff_name':staff_name,'service_name':title,'total_sale':total_cost,'commision_rate':commision,'commision_value':commision_value,'target_status':target_status})
+						commision_data.append({'staff_name':staff_name,'service_name':title,'total_sale':total_costing,'commision_rate':commision,'commision_value':commision_value,'target_status':target_status})
 
 
 						#end of item selling commision data settings
@@ -344,6 +352,9 @@ def sales_report(request):
 
 
 				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':employee_list,'commision_data':commision_data})
+
+				this_services = ''
+				this_items = ''
 
 			if len(filter_orders) == 0:
 				res.append({'staff_list':employee_list,'commision_data':commision_data})
