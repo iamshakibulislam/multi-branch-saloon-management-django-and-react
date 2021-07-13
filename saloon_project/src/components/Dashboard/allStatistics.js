@@ -330,7 +330,7 @@ return(
 												</tr>
 											</thead>
 											<tbody>
-											{this.state.report != null && this.state.report.length!=0 && this.state.report[0].commision_data.length !=0?
+											{(this.state.report != null && this.state.report.length!=0 && this.state.commonth !=null)?
 
 												this.state.report[0].commision_data.map((data,index)=>{
 
