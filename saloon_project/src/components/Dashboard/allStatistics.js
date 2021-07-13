@@ -11,7 +11,10 @@ state = {
 	branchid:0,
 	from:new Date().toISOString().slice(0, 10),
 	to:new Date().toISOString().slice(0, 10),
-	report:null
+	report:[],
+	staffid:0,
+	staff_data:null,
+	commonth:null
 }
 
 
@@ -25,7 +28,9 @@ componentDidMount(){
     { 
     	branchid:Number(this.state.branchid),
     	fromdate:this.state.from,
-    	todate:this.state.to
+    	todate:this.state.to,
+    	staffid:Number(this.state.staffid),
+    	commonth:this.state.commonth
 
 
     },{
@@ -85,7 +90,9 @@ needRefresh(){
     { 
     	branchid:Number(this.state.branchid),
     	fromdate:this.state.from,
-    	todate:this.state.to
+    	todate:this.state.to,
+    	staffid:Number(this.state.staffid),
+    	commonth:this.state.commonth
 
 
     },{
@@ -156,8 +163,19 @@ if(name=='fromdate'){
 	
 }
 
+if(name=='staffid'){
+	this.setState((state)=>({staffid:event.target.value}),()=>this.needRefresh());
+	
+}
+
 if(name=='todate'){
 	this.setState((state)=>({to:event.target.value}),()=>this.needRefresh());
+	
+}
+
+
+if(name=='commonth'){
+	this.setState((state)=>({commonth:event.target.value}),()=>this.needRefresh());
 	
 }
 
@@ -179,7 +197,7 @@ return(
 										<form className="form d-flex">
 											{/*begin::Dropdown*/ }
 											<div className="form-group">
-											<label>Select Branch</label>
+											<label>Branch</label>
 											<select name="branch" id="branchsel" className="form-control d-inline" onChange={(event)=>this.setInfo(event,'branch')}>
 											<option value="0">All branch</option>
 											{this.state.branch != 'all'?
@@ -196,6 +214,32 @@ return(
 												:null}
 											</select>
 											</div>
+
+
+
+											<div className="form-group">
+											<label>Staff</label>
+											<select name="branch" id="branchsel" className="form-control d-inline" onChange={(event)=>this.setInfo(event,'staffid')}>
+											<option value="0">Select Staff</option>
+											{this.state.branchid != 0 && this.state.report.length!=0 &&  (this.state.report != null)?
+
+													this.state.report[0].staff_list.map((data,index)=>{
+														return(
+
+															<option value={data.id} id={data.id}>{data.name}</option>
+
+
+															)
+													})
+
+												:null}
+											</select>
+											</div>
+
+
+
+
+
 
 											<div className="form-group">
 											<label>From: </label>
@@ -230,7 +274,7 @@ return(
 													<th>Staff name</th>
 													<th>Services</th>
 													<th>Items</th>
-													<th>Toal sales</th>
+													<th>Total sales</th>
 													
 												</tr>
 											</thead>
@@ -259,6 +303,60 @@ return(
 												
 											</tbody>
 										</table>
+
+										<div className="row">
+										<div className="col-md-6">
+										<h6 className="mt-4 mb-4" style={{marginTop:'5rem'}}>Commision report</h6>
+										<form className="form form-inline mb-4 ml-2">
+										<label>Select Month</label>
+										<input className="form-control ml-3" id="commonth" onChange={(event)=>this.setInfo(event,'commonth')} type="month"/>
+										</form>
+										</div>
+										</div>
+
+										<table className="table table-bordered table-checkable" id="kt_datatable">
+
+											<thead>
+												<tr>
+													
+													
+													<th>Staff name</th>
+													<th>service/item</th>
+													<th>Commision (%)</th>
+													<th>Total Sales</th>
+													<th>Target Status</th>
+													<th>Total Commision</th>
+													
+												</tr>
+											</thead>
+											<tbody>
+											{this.state.report != null && this.state.report.length!=0 && this.state.report[0].commision_data.length !=0?
+
+												this.state.report[0].commision_data.map((data,index)=>{
+
+													return(
+
+													<tr>
+													
+													<td>{data.staff_name}</td>
+													<td>{data.service_name}</td>
+													<td>{data.commision_rate} %</td>
+													<td>{data.total_sale}</td>
+													<td>{data.target_status}</td>
+													<td>{data.commision_value}</td>
+													
+													
+													
+												</tr>)
+
+
+												})
+												:null}
+												
+												
+											</tbody>
+										</table>
+
 										{/*end: Datatable*/ }
 									</div>
 								</div>

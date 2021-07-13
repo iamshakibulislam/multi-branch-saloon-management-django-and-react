@@ -174,12 +174,21 @@ def sales_report(request):
 		branchid = info.validated_data['branchid']
 		fromdate = info.validated_data['fromdate']
 		todate = info.validated_data['todate']
+		staffid = info.validated_data['staffid']
+		
+		commonth = info.validated_data['commonth']
+
+		
+		print('your commmin month is',commonth)
+
+
 
 
 		res = []
 		this_services =''
 		this_items =''
 		total_cost=0
+		commision_data = []
 
 
 		if branchid == 0:
@@ -203,7 +212,7 @@ def sales_report(request):
 				this_items = this_items[2:]
 
 
-				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost})
+				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':[]})
 
 			return Response(res)
 
@@ -211,7 +220,110 @@ def sales_report(request):
 
 		if branchid != 0:
 			sel_branch = Branch.objects.get(id=int(branchid))
-			filter_orders = order.objects.filter(Q(date__gte=fromdate) & Q(date__lte=todate) & Q(status='completed') & Q(branch=sel_branch))
+			get_staffs = BranchEmployee.objects.filter(branch_name=sel_branch)
+
+			if staffid ==0:
+				filter_orders = order.objects.filter(Q(date__gte=fromdate) & Q(date__lte=todate) & Q(status='completed') & Q(branch=sel_branch))
+
+			else:
+
+				if commonth != 0 and commonth != None and commonth != '':
+					year = commonth.split('-')[0]
+					month = commonth.split('-')[1]
+
+					
+
+					sel_staff_user = User.objects.get(id=int(staffid))
+
+					filter_services_month = order_services.objects.filter(Q(order_ref__date__gte=str(year)+'-'+str(month)+'-'+'01') & Q(order_ref__date__lte=str(year)+'-'+str(month)+'-'+'31') & Q(order_ref__staff=sel_staff_user) & Q(order_ref__status='completed'))
+					filter_items_month = order_items.objects.filter(Q(order_ref__date__gte=str(year)+'-'+str(month)+'-'+'01') & Q(order_ref__date__lte=str(year)+'-'+str(month)+'-'+'31') & Q(order_ref__staff=sel_staff_user) & Q(order_ref__status='completed'))
+
+					all_services = Service.objects.all()
+					all_items = product_items.objects.all()
+
+
+
+
+					for ser in all_services:
+
+						cost = ser.cost
+						total_cost=0
+						title = ser.title
+						total_provided = 0
+						commision = ser.servicecommision
+						commision_value = 'N/A'
+						monthlytarget = ser.monthlytarget
+						target_status = 'Not reached'
+
+						staff_name = sel_staff_user.first_name+' '+sel_staff_user.last_name
+
+						total_ordered = len(filter_services_month.filter(servic_ref=ser))
+
+						if total_ordered != 0:
+							total_provided = total_ordered
+							total_cost = cost*total_provided
+
+							if total_cost > monthlytarget or total_cost == monthlytarget:
+								target_status = 'Reached'
+								commision_value = cost * 0.01 * commision
+
+
+						commision_data.append({'staff_name':staff_name,'service_name':title,'total_sale':total_cost,'commision_rate':commision,'commision_value':commision_value,'target_status':target_status})
+
+
+
+
+						#item selling commision data will be there
+
+
+					for it in all_items:
+
+						cost = it.sale_price
+						total_cost=0
+						title = it.name
+						total_provided = 0
+						commision = it.commision
+						commision_value = 'N/A'
+						monthlytarget = it.target
+						target_status = 'Not reached'
+
+						staff_name = sel_staff_user.first_name+' '+sel_staff_user.last_name
+
+						total_ordered = len(filter_items_month.filter(item_ref=it))
+
+						if total_ordered != 0:
+							total_provided = total_ordered
+							total_cost = cost*total_provided
+
+							if total_cost > monthlytarget or total_cost == monthlytarget:
+								target_status = 'Reached'
+								commision_value = cost * 0.01 * commision
+
+
+						commision_data.append({'staff_name':staff_name,'service_name':title,'total_sale':total_cost,'commision_rate':commision,'commision_value':commision_value,'target_status':target_status})
+
+
+						#end of item selling commision data settings
+							
+
+
+
+
+					
+
+						
+
+
+
+				else:
+					pass
+				filter_orders = order.objects.filter(Q(date__gte=fromdate) & Q(date__lte=todate) & Q(status='completed') & Q(branch=sel_branch) & Q(staff=User.objects.get(id=int(staffid))))
+
+
+			employee_list = []
+
+			for em in get_staffs:
+				employee_list.append({'id':em.staff.id,'name':em.staff.first_name})
 
 			for x in filter_orders:
 				f=order_services.objects.filter(order_ref=x)
@@ -231,7 +343,10 @@ def sales_report(request):
 				this_items = this_items[2:]
 
 
-				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost})
+				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':employee_list,'commision_data':commision_data})
+
+			if len(filter_orders) == 0:
+				res.append({'staff_list':employee_list,'commision_data':commision_data})
 
 			return Response(res)
 

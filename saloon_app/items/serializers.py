@@ -118,6 +118,8 @@ class salesreport(serializers.Serializer):
 	branchid = serializers.IntegerField()
 	fromdate = serializers.CharField(max_length=200,allow_null=True)
 	todate = serializers.CharField(max_length=200,allow_null=True)
+	staffid = serializers.IntegerField(allow_null=True,required=False)
+	commonth = serializers.CharField(max_length=200, allow_null=True,required=False)
 
 
 class get_daterange(serializers.Serializer):
