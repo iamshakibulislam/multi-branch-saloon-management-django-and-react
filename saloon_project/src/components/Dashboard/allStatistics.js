@@ -2,6 +2,8 @@ import react,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
+import Pagination from 'react-responsive-pagination';
+
 
 class allStatistics extends Component{
 
@@ -14,17 +16,20 @@ state = {
 	report:[],
 	staffid:0,
 	staff_data:null,
-	commonth:null
+	commonth:null,
+
+	totalPages: 0,
+
+	totalCommisionPages:0,
+  currentPage: 1,
+  currentCommisionPage:1,
+
+  sales_tab_open:true
 }
 
 
 static contextType=baseContext
 
-componentDidCatch(error, info) {
-    // Display fallback UI
-    console.log('error')
-    // You can also log the error to an error reporting service
-    }
 
 componentDidMount(){
 
@@ -44,7 +49,7 @@ componentDidMount(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({report:response.data})
+      this.setState({totalCommisionPages:Math.round(response.data[0].commision_data.length/5),totalPages:Math.round(response.data.length/10),report:response.data})
       
       }
       
@@ -87,6 +92,18 @@ componentDidMount(){
 }
 
 
+handlePageChange(page) {
+    this.setState({ currentPage: page });
+    // ... do something with `page`
+  }
+
+
+
+handleCommisionPageChange(page) {
+    this.setState({ currentCommisionPage: page });
+    // ... do something with `page`
+  }
+
 
 needRefresh(){
 
@@ -106,7 +123,7 @@ needRefresh(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({report:response.data})
+      this.setState({totalCommisionPages:Math.round(response.data[0].commision_data.length/5),totalPages:Math.round(response.data.length/10),report:response.data})
       
       }
       
@@ -195,7 +212,21 @@ return(
 								<div className="card card-custom gutter-b">
 									<div className="card-header flex-wrap py-3">
 										<div className="card-title">
-											<h3 className="card-label">Sales report
+											<h3 className="card-label">Report
+											<span className="d-block text-muted pt-2 font-size-sm"></span></h3>
+										</div>
+										<div className="card-title">
+											<h3 className="card-label">
+
+											<select className="form-control" onChange={()=> this.setState({sales_tab_open:!this.state.sales_tab_open})}>
+											<option value="sales report" id="sales_report">
+											 Sales Report
+											 </option>
+
+											 <option value="commision report" id="commision_report">
+											 Commison Report
+											 </option>
+											 </select>
 											<span className="d-block text-muted pt-2 font-size-sm"></span></h3>
 										</div>
 										<div className="card-toolbar">
@@ -271,6 +302,8 @@ return(
 									</div>
 									<div className="card-body">
 										{/*begin: Datatable*/ }
+
+										{this.state.sales_tab_open == true?
 										<table className="table table-bordered table-checkable" id="kt_datatable">
 											<thead>
 												<tr>
@@ -283,10 +316,10 @@ return(
 													
 												</tr>
 											</thead>
-											<tbody>
+											<tbody className="mb-4">
 											{this.state.report != null?
 
-												this.state.report.map((data,index)=>{
+												this.state.report.slice(Number(this.state.currentPage)-1,Number(this.state.currentPage)+4).map((data,index)=>{
 
 													return(
 
@@ -307,8 +340,16 @@ return(
 												
 												
 											</tbody>
-										</table>
 
+											<br/>
+											<Pagination
+       										 	total={this.state.totalPages}
+        										current={this.state.currentPage}
+        										onPageChange={page => this.handlePageChange(page)}
+      								/>
+										</table>:null}
+										
+										{this.state.sales_tab_open == false?
 										<div className="row">
 										<div className="col-md-6">
 										<h6 className="mt-4 mb-4" style={{marginTop:'5rem'}}>Commision report</h6>
@@ -317,8 +358,8 @@ return(
 										<input className="form-control ml-3" id="commonth" onChange={(event)=>this.setInfo(event,'commonth')} type="month"/>
 										</form>
 										</div>
-										</div>
-
+										</div>:null}
+										{this.state.sales_tab_open==false ?
 										<table className="table table-bordered table-checkable" id="kt_datatable">
 
 											<thead>
@@ -340,7 +381,7 @@ return(
 
 
 
-												this.state.report[0].commision_data.map((data,index)=>{
+												this.state.report[0].commision_data.slice(Number(this.state.currentCommisionPage)-1,Number(this.state.currentCommisionPage)+4).map((data,index)=>{
 
 													
 
@@ -365,7 +406,12 @@ return(
 												
 												
 											</tbody>
-										</table>
+											<Pagination
+       										 	total={this.state.totalCommisionPages}
+        										current={this.state.currentCommisionPage}
+        										onPageChange={page => this.handleCommisionPageChange(page)}
+      								/>
+										</table>:null}
 
 										{/*end: Datatable*/ }
 									</div>

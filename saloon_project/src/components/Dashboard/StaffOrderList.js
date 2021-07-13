@@ -2,13 +2,17 @@ import react,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import baseContext from '../shared/baseContext'
+import Pagination from 'react-responsive-pagination';
 
 class stock extends Component{
 
 state = {
 	'stock_info':null,
 	'branch':'all',
-	branchid:0
+	branchid:0,
+
+	 totalPages: 0,
+   currentPage: 1,
 }
 
 
@@ -29,7 +33,7 @@ componentDidMount(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({stock_info:response.data})
+      this.setState({totalPages:Math.round(response.data.length/10),stock_info:response.data})
       
       }
       
@@ -73,6 +77,11 @@ componentDidMount(){
 
 
 
+  handlePageChange(page) {
+    this.setState({ currentPage: page });
+    // ... do something with `page`
+  }
+
 needRefresh(){
 
 	
@@ -87,7 +96,7 @@ needRefresh(){
     'Content-Type': 'application/json'
   }}).then((response)=>{
       console.log(response.data);
-      this.setState({stock_info:response.data})
+      this.setState({totalPages:Math.round(response.data.length/10),stock_info:response.data})
       
       }
       
@@ -170,7 +179,7 @@ return(
 											<tbody>
 											{this.state.stock_info != null?
 
-												this.state.stock_info.map((data,index)=>{
+												this.state.stock_info.slice(Number(this.state.currentPage)-1,Number(this.state.currentPage)+9).map((data,index)=>{
 
 													return(
 
@@ -192,6 +201,12 @@ return(
 												
 											</tbody>
 										</table>
+										<Pagination
+								        total={this.state.totalPages}
+								        current={this.state.currentPage}
+								        onPageChange={page => this.handlePageChange(page)}
+								      />
+     
 										{/*end: Datatable*/ }
 									</div>
 								</div>
