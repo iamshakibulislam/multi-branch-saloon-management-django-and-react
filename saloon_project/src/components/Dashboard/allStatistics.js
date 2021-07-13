@@ -20,6 +20,11 @@ state = {
 
 static contextType=baseContext
 
+componentDidCatch(error, info) {
+    // Display fallback UI
+    console.log('error')
+    // You can also log the error to an error reporting service
+    }
 
 componentDidMount(){
 
@@ -329,10 +334,15 @@ return(
 													
 												</tr>
 											</thead>
+											
 											<tbody>
-											{(this.state.report != null && this.state.report.length!=0 && this.state.commonth !=null)?
+											{(this.state.report != null && this.state.report.length!=0)?
+
+
 
 												this.state.report[0].commision_data.map((data,index)=>{
+
+													
 
 													return(
 

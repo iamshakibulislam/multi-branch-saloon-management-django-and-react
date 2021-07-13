@@ -212,7 +212,7 @@ def sales_report(request):
 				this_items = this_items[2:]
 
 
-				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':[]})
+				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':[],'commision_data':commision_data})
 
 			return Response(res)
 
