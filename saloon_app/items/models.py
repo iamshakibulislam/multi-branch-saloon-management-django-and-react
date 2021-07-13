@@ -68,6 +68,7 @@ class order(models.Model):
 	payment_status = models.CharField(choices=payment_status_choise,max_length=200,blank=True,null=True,default='paid')
 	payment_method_choise = [('voucher','voucher'),('cash','cash')]
 	payment_method = models.CharField(choices=payment_method_choise,max_length=200,blank=True,null=True)
+	partial_amount = models.FloatField(default=0,null=True)
 
 	def __str__(self):
 		return str(self.date)+' '+str(self.customer.first_name)+' '+str(self.staff.first_name)

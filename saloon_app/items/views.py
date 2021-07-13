@@ -331,7 +331,10 @@ def sales_report(request):
 			employee_list = []
 
 			for em in get_staffs:
-				employee_list.append({'id':em.staff.id,'name':em.staff.first_name})
+				if (em.staff.is_manager == True or em.staff.is_admin == True or em.staff.is_superuser == True):
+					pass
+				else:
+					employee_list.append({'id':em.staff.id,'name':em.staff.first_name})
 
 			for x in filter_orders:
 				f=order_services.objects.filter(order_ref=x)
@@ -355,6 +358,7 @@ def sales_report(request):
 
 				this_services = ''
 				this_items = ''
+				total_cost=0
 
 			if len(filter_orders) == 0:
 				res.append({'staff_list':employee_list,'commision_data':commision_data})

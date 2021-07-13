@@ -96,6 +96,7 @@ class get_order_data(serializers.Serializer):
 	time = serializers.CharField(max_length=500,allow_null=True,required=False)
 	itemforservice = serializers.CharField(max_length=500,allow_null=True,required=False)
 	payment_type = serializers.CharField(max_length=200,allow_null=True,required=False)
+	partial_amount = serializers.IntegerField(allow_null=True,required=False)
 
 
 
