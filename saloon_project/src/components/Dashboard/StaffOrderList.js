@@ -169,10 +169,12 @@ return(
 												<tr>
 													<th>Appointment Date</th>
 													<th>User</th>
-													<th>services</th>
+													<th>Services/Items</th>
 													<th>Status</th>
 													<th>Payment status </th>
 													<th>Payment method </th>
+													<th>total costs($)</th>
+													<th>Due($)</th>
 													
 												</tr>
 											</thead>
@@ -186,10 +188,21 @@ return(
 													<tr>
 													<td>{data.date}</td>
 													<td>{data.user}</td>
-													<td>{data.services}</td>
+
+													{data.services!="" && data.ordered_items!=""?
+													<td>services: {data.services} items: {data.ordered_items}</td>
+													: data.services == ""?
+													<td>{data.ordered_items}</td>
+
+													:data.ordered_items == ""?
+													<td>{data.services}</td>:<td>{data.services}</td>}
+
+
 													<td>{data.status}</td>
 													<td>{data.payment_status}</td>
 													<td>{data.payment_method}</td>
+													<td>{data.total_costs}</td>
+													<td>{data.due}</td>
 													
 													
 												</tr>)

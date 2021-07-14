@@ -18,6 +18,8 @@ static contextType = baseContext
         
         branchlist:null,
 
+        alertMessage:null,
+
         branchid:null,
         stafflist:null,
         staffid:[],
@@ -37,6 +39,7 @@ static contextType = baseContext
 
         total_cost:0,
         tax_cost:0,
+        regi_open:false,
 
         useremail:null,
         showExpress:false,
@@ -379,6 +382,42 @@ setInfo(event,name){
 }
 
 
+createUser(event){
+  event.preventDefault();
+
+
+  this.setState({processing:true});
+  axios.post(this.context.baseUrl+'/api/authentication/register',
+    {first_name:this.state.first_name,
+    last_name:this.state.last_name,
+    email:this.state.user_email,
+    password:this.state.password,
+    password2:this.state.password,
+    username:this.state.username,
+    phone:this.state.phone
+
+    }).then((response)=>{
+      console.log(response.data);
+      if(response.data.email[0]=='user with this email already exists.'){
+        
+        this.setState({alert:true,alertMessage:'Email is already in used !',process:false});
+
+        return false
+      }
+      
+    
+      this.setState({regi_open:false,account_created:true,processing:false,alert:true,alertMessage:'Account has been created ! Please book an order'})
+    
+
+    }).catch((error)=>{
+      console.log(error.response)
+      this.setState({process:false})
+    })
+
+}
+
+
+
 order(event){
 
  event.preventDefault();
@@ -443,6 +482,7 @@ axios.post(this.context.baseUrl+'/items/place_order/',
 
 
 
+
 closingmodal(){
     this.setState({editingmode:false})
 }
@@ -459,9 +499,93 @@ render(){
    Book an appointment 
   </h3>
   <div className="card-toolbar">
-   Select branch and services and date
+  {this.state.regi_open == true?
+    <a className="btn btn-danger" onClick={()=>this.setState({regi_open:false})}>Close Registration Form</a>
+
+    :
+   <a className="btn btn-danger" onClick={()=>this.setState({regi_open:true})}>Create New Account</a>}
   </div>
  </div>
+
+                    <div className="col-md-12">
+                    {this.state.alertMessage != null?
+                        <div className="alert alert-success text-center">{this.state.alertMessage}</div>:null
+                    }
+                    </div>
+
+
+                    {this.state.regi_open == true?
+                    <div className="col-md-10 mt-4">
+
+                    <form className="form mt-4" onSubmit={this.createUser.bind(this)}>
+                    <div className="row mt-4">
+                      <div className="col-md-5">
+                      <div className="form-group">
+
+                      <input type="text" placeholder="first name" onChange={(event)=>this.setState({first_name:event.target.value})} className="form-control"/>
+
+                      </div>
+                      </div>
+
+
+                      <div className="col-md-5">
+
+                      <div className="form-group">
+
+                      <input type="text" placeholder="last name" onChange={(event)=>this.setState({last_name:event.target.value})} className="form-control"/>
+
+                      </div>
+                      </div>
+
+                      <div className="col-md-5">
+                      <div className="form-group">
+
+                      <input type="text" placeholder="Username" onChange={(event)=>this.setState({username:event.target.value})} className="form-control"/>
+
+                      </div>
+                      </div>
+
+                      <div className="col-md-5">
+
+                      <div className="form-group">
+
+                      <input type="email" placeholder="Enter user email" onChange={(event)=>this.setState({user_email:event.target.value})} className="form-control"/>
+
+                      </div>
+                      </div>
+
+                      <div className="col-md-5">
+
+                      <div className="form-group">
+
+                      <input type="password" placeholder="Enter User password" onChange={(event)=>this.setState({password:event.target.value})} className="form-control"/>
+
+                      </div>
+                      </div>
+                      <div className="col-md-5">
+                      <div className="form-group">
+
+                      <input type="text" placeholder="Phone number" onChange={(event)=>this.setState({phone:event.target.value})} className="form-control"/>
+
+                      </div>
+                      </div>
+                      <div className="col-md-12">
+                      <div className="form-group">
+                      {this.state.processing == false?
+                      <input type="submit" value="Create User"  className="btn btn-primary"/>:
+                      <input type="submit" value="Please wait....."  className="btn btn-success"/>
+
+                  }
+
+                      </div>
+                      </div>
+
+                      </div>
+                    </form>
+
+                    </div>:null}
+
+
  {/*begin::Form*/}
  <form onSubmit={this.order.bind(this)}>
   <div className="card-body">

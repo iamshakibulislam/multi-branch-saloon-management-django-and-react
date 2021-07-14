@@ -22,7 +22,7 @@ import {Route,Switch,Link,Render} from 'react-router-dom'
 import BookAppointment from './Dashboard/StaffOrder'
 import StaffOrderList from './Dashboard/StaffOrderList'
 import baseContext from './shared/baseContext'
-
+import cardData from './Dashboard/cardData'
 
 
 
@@ -720,6 +720,9 @@ return(
 									<Route path="/dashboard/report/" exact component={allStatistics} />:null}
 									{this.state.user_info.role == 'user' ?
 									<Route path="/dashboard/" exact component={orderdetails} />:null}
+
+									{this.state.user_info.role == 'superuser' || this.state.user_info.role=='admin'?
+									<Route path="/dashboard/" exact component={cardData} />:null}
 
 									{this.state.user_info.role == 'manager' || this.state.user_info.role == 'staff'?
 

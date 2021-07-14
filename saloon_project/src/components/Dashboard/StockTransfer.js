@@ -468,8 +468,11 @@ return(
 										{/*begin: Datatable*/ }
 										<table className="table table-bordered table-checkable" id="kt_datatable">
 											<thead>
+											{this.state.stock_data != null?
 												<tr>
 													<th>Transfer Date</th>
+													{this.state.stock_data[0]['superuser'] == true?
+													<th>From Branch</th>:null}
 													<th>Item Name</th>
 													<th>Quantity</th>
 													<th>Branch </th>
@@ -478,7 +481,7 @@ return(
 													<th>Action</th>
 													
 													
-												</tr>
+												</tr>:null}
 											</thead>
 											<tbody>
 											{this.state.stock_data != null?
@@ -491,6 +494,8 @@ return(
 
 													<tr>
 													<td>{data.date}</td>
+													{this.state.stock_data[0]['superuser'] == true?
+													<td>{data.frombranch}</td>:null}
 													<td value={data.item_id}>{data.itemname}</td>
 													<td value={data.quantity}>{data.quantity}</td>
 													<td value={data.branch_id}>{data.branchname}</td>
@@ -509,13 +514,13 @@ return(
 												}
 													<td> {data.status != 'confirmed'?
 															<select name="status" className="form-control d-inline">
-															{data.sender == true?
+															{data.sender == true || data.sender == 'superuser'?
 																<option value="pending">Pending Transfer</option>:null}
-																{data.sender == true?
+																{data.sender == true || data.sender == 'superuser'?
 																<option value="sent">Item sent</option>:null}
-																{data.sender == false?
+																{data.sender == false || data.sender == 'superuser'?
 																<option value="recieved">Item recieved</option>:null}
-																{data.sender == false?
+																{data.sender == false || data.sender=='superuser'?
 																<option value="confirmed">Confirmed</option>:null}
 
 															</select>:

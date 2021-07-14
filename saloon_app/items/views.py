@@ -8,11 +8,90 @@ from .serializers import *
 from companybranch.models import Branch,BranchEmployee
 from staffall.models import *
 from datetime import datetime,timedelta
+import datetime as dateinfo
 from django.core.mail import send_mail
 from django.db.models import Q,Sum
 import json
 from .models import *
 from authentication.models import User
+
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def cardData(request):
+
+	res = {}
+
+	all_orders_today = order.objects.filter(Q(date = datetime.now()) & ~Q(status='completed'))
+
+	res['total_appointment_today'] = len(all_orders_today)
+
+	all_completed_orders_today = order.objects.filter(Q(date = datetime.now()) & Q(status='completed'))
+
+	res['total_completed_orders_today'] = len(all_completed_orders_today)
+
+
+
+	total_sales_today = 0
+
+
+	for odr in all_completed_orders_today:
+
+		get_service_val = order_services.objects.filter(order_ref=odr)
+
+		get_item_val = order_items.objects.filter(order_ref=odr)
+
+		for x in get_service_val:
+			total_sales_today = int(total_sales_today + x.servic_ref.cost)
+
+
+		for y in get_item_val:
+
+			total_sales_today = int(total_sales_today + y.item_ref.sale_price)
+
+
+
+
+	res['total_sales_today'] = total_sales_today
+
+	filter_partial_cash_orders = order.objects.filter(date__year=dateinfo.date.today().year,date__month=dateinfo.date.today().month).filter(payment_method='cash')
+
+	total_balance = 0
+
+
+	for myorder in filter_partial_cash_orders:
+
+		if(myorder.payment_status=='paid'):
+
+			sel_serv = order_services.objects.filter(order_ref=myorder)
+
+			for money in sel_serv:
+				total_balance = int(total_balance + money.servic_ref.cost + (money.servic_ref.cost*0.01*money.servic_ref.taxes))
+
+
+			sel_itemmm = order_items.objects.filter(order_ref=myorder)
+
+			for ordrr in sel_itemmm:
+				total_balance = total_balance+ordrr.item_ref.sale_price+(ordrr.item_ref.sale_price*0.01*ordrr.item_ref.sale_price)
+
+
+
+		elif myorder.payment_status=='partial':
+			total_balance = int(total_balance+myorder.partial_amount)
+
+
+
+	res['total_balance_this_month'] = round(total_balance,2)
+
+
+
+	return Response(res)
+
+
+
+
+
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
@@ -53,6 +132,34 @@ def change_stock_status(request):
 @permission_classes([IsAuthenticated,])
 def get_stock_transfer_data(request):
 	res = []
+
+	if request.user.is_superuser == True:
+
+		
+
+		
+
+		sel = stock_transfer.objects.all()[:40]
+
+		for x in sel:
+			branchname = ''
+			branchid = ''
+			sender = True
+
+			
+			branchid=x.tobranch.id
+			branchname = x.tobranch.name
+				
+
+			
+
+			res.append({'sender':'superuser','frombranch':x.frombranch.name,'transfer_id':x.id,'branch_id':branchid,'branchname':branchname,'item_id':x.item.id,'itemname':x.item.name,'quantity':x.quantity,'date':x.date,'status':x.status,'superuser':True})
+
+
+		return Response(res)
+
+
+
 	getBranchid = BranchEmployee.objects.get(staff=request.user).branch_name.id
 
 	sel_branch = Branch.objects.get(id=int(getBranchid))
@@ -122,6 +229,8 @@ def get_my_orders(request):
 	current_items = ""
 	find_orders=order.objects.filter(staff=request.user)
 
+	cost_of_purchase = 0
+
 	print('your orders',find_orders)
 
 	for x in find_orders:
@@ -129,6 +238,7 @@ def get_my_orders(request):
 
 		for ser in get_services:
 			current_services = current_services +' , '+ser.servic_ref.title
+			cost_of_purchase = cost_of_purchase + ser.servic_ref.cost + (ser.servic_ref.taxes*0.01*ser.servic_ref.cost)
 
 		current_services = current_services[2:]
 
@@ -136,16 +246,30 @@ def get_my_orders(request):
 		if len(get_items)!=0:
 			for i in get_items:
 				current_items = current_items+' , '+i.item_ref.name
+				cost_of_purchase = cost_of_purchase + i.item_ref.sale_price + (i.item_ref.sale_price*0.01*i.item_ref.taxes)
+
 
 			current_items = current_items[2:]
 
 
+		if x.payment_status == 'partial':
+			due = round((cost_of_purchase - x.partial_amount),2)
+
+		elif x.payment_status == 'due':
+			due = round(cost_of_purchase,2)
+
+		else:
+			due = 0
 
 
-		res.append({'id':x.id,'date':x.appointment_date,'time':x.appointment_time,'branch':x.branch.name,'staff':x.staff.first_name+' '+x.staff.last_name,'services':current_services,'payment_status':x.payment_status,'status':x.status,'ordered_items':current_items,'balance':request.user.balance,'user':x.customer.first_name,'payment_method':x.payment_method})
+
+
+		res.append({'id':x.id,'date':x.appointment_date,'time':x.appointment_time,'branch':x.branch.name,'staff':x.staff.first_name+' '+x.staff.last_name,'services':current_services,'payment_status':x.payment_status,'status':x.status,'ordered_items':current_items,'balance':request.user.balance,'user':x.customer.first_name,'payment_method':x.payment_method,'due':due,'total_costs':round(cost_of_purchase,2)})
 
 		current_services = ""
 		current_items = ""
+
+		cost_of_purchase = 0
 
 
 	res.reverse()
@@ -215,7 +339,7 @@ def sales_report(request):
 				this_items = this_items[2:]
 
 
-				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':[],'commision_data':commision_data})
+				res.append({'id':x.id,'branch':x.branch.name,'date':x.appointment_date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':[],'commision_data':commision_data})
 
 				this_services = ''
 				this_items = ''
@@ -354,7 +478,7 @@ def sales_report(request):
 				this_items = this_items[2:]
 
 
-				res.append({'id':x.id,'branch':x.branch.name,'date':x.date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':employee_list,'commision_data':commision_data})
+				res.append({'id':x.id,'branch':x.branch.name,'date':x.appointment_date,'staff':x.staff.first_name+''+x.staff.last_name,'services':this_services,'items':this_items,'cost':total_cost,'staff_list':employee_list,'commision_data':commision_data})
 
 				this_services = ''
 				this_items = ''
@@ -412,8 +536,9 @@ def update_order(request):
 		if modified_status != None:
 			if sel.status != modified_status:
 				if modified_status != 'completed':
-
 					sel.status = modified_status
+
+
 
 		if modified_payment_method != None:
 			if sel.payment_method != modified_payment_method:
@@ -423,7 +548,14 @@ def update_order(request):
 
 		if modified_payment_status != None:
 			if sel.payment_status != modified_payment_status:
-				sel.payment_status = modified_payment_status
+
+				if modified_payment_status == 'paid':
+
+					sel.payment_status = modified_status
+					sel.partial_amount = 0
+				else:
+					#sel.status = modified_status
+					sel.payment_status = modified_payment_status
 
 
 		sel.save()
@@ -1120,11 +1252,9 @@ def place_order(request):
 
 			for x in unique_staffs:
 
-				print('payment stats is ',payment_stats,'order_type ',payment_type)
-				sel_staff = User.objects.get(id=int(x))
-				create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method=paymentsystem,payment_status=payment_stats,partial_amount=partial_amount)
-
 				find_index_of_service = []
+
+				cost_of_service = 0
 
 				for index,staff in enumerate(staffid):
 					if int(staff) == int(x):
@@ -1135,6 +1265,47 @@ def place_order(request):
 
 				for ind in find_index_of_service:
 					my_ordered_services.append(servicess[ind])
+
+
+
+				for myorder in my_ordered_services:
+					sel_myserv = Service.objects.get(id=int(myorder))
+
+					cost_of_service = cost_of_service + int(sel_myserv.cost) + (sel_myserv.cost*0.01*sel_myserv.taxes)
+
+
+
+				print('payment stats is ',payment_stats,'order_type ',payment_type)
+				sel_staff = User.objects.get(id=int(x))
+
+
+				if payment_type == 'partial':
+					if int(partial_amount) == 0:
+						create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method=paymentsystem,payment_status='due',partial_amount=0)
+
+
+					elif int(partial_amount) > int(cost_of_service):
+						partial_amount = int(partial_amount) - int(cost_of_service)
+						create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method=paymentsystem,payment_status='paid',partial_amount=0)
+
+
+
+					elif int(partial_amount) < int(cost_of_service):
+						create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method=paymentsystem,payment_status='partial',partial_amount=partial_amount)
+
+
+						partial_amount = 0
+
+
+
+
+				else:
+					create_order=order.objects.create(branch=sel_branch,staff=sel_staff,appointment_date=date,appointment_time=time,customer=cus,payment_method=paymentsystem,payment_status=payment_stats,partial_amount=0)
+
+
+
+
+				
 
 
 
