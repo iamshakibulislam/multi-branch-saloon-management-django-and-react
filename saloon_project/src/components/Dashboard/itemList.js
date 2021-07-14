@@ -282,7 +282,7 @@ return(
 
 								<div className="form-group ml-0" >
 				
-								<input type="number" className="form-control"  name="commision" placeholder="commision($)" onChange={(event)=>this.add_items_update(event,'commision')} required/>
+								<input type="number" className="form-control"  name="commision" placeholder="commision(%)" onChange={(event)=>this.add_items_update(event,'commision')} required/>
 								</div>
 
 								<div className="form-group ml-0" >

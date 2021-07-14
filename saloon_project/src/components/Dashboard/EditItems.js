@@ -336,7 +336,7 @@ render(){
    </div>
 
    <div className="form-group">
-    <label>Commision <span className="text-danger">*</span></label>
+    <label>Commision <span className="text-danger">(%)</span></label>
     <input type="number" className="form-control" value={this.state.items_info.item_info.commision} placeholder="commision" onChange={(event)=>this.setInfo(event,'commision')}  />
     <span className="form-text text-muted"></span>
    </div>
@@ -349,7 +349,7 @@ render(){
 
 
    <div className="form-group">
-    <label> Taxes <span className="text-danger">*</span></label>
+    <label> Taxes <span className="text-danger">(%)</span></label>
     <input type="number" className="form-control" value={this.state.items_info.item_info.taxes} placeholder="target" onChange={(event)=>this.setInfo(event,'taxes')}  />
     <span className="form-text text-muted"></span>
    </div>

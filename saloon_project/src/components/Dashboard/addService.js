@@ -194,7 +194,7 @@ render(){
    <div className="row">
    <div className="col-md-6">
      <div className="form-group">
-    <label>Tax <span className="text-danger">* ($)</span></label>
+    <label>Tax <span className="text-danger">* (%)</span></label>
     <input type="number" className="form-control"  placeholder="2" onChange={(event)=>this.setInfo(event,'tax')} required/>
     <span className="form-text text-muted"></span>
    </div>
@@ -211,7 +211,7 @@ render(){
    <div className="row">
    <div className="col-md-4">
    <div className="form-group">
-    <label for="exampleInputPassword1">Commision<span className="text-danger">* ($)</span></label>
+    <label for="exampleInputPassword1">Commision<span className="text-danger">* (%)</span></label>
     <input type="number" className="form-control" id="exampleInputPassword1" placeholder="5" onChange={(event)=>this.setInfo(event,'commision')} required/>
    </div>
    </div>
