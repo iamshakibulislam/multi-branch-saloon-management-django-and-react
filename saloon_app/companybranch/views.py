@@ -3,9 +3,82 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .models import Branch
-from .serializers import get_branch_add_data,get_delete_id,get_branch_id,update_branches
+from .models import *
+from .serializers import *
 
+
+@api_view(['POST',])
+def show_company_info(request):
+
+	get_info = company_setup.objects.all()[0]
+
+	return Response({'name':get_info.name,'email':get_info.email,'cr_number':get_info.cr_number,'tax_number':get_info.tax_number,'logo':get_info.logo.url,'phone':get_info.phone,'address':get_info.address})
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated,])
+def set_company_info(request):
+	info = set_info(data=request.data)
+
+	if info.is_valid():
+
+		name = info.validated_data['name']
+		email = info.validated_data['email']
+		address = info.validated_data['address']
+		phone = info.validated_data['phone']
+		cr_number = info.validated_data['cr_number']
+		tax_number = info.validated_data['tax_number']
+
+		logo = info.validated_data['logo']
+
+
+
+		get_obj = company_setup.objects.all()
+
+		if len(get_obj) == 0:
+			company_setup.objects.create(name=name,address=address,email=email,phone=phone,cr_number=cr_number,tax_number=tax_number,logo=logo)
+
+
+		if len(get_obj) > 0:
+
+			sel = get_obj[0]
+
+
+			if sel.name != name and name !=  None and name != '':
+				sel.name = name
+
+			if sel.address != address and address != None and address != '':
+				sel.address = address
+
+
+			if sel.email != email and email != None and email != '':
+				sel.email = email
+
+
+			if sel.phone != phone and phone != None and phone != '':
+				sel.phone = phone
+
+
+			if sel.cr_number != cr_number and cr_number != None and cr_number != '':
+				sel.cr_number = cr_number
+
+
+			if sel.tax_number != tax_number and tax_number != None and tax_number != '':
+				sel.tax_number = tax_number
+
+
+			if sel.logo != None and logo != '' and logo != None:
+				sel.logo = logo
+
+
+
+
+			sel.save()
+
+
+
+
+		return Response({'status':'ok'})
 
 
 @api_view(['POST',])

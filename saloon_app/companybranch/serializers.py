@@ -22,3 +22,18 @@ class update_branches(serializers.Serializer):
 	address = serializers.CharField(max_length=200,allow_null=True,required=False)
 	branch_email = serializers.CharField(max_length=200,allow_null=True,required=False)
 	branch_phone = serializers.CharField(max_length=200,allow_null=True,required=False)
+
+
+
+class set_info(serializers.Serializer):
+
+	name = serializers.CharField(max_length=300,allow_null=True,required=False)
+	email = serializers.CharField(max_length=200,allow_null=True,required=False)
+	address = serializers.CharField(allow_null=True,required=False)
+	phone = serializers.CharField(max_length=200,allow_null=True,required=False)
+	cr_number = serializers.CharField(max_length=200,allow_null=True,required=False)
+	tax_number = serializers.CharField(max_length=200,allow_null=True,required=False)
+
+	logo = serializers.ImageField(allow_null=True,required=False)
+
+

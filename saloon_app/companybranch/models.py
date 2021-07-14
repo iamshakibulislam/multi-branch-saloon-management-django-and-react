@@ -1,7 +1,26 @@
 from django.db import models
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
-# Create your models here.
+
+
+
+class company_setup(models.Model):
+
+  name = models.CharField(max_length=400,null=True,blank=True)
+  email = models.EmailField(max_length=200,null=True,blank=True)
+  address = models.TextField(null=True,blank=True)
+
+  phone = models.CharField(max_length=20,null=True,blank=True)
+  cr_number = models.CharField(max_length=50,null=True,blank=True)
+
+  tax_number = models.CharField(max_length=50,null=True,blank=True)
+  logo = models.ImageField(null=True,upload_to='media/')
+
+
+  def __str__(self):
+    return str(self.name)
+
+
 
 class Manager(models.Model):
 

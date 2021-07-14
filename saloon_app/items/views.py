@@ -16,6 +16,39 @@ from .models import *
 from authentication.models import User
 
 
+@api_view(['POST',])
+def get_company_information(request):
+	res={'services':[],'branches':[],'items':[]}
+
+
+	get_services = Service.objects.all()[:9]
+
+	get_items = product_items.objects.all()[:9]
+
+	get_branches = Branch.objects.all()[:9]
+
+
+
+	for x in get_services:
+
+		res['services'].append({'name':x.title,'cost':x.cost})
+
+
+	for i in get_items:
+
+		res['items'].append({'name':i.name,'price':i.price})
+
+
+	for b in get_branches:
+		res['branches'].append({'name':b.name,'address':b.address,'email':b.email})
+
+
+
+	return Response(res)
+
+
+
+
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
@@ -353,11 +386,14 @@ def sales_report(request):
 		if branchid != 0:
 			sel_branch = Branch.objects.get(id=int(branchid))
 			get_staffs = BranchEmployee.objects.filter(branch_name=sel_branch)
-
+			filter_orders = order.objects.filter(Q(appointment_date__gte=fromdate) & Q(appointment_date__lte=todate) & Q(status='completed') & Q(branch=sel_branch))
 			if staffid ==0:
-				filter_orders = order.objects.filter(Q(appointment_date__gte=fromdate) & Q(appointment_date__lte=todate) & Q(status='completed') & Q(branch=sel_branch))
+				filter_orders = order.objects.filter(Q(appointment_date__gte=fromdate) & Q(appointment_date__lte=todate) & Q(status='completed') & Q(branch=sel_branch) )
 
 			else:
+				filter_orders = order.objects.filter(Q(appointment_date__gte=fromdate) & Q(appointment_date__lte=todate) & Q(status='completed') & Q(branch=sel_branch) & Q(staff=User.objects.get(id=int(staffid))))
+
+
 
 				if commonth != 0 and commonth != None and commonth != '':
 					year = commonth.split('-')[0]
@@ -449,7 +485,7 @@ def sales_report(request):
 
 				else:
 					pass
-				filter_orders = order.objects.filter(Q(date__gte=fromdate) & Q(date__lte=todate) & Q(status='completed') & Q(branch=sel_branch) & Q(staff=User.objects.get(id=int(staffid))))
+				
 
 
 			employee_list = []
@@ -824,6 +860,7 @@ def get_services(request):
 @api_view(['POST',])
 @permission_classes([IsAuthenticated,])
 def get_upcomming_appointment(request):
+	branch_emp = Employe.objects.get(user_staff = request.user)
 	try:
 		info = get_daterange(data=request.data)
 		if info.is_valid():
@@ -833,12 +870,13 @@ def get_upcomming_appointment(request):
 		else :
 			print('not valid')
 	except:
+		
 		filtr = order.objects.filter(Q(appointment_date__gte=datetime.now()) & Q(staff = request.user))
 		info = []
 
 		for x in filtr:
 			if x not in info:
-				info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+				info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A")),'color':str(branch_emp.color)})
 
 
 		return Response(info)
@@ -919,7 +957,7 @@ def get_upcomming_appointment(request):
 
 			for x in filtr:
 				if x not in info:
-					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A")),'color':str(branch_emp.color)})
 
 
 			return Response(info)
@@ -996,7 +1034,7 @@ def get_upcomming_appointment(request):
 
 			for x in filtr:
 				if x not in info:
-					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A")),'color':str(branch_emp.color)})
 
 
 			return Response(info)
@@ -1091,7 +1129,7 @@ def get_upcomming_appointment(request):
 			for x in filtr:
 				if x not in info:
 
-					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+					info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A")),'color':str(branch_emp.color)})
 
 
 			return Response(info)
@@ -1101,7 +1139,7 @@ def get_upcomming_appointment(request):
 		for x in filtr:
 
 			if x not in info:
-				info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A"))})
+				info.append({'date':x.appointment_date,'time':x.appointment_time.strftime("%I:%M %p"),'roundtime':str(x.appointment_time).split(':')[0]+':00:00','weekday':str(x.appointment_date.strftime("%A")),'color':str(branch_emp.color)})
 
 
 		return Response(info)

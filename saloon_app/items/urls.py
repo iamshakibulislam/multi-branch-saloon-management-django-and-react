@@ -36,6 +36,7 @@ urlpatterns = [
 	path('item_stock_transfer/',views.item_stock_transfer),
 	path('get_stock_transfer_data/',views.get_stock_transfer_data),
 	path('change_stock_status/',views.change_stock_status),
-	path('card_data/',views.cardData)
+	path('card_data/',views.cardData),
+	path('get_company_information/',views.get_company_information)
 
 ]

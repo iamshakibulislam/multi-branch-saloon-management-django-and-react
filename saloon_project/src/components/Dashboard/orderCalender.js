@@ -80,7 +80,8 @@ localStorage.setItem('baseUrl',this.context.baseUrl);
 
       evnt = document.querySelector(dt);
 
-      document.querySelector(dt).parentElement.parentElement.parentElement.children[1].children[0].children[childno].setAttribute('class','bg-success text-white');
+      document.querySelector(dt).parentElement.parentElement.parentElement.children[1].children[0].children[childno].setAttribute('class','text-white');
+      document.querySelector(dt).parentElement.parentElement.parentElement.children[1].children[0].children[childno].setAttribute('style','background-color:'+response.data[0].color);
 
       evnt.parentElement.parentElement.parentElement.children[1].children[0].children[childno].textContent='New order';
        //const rm = document.querySelectorAll('.fc-button-group');
@@ -176,7 +177,7 @@ try{
 
       subrow.forEach(sub => {sub.remove()})
 
-      allrow.forEach(ele => {ele.style.border = '1.5px solid black';ele.style.height="7rem"})
+      allrow.forEach(ele => {ele.style.border = '1.5px solid black';ele.style.height="6rem"})
 
 
 
@@ -208,9 +209,9 @@ try{
 
         let tdtag = document.createElement('td');
 
-        tdtag.className = 'fc-event-container bg-primary text-white text-center ';
+        tdtag.className = 'fc-event-container bg-primary text-white text-center';
 
-        let createp = document.createElement('p');
+      let createp = document.createElement('p');
        let  txt = document.createTextNode('Starting At ' +response.data[i]['time']);
 
         createp.className = 'lead mt-4';
@@ -438,7 +439,7 @@ return(
 
 
 
-	)
+  )
 
 
 }

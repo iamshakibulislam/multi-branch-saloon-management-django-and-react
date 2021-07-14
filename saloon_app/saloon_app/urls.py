@@ -27,10 +27,10 @@ urlpatterns = [
     path('items/',include('items.urls')),
     path('marketing/',include('marketing.urls')),
     #this re_path should connect to a view (while deploying to the server) to get react routing advantages which renders react build index.html file .
-    re_path('',views.testing)
+    #re_path('',views.testing)
     
 
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
