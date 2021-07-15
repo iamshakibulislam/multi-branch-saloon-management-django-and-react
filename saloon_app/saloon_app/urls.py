@@ -15,10 +15,22 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path,include
-
+from django.urls import path,include,re_path
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/authentication/',include('authentication.api.urls', 'authentication_api')),
+    path('staff/',include('staffall.urls')),
+    path('branch/',include('companybranch.urls')),
+    path('items/',include('items.urls')),
+    path('marketing/',include('marketing.urls')),
+    #this re_path should connect to a view (while deploying to the server) to get react routing advantages which renders react build index.html file .
+    #re_path('',views.testing)
+    
 
 ]
+
+urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
